@@ -1,0 +1,7 @@
+{
+  "name": "next-great-idea-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
