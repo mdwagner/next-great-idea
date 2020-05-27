@@ -6,6 +6,7 @@
   "scripts": {
     "console": "hasura console",
     "migrate": "hasura migrate apply && hasura metadata apply",
+    "serve": "ionic serve",
     "ionic:start": "react-scripts start",
     "ionic:build": "react-scripts build",
     "ionic:test": "react-scripts test"
@@ -57,6 +58,5 @@
   },
   "bugs": {
     "url": "https://github.com/mdwagner/next-great-idea/issues"
-  },
-  "homepage": "https://github.com/mdwagner/next-great-idea#readme"
+  }
 }
