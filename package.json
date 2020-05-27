@@ -4,7 +4,8 @@
   "description": "GreatIdea app",
   "license": "MIT",
   "scripts": {
-    "console": "hasura console"
+    "console": "hasura console",
+    "migrate": "hasura migrate apply && hasura metadata apply"
   },
   "devDependencies": {
     "hasura-cli": "^1.2.1"
