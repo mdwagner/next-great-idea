@@ -3,7 +3,6 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
-import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 
 /* Core CSS required for Ionic components to work properly */
@@ -29,9 +28,8 @@ export const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route path="/home" children={<Home />} />
         <Route path="/login" children={<Login />} />
-        <Route path="/" exact children={<Redirect to="/home" />} />
+        <Route path="/" exact children={<Redirect to="/login" />} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

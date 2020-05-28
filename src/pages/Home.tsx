@@ -12,17 +12,20 @@ export const Home: React.FC = () => {
 
   return (
     <IonPage>
+
       <IonHeader>
         <IonToolbar>
           <IonTitle>Blank</IonTitle>
         </IonToolbar>
       </IonHeader>
+
       <IonContent>
         <ExploreContainer />
         <IonButton onClick={goToLogin}>
           Login
         </IonButton>
       </IonContent>
+
     </IonPage>
   );
 };
