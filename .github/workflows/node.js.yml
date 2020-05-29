@@ -23,4 +23,4 @@ jobs:
       run: npm ci
 
     - name: Run tests
-      run: npm run ionic:test
+      run: CI=true npm run ionic:test
