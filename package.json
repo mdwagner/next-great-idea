@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@capacitor/core": "2.1.0",
+    "@fusionauth/typescript-client": "^1.16.1",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
     "ionicons": "^5.0.0",
