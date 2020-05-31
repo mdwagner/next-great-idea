@@ -8,6 +8,8 @@ services:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    networks:
+      - postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
@@ -25,5 +27,32 @@ services:
       HASURA_GRAPHQL_ENABLE_CONSOLE: ${HASURA_GRAPHQL_ENABLE_CONSOLE:-false}
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES:-startup,http-log,webhook-log,websocket-log,query-log}
 
+  fusionauth:
+    image: fusionauth/fusionauth-app:${FUSIONAUTH_IMAGE_VERSION:-1.16.1}
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "jdbc:postgresql://postgres:5432/${FUSIONAUTH_DATABASE_NAME:-fusionauth}"
+      DATABASE_ROOT_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_ROOT_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      DATABASE_USER: ${FUSIONAUTH_DATABASE_USER:-fusionauth}
+      DATABASE_PASSWORD: ${FUSIONAUTH_DATABASE_PASSWORD:-password}
+      FUSIONAUTH_MEMORY: ${FUSIONAUTH_MEMORY:-512M}
+      FUSIONAUTH_SEARCH_ENGINE_TYPE: database
+      FUSIONAUTH_URL: http://fusionauth:9011
+      FUSIONAUTH_RUNTIME_MODE: development
+    networks:
+      - postgres
+    restart: always
+    ports:
+      - "${FUSIONAUTH_PORT:-9011}:9011"
+    volumes:
+      - fa_config:/usr/local/fusionauth/config
+
+networks:
+  postgres:
+    driver: bridge
+
 volumes:
   db_data:
+  fa_config:
