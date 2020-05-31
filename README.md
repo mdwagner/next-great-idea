@@ -19,3 +19,14 @@ An app for your _next_ idea!
 1. Start apps:
     - Hasura console: `npm run console`
     - Ionic app (web): `npm run serve`
+
+## Contributing
+This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). Usage is up to developer discretion. We only ask you follow these conventions:
+- commit prefix is lowercase `<type>[optional scope]`
+    - Ex: `fix(react): Fixed everything lol`
+- commit prefix breaking changes use `!`
+    - Ex: `refactor!: drop IE 11`
+- branch names can be whatever developer wants
+    - Ex: `whatever-i-want`
+    - Ex: `not-master`
+    - Ex: `ticket-123`
