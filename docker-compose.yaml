@@ -43,6 +43,7 @@ services:
       FUSIONAUTH_SEARCH_ENGINE_TYPE: database
       FUSIONAUTH_URL: http://fusionauth:9011
       FUSIONAUTH_RUNTIME_MODE: development
+      FUSIONAUTH_KICKSTART: /kickstart/dev.json
     networks:
       - postgres
     restart: always
@@ -50,6 +51,7 @@ services:
       - "${FUSIONAUTH_PORT:-9011}:9011"
     volumes:
       - fa_config:/usr/local/fusionauth/config
+      - ./kickstart:/kickstart
 
 networks:
   postgres:
