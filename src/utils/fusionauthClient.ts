@@ -1,6 +1,7 @@
 import { FusionAuthClient } from '@fusionauth/typescript-client';
 
-const clientApiKey = 'Bn1bHtL29JZiTyLJTxF2IRoGOsm8KzvC2je7JZXQv3I';
-const url = 'https://fusionauth.wagz.dev';
+const clientApiKey = process.env.REACT_APP_FUSIONAUTH_API_KEY;
+const url = process.env.REACT_APP_FUSIONAUTH_URL;
+const tenantId = process.env.REACT_APP_FUSIONAUTH_TENANT;
 
-export const client = new FusionAuthClient(clientApiKey, url);
+export const client = new FusionAuthClient(clientApiKey, url, tenantId);
