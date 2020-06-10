@@ -21,6 +21,7 @@ services:
       - "${HASURA_GRAPHQL_PORT:-8080}:8080"
     depends_on:
       - "postgres"
+      - "docker-host"
     networks:
       - postgres
     environment:
@@ -32,7 +33,7 @@ services:
   fusionauth:
     image: fusionauth/fusionauth-app:${FUSIONAUTH_IMAGE_VERSION:-1.16.1}
     depends_on:
-      - postgres
+      - "postgres"
     environment:
       DATABASE_URL: "jdbc:postgresql://postgres:5432/${FUSIONAUTH_DATABASE_NAME:-fusionauth}"
       DATABASE_ROOT_USER: ${POSTGRES_USER:-postgres}
@@ -52,6 +53,14 @@ services:
     volumes:
       - fa_config:/usr/local/fusionauth/config
       - ./kickstart:/kickstart
+
+  # connects docker containers to host
+  docker-host:
+    image: qoomon/docker-host
+    cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+    restart: always
+    networks:
+      - postgres
 
 networks:
   postgres:
