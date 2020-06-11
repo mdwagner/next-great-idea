@@ -28,3 +28,7 @@ shards:
     github: kemalcr/spec-kemal
     version: 0.5.0
 
+  webmock:
+    github: manastech/webmock.cr
+    commit: bb3eab30f6c7d1fdc0a7ff14cd136d68e860d1a7
+

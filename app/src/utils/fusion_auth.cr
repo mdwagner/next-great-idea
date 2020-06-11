@@ -1,7 +1,15 @@
 require "./http_client_base"
 
 class FusionAuth < HttpClientBase
-  def self.uri
+  def uri
     AppConfig.settings.fusionauth_url
+  end
+
+  def client
+    c = create_client
+    c.before_request do |request|
+      request.headers["Authorization"] = AppConfig.settings.fusionauth_api_key
+    end
+    c
   end
 end

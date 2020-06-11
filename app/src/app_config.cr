@@ -4,6 +4,7 @@ class AppConfig
   Habitat.create do
     setting fusionauth_url : String
     setting hasura_graphql_url : String
+    setting fusionauth_api_key : String
   end
 
   {% for type in ["production", "development", "test"] %}

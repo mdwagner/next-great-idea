@@ -18,6 +18,9 @@ dependencies:
     github: gdotdesign/cr-dotenv
   habitat:
     github: luckyframework/habitat
+  webmock:
+    github: manastech/webmock.cr
+    branch: master
 
 crystal: 0.34.0
 
