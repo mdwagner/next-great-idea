@@ -5,6 +5,7 @@ An app for your _next_ idea!
 - [PostgreSQL 12](https://www.postgresql.org/docs/12/)
 - [Hasura GraphQL](https://hasura.io/docs/1.0/graphql/manual/index.html)
 - [Ionic Framework (React)](https://ionicframework.com/docs)
+- [FusionAuth](https://fusionauth.io/docs/v1/tech/) (not implemented yet)
 
 ## Getting Started
 
