@@ -16,6 +16,8 @@ dependencies:
     github: kemalcr/spec-kemal
   dotenv:
     github: gdotdesign/cr-dotenv
+  habitat:
+    github: luckyframework/habitat
 
 crystal: 0.34.0
 

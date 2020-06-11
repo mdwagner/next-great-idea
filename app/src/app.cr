@@ -1,23 +1,24 @@
 require "kemal"
 require "json"
+require "dotenv"
+require "./app_config"
 require "./utils/hasura"
 require "./utils/fusion_auth"
 
-before_all do |env|
-  FusionAuth.open
-  Hasura.open
+AppConfig.configure do |settings|
+  Dotenv.load? unless AppConfig.test?
 
+  settings.fusionauth_url = ENV.fetch("FUSIONAUTH_URL", "http://localhost:9011")
+  settings.hasura_graphql_url = ENV.fetch("HASURA_GRAPHQL_ENDPOINT", "http://localhost:8080")
+end
+
+before_all do |env|
   env.response.content_type = "application/json"
 end
 
-after_all do |env|
-  FusionAuth.close
-  Hasura.close
-end
-
 post "/login" do |env|
-  fa_client = FusionAuth.client!
-  hasura_client = Hasura.client!
+  fa_client = FusionAuth.client
+  hasura_client = Hasura.client
 
   {
     "fusionauth_host" => fa_client.host,
@@ -27,4 +28,5 @@ post "/login" do |env|
   }.to_json
 end
 
+Habitat.raise_if_missing_settings!
 Kemal.run
