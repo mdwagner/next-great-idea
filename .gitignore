@@ -2,6 +2,9 @@
 /node_modules
 /.pnp
 .pnp.js
+/lib/
+/bin/
+/.shards/
 
 # testing
 /coverage
@@ -17,6 +20,8 @@
 .env.test.local
 .env.production.local
 .vscode
+*.dwarf
+/docs/
 
 npm-debug.log*
 yarn-debug.log*

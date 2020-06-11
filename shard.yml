@@ -1,0 +1,22 @@
+name: next_great_idea
+version: 0.1.0
+
+authors:
+  - Michael Wagner
+  - Wil Merchant
+
+targets:
+  next_great_idea:
+    main: app/src/next_great_idea.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+  spec-kemal:
+    github: kemalcr/spec-kemal
+  dotenv:
+    github: gdotdesign/cr-dotenv
+
+crystal: 0.35.0
+
+license: MIT
