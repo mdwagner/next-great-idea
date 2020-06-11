@@ -8,8 +8,8 @@ describe "App" do
       expected = {
         "fusionauth_host" => "localhost",
         "fusionauth_port" => 9011,
-        "hasura_host" => "localhost",
-        "hasura_port" => 8080
+        "hasura_host"     => "localhost",
+        "hasura_port"     => 8080,
       }.to_json
 
       response.status_code.should eq 200
