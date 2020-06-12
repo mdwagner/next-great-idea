@@ -29,9 +29,7 @@ jobs:
       run: shards install
 
     - name: Check file formatting
-      run: crystal tool format --check app
+      run: crystal tool format --check crystal_server
 
     - name: Run tests
-      run: crystal spec app/spec
-      env:
-        KEMAL_ENV: test
+      run: crystal spec crystal_server/spec

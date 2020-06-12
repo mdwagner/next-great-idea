@@ -21,7 +21,10 @@
 .env.production.local
 .vscode
 *.dwarf
+*.local.cr
 /docs/
+/tmp
+start_server
 
 npm-debug.log*
 yarn-debug.log*

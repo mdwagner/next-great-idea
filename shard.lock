@@ -1,5 +1,29 @@
 version: 1.0
 shards:
+  avram:
+    github: luckyframework/avram
+    version: 0.14.0
+
+  blank:
+    github: kostya/blank
+    version: 0.1.0
+
+  carbon:
+    github: luckyframework/carbon
+    version: 0.1.1
+
+  cry:
+    github: paulcsmith/cry
+    version: 0.4.2
+
+  db:
+    github: crystal-lang/crystal-db
+    version: 0.9.0
+
+  dexter:
+    github: luckyframework/dexter
+    version: 0.2.0
+
   dotenv:
     github: gdotdesign/cr-dotenv
     version: 0.7.0
@@ -12,23 +36,35 @@ shards:
     github: luckyframework/habitat
     version: 0.4.3
 
-  kemal:
-    github: kemalcr/kemal
-    version: 0.26.1
+  lucky:
+    github: luckyframework/lucky
+    version: 0.21.1
 
-  kilt:
-    github: jeromegn/kilt
-    version: 0.4.0
+  lucky_cli:
+    github: luckyframework/lucky_cli
+    version: 0.21.0
 
-  radix:
-    github: luislavena/radix
-    version: 0.3.9
+  lucky_router:
+    github: luckyframework/lucky_router
+    version: 0.2.2
 
-  spec-kemal:
-    github: kemalcr/spec-kemal
-    version: 0.5.0
+  pg:
+    github: will/crystal-pg
+    version: 0.21.1
+
+  shell-table:
+    github: luckyframework/shell-table.cr
+    commit: 078a04ea58ead5203bb435a3b5fff448ddabaeea
+
+  teeplate:
+    github: luckyframework/teeplate
+    version: 0.8.1
 
   webmock:
     github: manastech/webmock.cr
     commit: bb3eab30f6c7d1fdc0a7ff14cd136d68e860d1a7
+
+  wordsmith:
+    github: luckyframework/wordsmith
+    version: 0.2.0
 

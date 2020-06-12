@@ -1,5 +1,6 @@
 name: next_great_idea
 version: 0.1.0
+license: MIT
 
 authors:
   - Michael Wagner
@@ -7,21 +8,20 @@ authors:
 
 targets:
   next_great_idea:
-    main: app/src/next_great_idea.cr
-
-dependencies:
-  kemal:
-    github: kemalcr/kemal
-  spec-kemal:
-    github: kemalcr/spec-kemal
-  dotenv:
-    github: gdotdesign/cr-dotenv
-  habitat:
-    github: luckyframework/habitat
-  webmock:
-    github: manastech/webmock.cr
-    branch: master
+    main: crystal_server/src/next_great_idea.cr
 
 crystal: 0.34.0
 
-license: MIT
+dependencies:
+  lucky:
+    github: luckyframework/lucky
+    version: ~> 0.21
+  carbon:
+    github: luckyframework/carbon
+    version: ~> 0.1.1
+  dotenv:
+    github: gdotdesign/cr-dotenv
+    version: ~> 0.7.0
+  webmock:
+    github: manastech/webmock.cr
+    branch: master
