@@ -4,11 +4,8 @@ on:
   push:
     paths:
     - 'hasura/**'
-    branches:
-    - master
-  pull_request:
-    paths:
-    - 'hasura/**'
+    - '!ionic/**'
+    - '!lucky/**'
 
 defaults:
   run:
