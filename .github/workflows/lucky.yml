@@ -1,9 +1,18 @@
-name: Crystal CI
+name: Lucky CI
 
 on:
   push:
-    branches: [ master ]
+    paths:
+    - 'lucky/**'
+    branches:
+    - master
   pull_request:
+    paths:
+    - 'lucky/**'
+
+defaults:
+  run:
+    working-directory: lucky
 
 jobs:
   test:
@@ -29,7 +38,7 @@ jobs:
       run: shards install
 
     - name: Check file formatting
-      run: crystal tool format --check crystal_server
+      run: crystal tool format --check src spec
 
     - name: Run tests
-      run: crystal spec crystal_server/spec
+      run: crystal spec

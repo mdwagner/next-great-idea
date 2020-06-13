@@ -4,10 +4,10 @@
 set -e
 set -o pipefail
 
-source crystal_server/script/helpers/text_helpers
+source script/helpers/text_helpers
 
 notice "Running System Check"
-./crystal_server/script/system_check
+./script/system_check
 print_done
 
 notice "Installing shards"

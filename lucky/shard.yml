@@ -8,7 +8,7 @@ authors:
 
 targets:
   next_great_idea:
-    main: crystal_server/src/next_great_idea.cr
+    main: src/next_great_idea.cr
 
 crystal: 0.34.0
 

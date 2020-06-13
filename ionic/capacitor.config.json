@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "next-great-idea-app",
+  "appName": "next-great-idea-ionic",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",

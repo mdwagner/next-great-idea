@@ -1,18 +1,3 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-/lib/
-/bin/
-/.shards/
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
 .DS_Store
 .env
 .env.local
@@ -21,11 +6,5 @@
 .env.production.local
 .vscode
 *.dwarf
-*.local.cr
-/docs/
 /tmp
-start_server
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+/coverage

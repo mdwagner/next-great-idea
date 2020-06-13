@@ -1,2 +1,0 @@
-system_check: crystal_server/script/system_check && sleep 100000
-web: lucky watch

@@ -1,14 +1,25 @@
-name: Node.js CI
+name: Ionic CI
 
 on:
   push:
-    branches: [ master ]
+    paths:
+    - 'ionic/**'
+    branches:
+    - master
   pull_request:
+    paths:
+    - 'ionic/**'
+
+defaults:
+  run:
+    working-directory: ionic
 
 jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
+    env:
+      CI: true
 
     steps:
     - name: Checkout code
@@ -23,4 +34,4 @@ jobs:
       run: npm ci
 
     - name: Run tests
-      run: CI=true npm run ionic:test
+      run: npm run ionic:test

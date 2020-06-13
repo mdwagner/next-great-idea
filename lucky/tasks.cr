@@ -6,10 +6,10 @@
 # https://luckyframework.org/guides/command-line-tasks/custom-tasks
 
 # Load Lucky and the app (actions, models, etc.)
-require "./crystal_server/src/app"
+require "./src/app"
 
 # You can add your own tasks here in the ./tasks folder
-require "./crystal_server/tasks/**"
+require "./tasks/**"
 
 # Load Lucky tasks (dev, routes, etc.)
 require "lucky/tasks/**"
