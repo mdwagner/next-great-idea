@@ -21,6 +21,7 @@ jobs:
     env:
       HASURA_ENDPOINT: http://graphql-engine:8080
       HASURA_ADMIN_SECRET: secret
+      HASURA_WORKDIR: hasura
 
     services:
       postgres:
