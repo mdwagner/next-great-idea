@@ -1,9 +1,3 @@
-#-------------------------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
-#-------------------------------------------------------------------------------------------------------------
-
-# Update the VARIANT arg in devcontainer.json to pick an Ubuntu version: 20.04, 18.04
 ARG VARIANT=18.04
 FROM mcr.microsoft.com/vscode/devcontainers/base:ubuntu${VARIANT}
 
