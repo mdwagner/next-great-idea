@@ -14,10 +14,25 @@ import {
 } from '@ionic/react';
 
 import './Login/Login.css';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
+const USER_LIST = gql `
+{
+  users {
+    id
+    email
+    firstname
+    lastname
+  }
+}
+`
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const {data} = useQuery(USER_LIST);
 
   const submit = () => {
     console.log('email', email);
