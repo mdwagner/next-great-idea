@@ -38,8 +38,11 @@ const client = new ApolloClient({
 //   .query({
 //     query: gql`
 //     query MyQuery {
-//         ideas {
+//         users {
 //           id
+//           email
+//           firstname
+//           lastname
 //         }
 //       }
 //     `
