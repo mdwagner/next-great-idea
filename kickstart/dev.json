@@ -1,0 +1,43 @@
+{
+  "variables": {
+    "adminEmail": "admin@example.com",
+    "password": "Asdf123!",
+    "defaultTenantId": "30663132-6464-6665-3032-326466613934",
+    "nextGreatIdeaAppId": "85a03867-dccf-4882-adde-1a79aeec50df"
+  },
+  "apiKeys": [
+    {
+      "key": "bf69486b-4733-4470-a592-f1bfce7af580",
+      "description": "Standard development API key"
+    }
+  ],
+  "requests": [
+    {
+      "method": "POST",
+      "url": "/api/application/#{nextGreatIdeaAppId}",
+      "body": {
+        "application": {
+          "name": "Next Great Idea"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/api/user/registration",
+      "body": {
+        "user": {
+          "email": "#{adminEmail}",
+          "password": "#{password}",
+          "firstName": "Admin",
+          "lastName": "User"
+        },
+        "registration": {
+          "applicationId": "#{FUSIONAUTH_APPLICATION_ID}",
+          "roles": [
+            "admin"
+          ]
+        }
+      }
+    }
+  ]
+}
