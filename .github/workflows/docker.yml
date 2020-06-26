@@ -12,7 +12,7 @@ jobs:
     name: Docker Build
     runs-on: ubuntu-latest
 
-    if: (github.ref == "ref/head/master") || (contains(github.ref, "docker-test"))
+    if: github.ref == 'ref/head/master' || contains(github.ref, 'docker-test')
 
     steps:
     - name: Checkout code
@@ -28,7 +28,7 @@ jobs:
     needs:
       - build
 
-    if: github.ref == "ref/head/master"
+    if: github.ref == 'ref/head/master'
 
     steps:
       - uses: actions/checkout@v2
