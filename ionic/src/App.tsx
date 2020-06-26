@@ -2,6 +2,9 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { gql } from "apollo-boost";
 
 import { Login } from './pages/Login';
 
@@ -24,13 +27,37 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+const client = new ApolloClient({
+  uri: process.env.HASURA_GRAPHQL_ENDPOINT || "http://host.docker.internal:8080/v1/graphql",
+  headers: {
+      "x-hasura-admin-secret": "secret"
+  }
+});
+
+// client
+//   .query({
+//     query: gql`
+//     query MyQuery {
+//         users {
+//           id
+//           email
+//           firstname
+//           lastname
+//         }
+//       }
+//     `
+//   })
+//   .then(result => console.log(result))
+
 export const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
+    <ApolloProvider client={client}>
       <IonRouterOutlet>
         <Route path="/login" children={<Login />} />
         <Route path="/" exact children={<Redirect to="/login" />} />
       </IonRouterOutlet>
+      </ApolloProvider>
     </IonReactRouter>
   </IonApp>
 );

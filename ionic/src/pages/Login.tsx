@@ -14,6 +14,8 @@ import {
 } from '@ionic/react';
 
 import './Login/Login.css';
+import '../components/UserList'
+import { UserList } from '../components/UserList';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -73,6 +75,8 @@ export const Login: React.FC = () => {
             onClick={submit}>
             Sign In
           </IonButton>
+
+          <UserList></UserList>
         </IonList>
       </IonContent>
 
