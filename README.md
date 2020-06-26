@@ -16,7 +16,7 @@ An app for your _next_ idea!
 - [Docker](https://www.docker.com/)
 
 ### Quick Start
-1. Initialize Docker: `docker-compose up -d`
+1. Open Folder in Container via Remote Containers extension
 1. TODO...
 
 ## Contributing
