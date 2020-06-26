@@ -1,0 +1,41 @@
+name: Lucky CI
+
+on:
+  push:
+    paths:
+    - 'lucky/**'
+    - '!ionic/**'
+    - '!hasura/**'
+
+defaults:
+  run:
+    working-directory: lucky
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    container:
+      image: crystallang/crystal:0.34.0-alpine
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Cache shards
+      uses: actions/cache@v1
+      with:
+        path: lib
+        key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-shards-
+
+    - name: Install deps
+      run: shards install
+
+    - name: Check file formatting
+      run: crystal tool format --check src spec
+
+    - name: Run tests
+      run: crystal spec

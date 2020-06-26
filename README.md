@@ -5,21 +5,25 @@ An app for your _next_ idea!
 - [PostgreSQL 12](https://www.postgresql.org/docs/12/)
 - [Hasura GraphQL](https://hasura.io/docs/1.0/graphql/manual/index.html)
 - [Ionic Framework (React)](https://ionicframework.com/docs)
-- [FusionAuth](https://fusionauth.io/docs/v1/tech/) (not implemented yet)
+- [FusionAuth](https://fusionauth.io/docs/v1/tech/)
+- [Lucky Framework](https://luckyframework.org/guides/getting-started/why-lucky)
 
 ## Getting Started
 
 ### Requirements
-- [Node.JS 12](https://nodejs.org/en/)
+- [git](https://git-scm.com/)
 - [Docker](https://www.docker.com/)
 
 ### Quick Start
-1. Initialize Docker: `docker-compose up -d`
-1. Install dependencies: `npm install`
-1. Initialize Postgres with Hasura migrations: `npm run migrate`
-1. Start apps:
-    - Hasura console: `npm run console`
-    - Ionic app (web): `npm run serve`
+- Clone repo
+- VS Code Remote Containers extension (easy)
+    - Open Folder in Container
+- Docker Compose (advanced)
+    - `$ docker-compose -f docker-compose.yaml -f .devcontainer/docker-compose.yml up -d`
+    - `$ docker-compose -f docker-compose.yaml -f .devcontainer/docker-compose.yml exec --workdir=/workspace dev-container bash`
+
+### NOTES
+- `git` might not work that well inside the container (errors, etc.), so it's recommended to do any `git` commands outside of the container.
 
 ## Contributing
 This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). Usage is up to developer discretion. We only ask you follow these conventions:

@@ -1,0 +1,56 @@
+name: Hasura CI
+
+on:
+  push:
+    paths:
+    - 'hasura/**'
+    - '!ionic/**'
+    - '!lucky/**'
+
+defaults:
+  run:
+    working-directory: hasura
+
+jobs:
+  hasura_migrate:
+    name: Hasura Migrations/Metadata
+    runs-on: ubuntu-latest
+    env:
+      HASURA_ENDPOINT: http://graphql-engine:8080
+      HASURA_ADMIN_SECRET: secret
+      HASURA_WORKDIR: hasura
+
+    services:
+      postgres:
+        image: postgres:12
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      graphql-engine:
+        image: hasura/graphql-engine:latest
+        ports:
+          - "8080:8080"
+        env:
+          HASURA_GRAPHQL_ADMIN_SECRET: secret
+          HASURA_GRAPHQL_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/postgres"
+          HASURA_GRAPHQL_ENABLE_CONSOLE: false
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Apply Hasura Migrations
+      uses: tibotiber/hasura-action@master
+      with:
+        args: migrate apply
+
+    - name: Apply Hasura Metadata
+      uses: tibotiber/hasura-action@master
+      with:
+        args: metadata apply

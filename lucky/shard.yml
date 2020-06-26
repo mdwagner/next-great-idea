@@ -1,0 +1,27 @@
+name: next_great_idea
+version: 0.1.0
+license: MIT
+
+authors:
+  - Michael Wagner
+  - Wil Merchant
+
+targets:
+  next_great_idea:
+    main: src/next_great_idea.cr
+
+crystal: 0.34.0
+
+dependencies:
+  lucky:
+    github: luckyframework/lucky
+    version: ~> 0.21
+  carbon:
+    github: luckyframework/carbon
+    version: ~> 0.1.1
+  dotenv:
+    github: gdotdesign/cr-dotenv
+    version: ~> 0.7.0
+  webmock:
+    github: manastech/webmock.cr
+    branch: master
