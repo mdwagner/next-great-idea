@@ -23,7 +23,6 @@
   "extensions": [
     "editorconfig.editorconfig",
     "waderyan.gitblame",
-    "ms-azuretools.vscode-docker",
     "kumar-harsh.graphql-for-vscode",
     "faustinoaq.crystal-lang"
   ],
