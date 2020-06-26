@@ -11,13 +11,19 @@ An app for your _next_ idea!
 ## Getting Started
 
 ### Requirements
-- [Node.JS 12](https://nodejs.org/en/)
-- [Lucky](https://luckyframework.org/guides/getting-started/installing)
+- [git](https://git-scm.com/)
 - [Docker](https://www.docker.com/)
 
 ### Quick Start
-1. Open Folder in Container via Remote Containers extension
-1. TODO...
+- Clone repo
+- VS Code Remote Containers extension (easy)
+    - Open Folder in Container
+- Docker Compose (advanced)
+    - `$ docker-compose -f docker-compose.yaml -f .devcontainer/docker-compose.yml up -d`
+    - `$ docker-compose -f docker-compose.yaml -f .devcontainer/docker-compose.yml exec --workdir=/workspace dev-container bash`
+
+### NOTES
+- `git` might not work that well inside the container (errors, etc.), so it's recommended to do any `git` commands outside of the container.
 
 ## Contributing
 This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). Usage is up to developer discretion. We only ask you follow these conventions:
