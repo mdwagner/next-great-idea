@@ -28,7 +28,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 const client = new ApolloClient({
-  uri: process.env.HASURA_GRAPHQL_ENDPOINT || "http://localhost:8080/v1/graphql",
+  uri: process.env.HASURA_GRAPHQL_ENDPOINT || "http://host.docker.internal:8080/v1/graphql",
   headers: {
       "x-hasura-admin-secret": "secret"
   }
