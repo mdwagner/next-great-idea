@@ -2,8 +2,6 @@ name: Docker CI
 
 on:
   push:
-    paths:
-    - '*/Dockerfile'
 
 env:
   IMAGE_NAME: mdwagner/next-great-idea
@@ -13,6 +11,8 @@ jobs:
   build:
     name: Docker Build
     runs-on: ubuntu-latest
+
+    if: github.ref == "ref/head/master" || contains(github.ref, "docker-test")
 
     steps:
     - name: Checkout code
