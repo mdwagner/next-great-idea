@@ -7,7 +7,8 @@ on:
 
 env:
   IMAGE_NAME: mdwagner/next-great-idea
-  VERSION: latest
+  VERSION: dev
+  # VERSION: latest
 
 jobs:
   build:
@@ -28,7 +29,7 @@ jobs:
     needs:
       - build
 
-    if: github.ref == 'ref/head/master'
+    # if: github.ref == 'ref/head/master'
 
     steps:
       - uses: actions/checkout@v2
