@@ -4,7 +4,7 @@
   "description": "NextGreatIdea (hasura)",
   "license": "MIT",
   "scripts": {
-    "console": "hasura console",
+    "console": "hasura console --no-browser",
     "migrate": "hasura migrate apply && hasura metadata apply"
   },
   "devDependencies": {

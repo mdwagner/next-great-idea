@@ -1,74 +1,59 @@
 version: '3.6'
 
 services:
+  dev-container:
+    image: mdwagner/next-great-idea:dev # TODO: change to latest before merge
+    depends_on:
+      - postgres
+      - graphql-engine
+      - fusionauth
+    links:
+      - postgres
+      - "graphql-engine:hasura"
+      - fusionauth
+
   postgres:
-    image: postgres:${POSTGRES_VERSION:-12}
+    image: postgres:12
     restart: always
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - 5432:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
-    networks:
-      - postgres
+      - /var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
 
   graphql-engine:
-    image: hasura/graphql-engine:${HASURA_GRAPHQL_IMAGE_VERSION:-latest}
+    image: hasura/graphql-engine:latest
     restart: always
     ports:
-      - "${HASURA_GRAPHQL_PORT:-8080}:8080"
+      - 8080:8080
     depends_on:
       - postgres
-      - docker-host
-    networks:
-      - postgres
     environment:
-      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET:-secret}
-      HASURA_GRAPHQL_DATABASE_URL: "postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@postgres:5432/${HASURA_GRAPHQL_DATABASE_NAME:-postgres}"
-      HASURA_GRAPHQL_ENABLE_CONSOLE: ${HASURA_GRAPHQL_ENABLE_CONSOLE:-false}
-      HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES:-startup,http-log,webhook-log,websocket-log,query-log}
+      HASURA_GRAPHQL_ADMIN_SECRET: secret
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:password@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup,http-log,webhook-log,websocket-log,query-log
 
   fusionauth:
-    image: fusionauth/fusionauth-app:${FUSIONAUTH_IMAGE_VERSION:-1.16.1}
+    image: fusionauth/fusionauth-app:1.16.1
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: "jdbc:postgresql://postgres:5432/${FUSIONAUTH_DATABASE_NAME:-fusionauth}"
-      DATABASE_ROOT_USER: ${POSTGRES_USER:-postgres}
-      DATABASE_ROOT_PASSWORD: ${POSTGRES_PASSWORD:-password}
-      DATABASE_USER: ${FUSIONAUTH_DATABASE_USER:-fusionauth}
-      DATABASE_PASSWORD: ${FUSIONAUTH_DATABASE_PASSWORD:-password}
-      FUSIONAUTH_MEMORY: ${FUSIONAUTH_MEMORY:-512M}
+      DATABASE_URL: jdbc:postgresql://postgres:5432/fusionauth
+      DATABASE_ROOT_USER: postgres
+      DATABASE_ROOT_PASSWORD: password
+      DATABASE_USER: fusionauth
+      DATABASE_PASSWORD: password
+      FUSIONAUTH_MEMORY: 512M
       FUSIONAUTH_SEARCH_ENGINE_TYPE: database
       FUSIONAUTH_URL: http://fusionauth:9011
       FUSIONAUTH_RUNTIME_MODE: development
       FUSIONAUTH_KICKSTART: /kickstart/kickstart_dev.json
-    networks:
-      - postgres
     restart: always
     ports:
-      - "${FUSIONAUTH_PORT:-9011}:9011"
+      - 9011:9011
     volumes:
-      - fa_config:/usr/local/fusionauth/config
+      - /usr/local/fusionauth/config
       - ./fusionauth:/kickstart
-
-  # os-agnostic way to connect containers to host machine
-  # ex: http://docker-host:3000 <-- port 3000 on host machine
-  docker-host:
-    image: qoomon/docker-host
-    cap_add:
-      - NET_ADMIN
-      - NET_RAW
-    restart: always
-    networks:
-      - postgres
-
-networks:
-  postgres:
-    driver: bridge
-
-volumes:
-  db_data:
-  fa_config:

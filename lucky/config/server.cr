@@ -46,7 +46,7 @@ Lucky::ForceSSLHandler.configure do |settings|
 end
 
 AppConfig.configure do |settings|
-  settings.fusionauth_url = ENV.fetch("FUSIONAUTH_URL", "http://localhost:9011")
-  settings.hasura_graphql_url = ENV.fetch("HASURA_GRAPHQL_ENDPOINT", "http://localhost:8080")
+  settings.fusionauth_url = ENV.fetch("FUSIONAUTH_URL", "http://fusionauth:9011")
+  settings.hasura_graphql_url = ENV.fetch("HASURA_GRAPHQL_ENDPOINT", "http://hasura:8080")
   settings.fusionauth_api_key = ENV.fetch("FUSIONAUTH_API_KEY", "bf69486b-4733-4470-a592-f1bfce7af580")
 end
