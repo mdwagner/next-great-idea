@@ -2,7 +2,6 @@ ARG VARIANT=18.04
 FROM mcr.microsoft.com/vscode/devcontainers/base:ubuntu${VARIANT}
 
 SHELL ["/bin/bash", "-c"]
-# test push
 
 # install apt packages
 RUN apt-get update \
