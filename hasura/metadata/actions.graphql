@@ -1,2 +1,23 @@
+type Mutation {
+  login (
+    body: FusionAuthLoginInput!
+  ): FusionAuthLoginResponse
+}
 
+
+
+
+input FusionAuthLoginInput {
+  loginId : String!
+  password : String!
+  applicationId : String
+  ipAddress : String
+}
+
+type FusionAuthLoginResponse {
+  token : String
+  user : JsonAny
+}
+
+scalar JsonAny
 

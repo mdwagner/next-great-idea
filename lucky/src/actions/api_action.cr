@@ -9,4 +9,8 @@ abstract class ApiAction < Lucky::Action
   def params_from_json
     params.from_json
   end
+
+  def params_input_body_to_json
+    params_from_json["input"]["body"].to_json
+  end
 end

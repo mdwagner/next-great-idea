@@ -4,4 +4,4 @@ admin_secret: secret
 metadata_directory: metadata
 actions:
   kind: synchronous
-  handler_webhook_baseurl: http://host.docker.internal:3000
+  handler_webhook_baseurl: http://host.docker.internal:5000/api/v1
