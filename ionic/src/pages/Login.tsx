@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   IonPage,
   IonHeader,
@@ -27,6 +28,9 @@ export const Login: React.FC = () => {
     setEmail('');
     setPassword('');
   }
+
+  const history = useHistory();
+  const goToSignUp = () => history.push('/signup');
 
   return (
     <IonPage>
@@ -74,6 +78,12 @@ export const Login: React.FC = () => {
             type="submit"
             onClick={submit}>
             Sign In
+          </IonButton>
+
+          <IonButton
+            type="submit"
+            onClick={goToSignUp}>
+            Sign Up As New User
           </IonButton>
 
           <UserList></UserList>

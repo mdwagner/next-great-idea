@@ -7,6 +7,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { gql } from "apollo-boost";
 
 import { Login } from './pages/Login';
+import { SignUp} from './pages/SignUp';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -56,6 +57,7 @@ export const App: React.FC = () => (
       <IonRouterOutlet>
         <Route path="/login" children={<Login />} />
         <Route path="/" exact children={<Redirect to="/login" />} />
+        <Route path="/signup" children={<SignUp />} />
       </IonRouterOutlet>
       </ApolloProvider>
     </IonReactRouter>
