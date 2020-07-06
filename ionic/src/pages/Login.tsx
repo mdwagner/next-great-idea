@@ -19,6 +19,7 @@ import { useHistory } from 'react-router-dom';
 
 import './Login/Login.css';
 import '../components/UserList'
+import { loginUser, loginUserVariables } from './types/loginUser';
 
 interface LoginInput {
   email: string;
@@ -38,10 +39,10 @@ export const Login: React.FC = () => {
   const history = useHistory(); // eslint-disable-line
   const { handleSubmit, control, reset } = useForm<LoginInput>();
   const client = useApolloClient();
-  const [ login, { loading } ] = useMutation(LOGIN_USER, {
-    onCompleted(responseData: { login: { token: string, user: any } }) {
+  const [ login, { loading } ] = useMutation<loginUser, loginUserVariables>(LOGIN_USER, {
+    onCompleted(responseData) {
       // set token in localStorage
-      window.localStorage.setItem('token', responseData.login.token);
+      window.localStorage.setItem('token', responseData.login?.token || '');
 
       // set client cache for logged in state
       client.cache.writeData({ data: { isLoggedIn: true } });
