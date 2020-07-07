@@ -55,6 +55,7 @@ export const Login: React.FC = () => {
       // display login message
       console.info('logged in!')
 
+      // TODO: add home page redirect
       // history.replace('/home');
     },
     onError(error) {
