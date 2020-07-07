@@ -2,7 +2,7 @@ type Mutation {
   login (
     loginId: String!
     password: String!
-  ): FusionAuthLoginResponse
+  ): FusionAuthLoginResponse!
 }
 
 

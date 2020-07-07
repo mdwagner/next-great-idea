@@ -7,13 +7,6 @@
 // START Enums and Input Objects
 //==============================================================
 
-export interface FusionAuthLoginInput {
-  applicationId?: string | null;
-  ipAddress?: string | null;
-  loginId: string;
-  password: string;
-}
-
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

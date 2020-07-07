@@ -3,25 +3,26 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FusionAuthLoginInput } from "./../../graphql-global-types";
-
 // ====================================================
 // GraphQL mutation operation: loginUser
 // ====================================================
 
 export interface loginUser_login {
   __typename: "FusionAuthLoginResponse";
-  token: string | null;
-  user: any | null;
+  id: string;
+  email: string;
+  token: string;
+  active: boolean;
 }
 
 export interface loginUser {
   /**
    * perform the action: "login"
    */
-  login: loginUser_login | null;
+  login: loginUser_login;
 }
 
 export interface loginUserVariables {
-  body: FusionAuthLoginInput;
+  loginId: string;
+  password: string;
 }

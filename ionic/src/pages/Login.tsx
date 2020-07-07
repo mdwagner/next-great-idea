@@ -27,10 +27,12 @@ interface LoginInput {
 }
 
 const LOGIN_USER = gql`
-  mutation loginUser($body: FusionAuthLoginInput!) {
-    login(body: $body) {
+  mutation loginUser($loginId: String!, $password: String!) {
+    login(loginId: $loginId, password: $password) {
+      id
+      email
       token
-      user
+      active
     }
   }
 `;
@@ -40,9 +42,9 @@ export const Login: React.FC = () => {
   const { handleSubmit, control, reset } = useForm<LoginInput>();
   const client = useApolloClient();
   const [ login, { loading } ] = useMutation<loginUser, loginUserVariables>(LOGIN_USER, {
-    onCompleted(responseData) {
+    onCompleted({ login: { token } }) {
       // set token in localStorage
-      window.localStorage.setItem('token', responseData.login?.token || '');
+      window.localStorage.setItem('token', token);
 
       // set client cache for logged in state
       client.cache.writeData({ data: { isLoggedIn: true } });
@@ -63,6 +65,16 @@ export const Login: React.FC = () => {
       console.error(error.message);
     }
   });
+  const submit = handleSubmit(
+    async ({ email: loginId, password }) => {
+      await login({
+        variables: {
+          loginId,
+          password
+        }
+      });
+    }
+  );
 
   return (
     <IonPage>
@@ -76,16 +88,7 @@ export const Login: React.FC = () => {
       <IonContent>
         <form
           noValidate
-          onSubmit={handleSubmit(async (data) => {
-            await login({
-              variables: {
-                body: {
-                  loginId: data.email,
-                  password: data.password
-                }
-              }
-            })
-          })}
+          onSubmit={submit}
         >
           <IonList>
             <IonItem>
