@@ -5,7 +5,19 @@ class FusionAuthLoginSerializer < BaseSerializer
     include JSON::Serializable
 
     property token : String
-    property user : JSON::Any
+    property user : User
+  end
+
+  class User
+    include JSON::Serializable
+
+    property id : String
+    property active : Bool
+    property data : JSON::Any?
+    property email : String
+    property timezone : String?
+    property username : String?
+    property verified : Bool
   end
 
   def initialize(@json_str : String)

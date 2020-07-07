@@ -3,7 +3,7 @@ require "../spec_helper"
 describe FusionAuthLoginService do
   it "should complete fusionauth login request" do
     WebMock.stub(:post, Regex.new(AppConfig.settings.fusionauth_url))
-      .to_return(status: 200, body: {token: "123", user: "{}"}.to_json)
+      .to_return(status: 200)
 
     params = {loginId: "admin@example.com", password: "Asdf123!"}.to_json
     input = FusionAuthLoginInput.from_json(params)
