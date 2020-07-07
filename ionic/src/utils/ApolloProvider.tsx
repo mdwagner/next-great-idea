@@ -28,7 +28,8 @@ const link = new HttpLink({
 });
 
 const defaultCacheData = {
-  isLoggedIn: !!window.localStorage.getItem('token')
+  isLoggedIn: !!window.localStorage.getItem('token'),
+  userId: null
 };
 
 cache.writeData({ data: defaultCacheData });
