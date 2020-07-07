@@ -4,7 +4,6 @@ class FusionAuthLoginService
 
   def call : Tuple(Int32, BaseSerializer)
     # TODO: add applicationId to request (get this from env)
-    # TODO: add ipAddress to request (use X-Forwarded-For header)
     fa_response = FusionAuthHttpClient.new.client.post("/api/login", body: request_json)
 
     if fa_response.status_code == 200 && fa_response.body?

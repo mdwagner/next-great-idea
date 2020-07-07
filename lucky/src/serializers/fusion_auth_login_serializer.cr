@@ -20,10 +20,20 @@ class FusionAuthLoginSerializer < BaseSerializer
     property verified : Bool
   end
 
-  def initialize(@json_str : String)
+  def initialize(json_str : String)
+    @json = Response.from_json(json_str)
   end
 
   def render
-    Response.from_json(@json_str)
+    {
+      "token"    => @json.token,
+      "id"       => @json.user.id,
+      "active"   => @json.user.active,
+      "data"     => @json.user.data,
+      "email"    => @json.user.email,
+      "timezone" => @json.user.timezone,
+      "username" => @json.user.username,
+      "verified" => @json.user.verified,
+    }
   end
 end
