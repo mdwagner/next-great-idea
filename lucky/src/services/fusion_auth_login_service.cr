@@ -3,6 +3,7 @@ class FusionAuthLoginService
   end
 
   def call : Tuple(Int32, BaseSerializer)
+    # TODO: add applicationId to request (get this from env)
     fa_response = FusionAuthHttpClient.new.client.post("/api/login", body: request_json)
 
     if fa_response.status_code == 200 && fa_response.body?

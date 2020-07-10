@@ -7,10 +7,4 @@ class FusionAuthLoginInput
 
   @[JSON::Field(key: "loginId")]
   property login_id : String
-
-  @[JSON::Field(key: "applicationId")]
-  property application_id : String?
-
-  @[JSON::Field(key: "ipAddress")]
-  property ip_address : String?
 end

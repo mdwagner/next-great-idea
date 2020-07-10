@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
 import { ExploreContainer } from '../components/ExploreContainer';
+import { UserList } from '../components/UserList';
 
 import './Home/Home.css';
 
@@ -20,6 +21,7 @@ export const Home: React.FC = () => {
       </IonHeader>
 
       <IonContent>
+        <UserList />
         <ExploreContainer />
         <IonButton onClick={goToLogin}>
           Login

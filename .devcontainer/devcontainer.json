@@ -6,7 +6,7 @@
   // Update the 'dockerComposeFile' list if you have more compose files or use different names.
   // The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
   "dockerComposeFile": [
-    "../docker-compose.yaml",
+    "../docker-compose.yml",
     "docker-compose.yml"
   ],
   // The 'service' property is the name of the service for the container that VS Code should
@@ -28,11 +28,10 @@
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
-    3000,
-    5000,
-    8100,
-    9693,
-    9695,
+    5000, // lucky
+    8100, // ionic
+    9693, // hasura
+    9695, // hasura
   ],
   // Uncomment the next line if you want start specific services in your Docker Compose config.
   // "runServices": [],
