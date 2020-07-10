@@ -7,7 +7,10 @@
     "serve": "ionic serve",
     "ionic:start": "react-scripts start",
     "ionic:build": "react-scripts build",
-    "ionic:test": "react-scripts test"
+    "ionic:test": "react-scripts test",
+    "gql:generate": "npm run gql:download-schema && npm run gql:codegen",
+    "gql:download-schema": "apollo client:download-schema src/graphql/schema.json --endpoint http://host.docker.internal:8080/v1/graphql --header 'X-Hasura-Admin-Secret: secret'",
+    "gql:codegen": "apollo client:codegen --localSchemaFile=src/graphql/schema.json --target=typescript --includes='src/**/*.{ts,tsx}' --tagName=gql --globalTypesFile=src/graphql-global-types.d.ts --tsFileExtension='d.ts' types"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
@@ -19,6 +22,7 @@
     "ionicons": "^5.0.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-hook-form": "^6.0.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2"
   },

@@ -1,6 +1,13 @@
-actions: []
+actions:
+- name: login
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:5000/api/v1/login
+    forward_client_headers: true
 custom_types:
   enums: []
   input_objects: []
-  objects: []
-  scalars: []
+  objects:
+  - name: FusionAuthLoginResponse
+  scalars:
+  - name: JsonAny
