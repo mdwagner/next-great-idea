@@ -10,15 +10,15 @@ import {
   IonLabel,
   IonText,
   IonButton,
-  IonInput,
 } from '@ionic/react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { gql } from 'apollo-boost';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import { useHistory } from 'react-router-dom';
 
 import './Login/Login.css';
 import '../components/UserList'
+import { IonInputController } from '../components/form/IonInputController';
 import { loginUser, loginUserVariables } from './types/loginUser';
 
 interface LoginInput {
@@ -99,21 +99,16 @@ export const Login: React.FC = () => {
                 &nbsp;
                 <IonText color="danger">*</IonText>
               </IonLabel>
-              <Controller
+              <IonInputController
                 name="email"
                 control={control}
                 rules={{ required: true }}
                 defaultValue=""
-                render={(props) => (
-                  <IonInput
-                    onIonChange={props.onChange}
-                    onIonBlur={props.onBlur}
-                    value={props.value}
-                    type="email"
-                    required
-                    clearInput
-                  />
-                )}
+                ionInputProps={{
+                  type: 'email',
+                  required: true,
+                  clearInput: true
+                }}
               />
             </IonItem>
 
@@ -123,22 +118,17 @@ export const Login: React.FC = () => {
                 &nbsp;
                 <IonText color="danger">*</IonText>
               </IonLabel>
-              <Controller
+              <IonInputController
                 name="password"
                 control={control}
                 rules={{ required: true }}
                 defaultValue=""
-                render={(props) => (
-                  <IonInput
-                    onIonChange={props.onChange}
-                    onIonBlur={props.onBlur}
-                    value={props.value}
-                    type="password"
-                    required
-                    clearInput
-                    clearOnEdit={false}
-                  />
-                )}
+                ionInputProps={{
+                  type: 'password',
+                  required: true,
+                  clearInput: true,
+                  clearOnEdit: false
+                }}
               />
             </IonItem>
 
