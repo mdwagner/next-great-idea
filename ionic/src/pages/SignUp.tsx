@@ -1,16 +1,35 @@
-import React, {useState} from 'react';
-import { useHistory } from 'react-router-dom';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonButton, IonItemDivider } from '@ionic/react';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonButton,
+} from "@ionic/react";
+import { useForm } from "react-hook-form";
 
+import "./SignUp/SignUp.css";
+import { IonInputController } from "../components/form/IonInputController";
 
-import './SignUp/SignUp.css';
+interface SignUpInput {
+  email: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  password: string;
+  passwordConfirmation: string;
+}
 
 export const SignUp: React.FC = () => {
-
-  const [text, setText] = useState<string>();
-
   const history = useHistory();
-  const goToLogin = () => history.push('/login');
+  const { handleSubmit, control } = useForm<SignUpInput>();
+  const goToLogin = () => history.push("/login");
 
   return (
     <IonPage>
@@ -20,38 +39,106 @@ export const SignUp: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonList>
-          <IonItem>
-            <IonLabel>Email Address: </IonLabel>
-            <IonInput value={text} type="email" placeholder="test@example.com" clearInput></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>First Name: </IonLabel>
-            <IonInput value={text} type="text" placeholder="John" clearInput></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Middle Name: </IonLabel>
-            <IonInput value={text} type="text" placeholder="Sam" clearInput></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Last Name: </IonLabel>
-            <IonInput value={text} type="text" placeholder="Doe" clearInput></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Password: </IonLabel>
-            <IonInput value={text} type="password" clearInput></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Password Confirmation: </IonLabel>
-            <IonInput value={text} type="password" clearInput></IonInput>
-          </IonItem>
-          <IonButton type="submit">
-            Create New Account
-          </IonButton>
-          <IonButton type="submit" onClick = {goToLogin}>
-            Return to Login Page
-          </IonButton>
-        </IonList>
+        <form noValidate onSubmit={/* TODO */ handleSubmit as any}>
+          <IonList>
+            <IonItem>
+              <IonLabel>Email Address: </IonLabel>
+              <IonInputController
+                name="email"
+                control={control}
+                rules={{ required: true }}
+                defaultValue=""
+                ionInputProps={{
+                  type: "email",
+                  required: true,
+                  clearInput: true,
+                  placeholder: "John",
+                }}
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel>First Name: </IonLabel>
+              <IonInputController
+                name="firstName"
+                control={control}
+                rules={{ required: true }}
+                defaultValue=""
+                ionInputProps={{
+                  type: "firstName",
+                  required: true,
+                  clearInput: true,
+                  placeholder: "John",
+                }}
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel>Middle Name: </IonLabel>
+              <IonInputController
+                name="middleName"
+                control={control}
+                rules={{ required: false }}
+                defaultValue=""
+                ionInputProps={{
+                  type: "middleName",
+                  required: true,
+                  clearInput: true,
+                  placeholder: "Sam",
+                }}
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel>Last Name: </IonLabel>
+              <IonInputController
+                name="lastName"
+                control={control}
+                rules={{ required: true }}
+                defaultValue=""
+                ionInputProps={{
+                  type: "lastName",
+                  required: true,
+                  clearInput: true,
+                  placeholder: "Doe",
+                }}
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel>Password: </IonLabel>
+              <IonInputController
+                name="password"
+                control={control}
+                rules={{ required: true }}
+                defaultValue=""
+                ionInputProps={{
+                  type: "password",
+                  required: true,
+                  clearInput: true,
+                }}
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel>Password Confirmation: </IonLabel>
+              <IonInputController
+                name="passwordConfirmation"
+                control={control}
+                rules={{ required: true }}
+                defaultValue=""
+                ionInputProps={{
+                  type: "passwordConfirmation",
+                  required: true,
+                  clearInput: true,
+                }}
+              />
+            </IonItem>
+
+            <IonButton type="submit" disabled={/* TODO */ false}>
+              Create New Account
+            </IonButton>
+
+            <IonButton type="button" onClick={goToLogin}>
+              Return to Login Page
+            </IonButton>
+          </IonList>
+        </form>
       </IonContent>
     </IonPage>
   );
