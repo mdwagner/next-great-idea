@@ -66,7 +66,7 @@ export const SignUp: React.FC = () => {
                 rules={{ required: true }}
                 defaultValue=""
                 ionInputProps={{
-                  type: "firstName",
+                  type: "text",
                   required: true,
                   clearInput: true,
                   placeholder: "John",
@@ -81,7 +81,7 @@ export const SignUp: React.FC = () => {
                 rules={{ required: false }}
                 defaultValue=""
                 ionInputProps={{
-                  type: "middleName",
+                  type: "text",
                   required: true,
                   clearInput: true,
                   placeholder: "Sam",
@@ -96,7 +96,7 @@ export const SignUp: React.FC = () => {
                 rules={{ required: true }}
                 defaultValue=""
                 ionInputProps={{
-                  type: "lastName",
+                  type: "text",
                   required: true,
                   clearInput: true,
                   placeholder: "Doe",
@@ -125,7 +125,7 @@ export const SignUp: React.FC = () => {
                 rules={{ required: true }}
                 defaultValue=""
                 ionInputProps={{
-                  type: "passwordConfirmation",
+                  type: "password",
                   required: true,
                   clearInput: true,
                 }}
