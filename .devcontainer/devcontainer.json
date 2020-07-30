@@ -17,14 +17,27 @@
   "workspaceFolder": "/workspace",
   // Set *default* container specific settings.json values on container create.
   "settings": {
-    "terminal.integrated.shell.linux": null
+    "terminal.integrated.shell.linux": null,
+    "[typescript]": {
+      "editor.formatOnSave": true
+    },
+    "[typescriptreact]": {
+      "editor.formatOnSave": true
+    },
+    "[javascript]": {
+      "editor.formatOnSave": true
+    },
+    "[javascriptreact]": {
+      "editor.formatOnSave": true
+    }
   },
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "editorconfig.editorconfig",
     "waderyan.gitblame",
     "kumar-harsh.graphql-for-vscode",
-    "faustinoaq.crystal-lang"
+    "faustinoaq.crystal-lang",
+    "esbenp.prettier-vscode"
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [

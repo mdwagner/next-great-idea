@@ -1,6 +1,6 @@
-import React from 'react';
-import { IonInput } from '@ionic/react';
-import { Controller, Control } from 'react-hook-form';
+import React from "react";
+import { IonInput } from "@ionic/react";
+import { Controller, Control } from "react-hook-form";
 
 interface IonInputControllerProps {
   name: string;
@@ -15,7 +15,7 @@ export const IonInputController: React.FC<IonInputControllerProps> = ({
   control,
   rules,
   defaultValue,
-  ionInputProps
+  ionInputProps,
 }) => {
   return (
     <Controller

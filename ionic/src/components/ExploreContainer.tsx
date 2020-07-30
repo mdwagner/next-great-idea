@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import './ExploreContainer/ExploreContainer.css';
+import "./ExploreContainer/ExploreContainer.css";
 
 export const ExploreContainer: React.FC = () => {
   return (
@@ -11,7 +11,8 @@ export const ExploreContainer: React.FC = () => {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="https://ionicframework.com/docs/components">
+          href="https://ionicframework.com/docs/components"
+        >
           UI Components
         </a>
       </p>

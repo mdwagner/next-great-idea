@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   IonPage,
   IonHeader,
@@ -10,16 +10,16 @@ import {
   IonLabel,
   IonText,
   IonButton,
-} from '@ionic/react';
-import { useForm } from 'react-hook-form';
-import { gql } from 'apollo-boost';
-import { useMutation, useApolloClient } from '@apollo/react-hooks';
-import { useHistory } from 'react-router-dom';
+} from "@ionic/react";
+import { useForm } from "react-hook-form";
+import { gql } from "apollo-boost";
+import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useHistory } from "react-router-dom";
 
-import './Login/Login.css';
-import '../components/UserList'
-import { IonInputController } from '../components/form/IonInputController';
-import { loginUser, loginUserVariables } from './types/loginUser';
+import "./Login/Login.css";
+import "../components/UserList";
+import { IonInputController } from "../components/form/IonInputController";
+import { loginUser, loginUserVariables } from "./types/loginUser";
 
 interface LoginInput {
   email: string;
@@ -41,46 +41,46 @@ export const Login: React.FC = () => {
   const history = useHistory(); // eslint-disable-line
   const { handleSubmit, control, reset } = useForm<LoginInput>();
   const client = useApolloClient();
-  const [ login, { loading } ] = useMutation<loginUser, loginUserVariables>(LOGIN_USER, {
-    onCompleted({ login: { token } }) {
-      // set token in localStorage
-      window.localStorage.setItem('token', token);
+  const [login, { loading }] = useMutation<loginUser, loginUserVariables>(
+    LOGIN_USER,
+    {
+      onCompleted({ login: { token } }) {
+        // set token in localStorage
+        window.localStorage.setItem("token", token);
 
-      // set client cache for logged in state
-      client.cache.writeData({ data: { isLoggedIn: true } });
+        // set client cache for logged in state
+        client.cache.writeData({ data: { isLoggedIn: true } });
 
-      // reset form state
-      reset({ email: '', password: '' });
+        // reset form state
+        reset({ email: "", password: "" });
 
-      // display login message
-      console.info('logged in!')
+        // display login message
+        console.info("logged in!");
 
-      // TODO: add home page redirect
-      // history.replace('/home');
-    },
-    onError(error) {
-      // reset form state
-      reset({ email: '', password: '' });
+        // TODO: add home page redirect
+        // history.replace('/home');
+      },
+      onError(error) {
+        // reset form state
+        reset({ email: "", password: "" });
 
-      // display error message
-      console.error(error.message);
-    }
-  });
-  const submit = handleSubmit(
-    async ({ email: loginId, password }) => {
-      await login({
-        variables: {
-          loginId,
-          password
-        }
-      });
+        // display error message
+        console.error(error.message);
+      },
     }
   );
-  const goToSignUp = () => history.push('/signup');
+  const submit = handleSubmit(async ({ email: loginId, password }) => {
+    await login({
+      variables: {
+        loginId,
+        password,
+      },
+    });
+  });
+  const goToSignUp = () => history.push("/signup");
 
   return (
     <IonPage>
-
       <IonHeader>
         <IonToolbar>
           <IonTitle>Login</IonTitle>
@@ -88,15 +88,11 @@ export const Login: React.FC = () => {
       </IonHeader>
 
       <IonContent>
-        <form
-          noValidate
-          onSubmit={submit}
-        >
+        <form noValidate onSubmit={submit}>
           <IonList>
             <IonItem>
               <IonLabel>
-                Email
-                &nbsp;
+                Email &nbsp;
                 <IonText color="danger">*</IonText>
               </IonLabel>
               <IonInputController
@@ -105,17 +101,16 @@ export const Login: React.FC = () => {
                 rules={{ required: true }}
                 defaultValue=""
                 ionInputProps={{
-                  type: 'email',
+                  type: "email",
                   required: true,
-                  clearInput: true
+                  clearInput: true,
                 }}
               />
             </IonItem>
 
             <IonItem>
               <IonLabel>
-                Password
-                &nbsp;
+                Password &nbsp;
                 <IonText color="danger">*</IonText>
               </IonLabel>
               <IonInputController
@@ -124,31 +119,24 @@ export const Login: React.FC = () => {
                 rules={{ required: true }}
                 defaultValue=""
                 ionInputProps={{
-                  type: 'password',
+                  type: "password",
                   required: true,
                   clearInput: true,
-                  clearOnEdit: false
+                  clearOnEdit: false,
                 }}
               />
             </IonItem>
 
-            <IonButton
-              type="submit"
-              disabled={loading}
-            >
+            <IonButton type="submit" disabled={loading}>
               Sign In
             </IonButton>
 
-            <IonButton
-              type="button"
-              onClick={goToSignUp}>
+            <IonButton type="button" onClick={goToSignUp}>
               Sign Up As New User
             </IonButton>
-
           </IonList>
         </form>
       </IonContent>
-
     </IonPage>
   );
 };

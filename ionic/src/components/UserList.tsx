@@ -1,7 +1,7 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-import { getUsers } from './types/getUsers';
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
+import { getUsers } from "./types/getUsers";
 
 const GET_USERS = gql`
   query getUsers {
@@ -24,15 +24,9 @@ export const UserList: React.FC = () => {
     <>
       {data?.users.map(({ id, email, firstname, lastname }) => (
         <div key={id}>
-          <p>
-            name: {[firstname, lastname].join(' ')}
-          </p>
-          <p>
-            email: {email}
-          </p>
-          <p>
-            id: {id}
-          </p>
+          <p>name: {[firstname, lastname].join(" ")}</p>
+          <p>email: {email}</p>
+          <p>id: {id}</p>
         </div>
       ))}
     </>

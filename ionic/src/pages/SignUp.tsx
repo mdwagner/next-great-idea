@@ -6,7 +6,6 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonInput,
   IonItem,
   IonLabel,
   IonList,
@@ -30,6 +29,9 @@ export const SignUp: React.FC = () => {
   const history = useHistory();
   const { handleSubmit, control } = useForm<SignUpInput>();
   const goToLogin = () => history.push("/login");
+  const submit = handleSubmit(async (input) => {
+    console.log("call mutation", input);
+  });
 
   return (
     <IonPage>
@@ -39,7 +41,7 @@ export const SignUp: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <form noValidate onSubmit={/* TODO */ handleSubmit as any}>
+        <form noValidate onSubmit={submit}>
           <IonList>
             <IonItem>
               <IonLabel>Email Address: </IonLabel>
@@ -130,7 +132,10 @@ export const SignUp: React.FC = () => {
               />
             </IonItem>
 
-            <IonButton type="submit" disabled={/* TODO */ false}>
+            <IonButton
+              type="submit"
+              disabled={/* TODO: loading on mutation */ false}
+            >
               Create New Account
             </IonButton>
 
