@@ -118,6 +118,7 @@ export const SignUp: React.FC = () => {
               />
             </IonItem>
             <IonItem>
+              {/* FE validation: check if passwords match */}
               <IonLabel>Password Confirmation: </IonLabel>
               <IonInputController
                 name="passwordConfirmation"
