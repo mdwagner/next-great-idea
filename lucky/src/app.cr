@@ -1,5 +1,6 @@
 require "./shards"
 
+require "../config/app_config"
 require "./types/**"
 require "./serializers/base_serializer"
 require "./serializers/**"

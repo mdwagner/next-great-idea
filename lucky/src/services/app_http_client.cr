@@ -17,7 +17,7 @@ class AppHttpClient
 
   # enum aliases for easier use
   FusionAuth = HttpClient::FusionAuth
-  Hasura = HttpClient::Hasura
+  Hasura     = HttpClient::Hasura
 
   def self.execute(client_type : HttpClient)
     # get uri
