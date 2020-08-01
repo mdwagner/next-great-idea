@@ -23,7 +23,7 @@
     },
     {
       "method": "POST",
-      "url": "/api/user/registration",
+      "url": "/api/user/registration/d0aa4c0a-1b88-404f-b649-7addf500d8d7",
       "body": {
         "user": {
           "email": "#{adminEmail}",
@@ -33,6 +33,18 @@
         },
         "registration": {
           "applicationId": "#{FUSIONAUTH_APPLICATION_ID}",
+          "roles": [
+            "admin"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/api/user/registration/d0aa4c0a-1b88-404f-b649-7addf500d8d7",
+      "body": {
+        "registration": {
+          "applicationId": "#{nextGreatIdeaAppId}",
           "roles": [
             "admin"
           ]
