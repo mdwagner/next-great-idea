@@ -1,9 +1,6 @@
-class HasuraHttpClient < BaseHttpClient
-  def uri
-    AppConfig.settings.hasura_graphql_url
-  end
-
-  def client
-    create_client
+class HasuraHttpClient
+  def self.client
+    url = AppConfig.settings.hasura_graphql_url
+    BaseHttpClient.create(url)
   end
 end

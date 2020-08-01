@@ -1,6 +1,10 @@
 require "json"
 
 class FusionAuthLoginSerializer < BaseSerializer
+  def initialize(json_str : String)
+    @json = Response.from_json(json_str)
+  end
+
   class Response
     include JSON::Serializable
 
@@ -18,10 +22,6 @@ class FusionAuthLoginSerializer < BaseSerializer
     property timezone : String?
     property username : String?
     property verified : Bool
-  end
-
-  def initialize(json_str : String)
-    @json = Response.from_json(json_str)
   end
 
   def render

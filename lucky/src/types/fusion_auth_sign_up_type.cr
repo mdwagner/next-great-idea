@@ -1,6 +1,6 @@
 require "json"
 
-class FusionAuthSignUpInput
+class FusionAuthSignUpType
   include JSON::Serializable
 
   property email : String

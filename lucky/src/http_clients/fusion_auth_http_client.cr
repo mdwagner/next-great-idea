@@ -1,13 +1,11 @@
-class FusionAuthHttpClient < BaseHttpClient
-  def uri
-    AppConfig.settings.fusionauth_url
-  end
-
-  def client
-    c = create_client
-    c.before_request do |request|
-      request.headers["Authorization"] = AppConfig.settings.fusionauth_api_key
+class FusionAuthHttpClient
+  def self.client
+    url = AppConfig.settings.fusionauth_url
+    http_client = BaseHttpClient.create(url)
+    http_client.before_request do |request|
+      api_key = AppConfig.settings.fusionauth_api_key
+      request.headers["Authorization"] = api_key
     end
-    c
+    http_client
   end
 end

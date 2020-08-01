@@ -1,6 +1,6 @@
 require "json"
 
-class FusionAuthLoginInput
+class FusionAuthLoginType
   include JSON::Serializable
 
   property password : String

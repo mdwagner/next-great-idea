@@ -1,5 +1,5 @@
 class FusionAuthSignUpService
-  def initialize(@input : FusionAuthSignUpInput)
+  def initialize(@type : FusionAuthSignUpType)
   end
 
   def call : Tuple(Int32, BaseSerializer)
@@ -11,7 +11,7 @@ class FusionAuthSignUpService
 
     # if hasura fails to create user, also delete fusionauth user
 
-    fa_response = FusionAuthHttpClient.new.client.post("/api/user/registration", body: request_json)
+    fa_response = FusionAuthHttpClient.client.post("/api/user/registration", body: @type.to_json)
 
     # TODO: below code is copy-paste/not used yet
     if fa_response.status_code == 200 && fa_response.body?
@@ -20,9 +20,5 @@ class FusionAuthSignUpService
       message = HTTP::Status::UNAUTHORIZED.description.not_nil!
       {401, ErrorSerializer.new(message: message)}
     end
-  end
-
-  private def request_json
-    @input.to_json
   end
 end
