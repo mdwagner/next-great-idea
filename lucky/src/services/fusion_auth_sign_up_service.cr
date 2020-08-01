@@ -4,7 +4,9 @@ class FusionAuthSignUpService
 
   def call : Tuple(Int32, BaseSerializer)
     # send user and registration request
-    fa_response = FusionAuthHttpClient.client.post("/api/user/registration", body: registration_body)
+    fa_response = AppHttpClient.execute(AppHttpClient::FusionAuth) do |client|
+      client.post("/api/user/registration", body: registration_body)
+    end
 
     # get user_id from response
     if fa_response.status_code != 200
@@ -13,12 +15,17 @@ class FusionAuthSignUpService
       code = status.code
       return {code, ErrorSerializer.new(message: message)}
     end
-    fa_json = JSON.parse(fa_response.body.not_nil!)
+    fa_json = JSON.parse(fa_response.body_io)
 
     # create new user in hasura (user_id -> external_user_id)
     fa_user_id = fa_json["user"]["id"].as_s
-    hasura_response = HasuraHttpClient.client.post("/v1/graphql", body: create_user_mutation_body(fa_user_id))
+    hasura_response = AppHttpClient.execute(AppHttpClient::Hasura) do |client|
+      client.post("/v1/graphql", body: create_user_mutation_body(fa_user_id))
+    end
     # need to check if hasura worked or not
+    if hasura_response.status.ok?
+      # TODO
+    end
     # if hasura fails to create user, also delete fusionauth user
 
     # normal response

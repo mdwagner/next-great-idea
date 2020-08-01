@@ -3,7 +3,9 @@ class FusionAuthLoginService
   end
 
   def call : Tuple(Int32, BaseSerializer)
-    fa_response = FusionAuthHttpClient.client.post("/api/login", body: login_body)
+    fa_response = AppHttpClient.execute(AppHttpClient::FusionAuth) do |client|
+      client.post("/api/login", body: login_body)
+    end
 
     if fa_response.status_code == 200 && fa_response.body?
       {200, FusionAuthLoginSerializer.new(fa_response.body)}

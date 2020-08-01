@@ -19,9 +19,9 @@ describe FusionAuthLoginService do
       .to_return(status: 200, body: mock_body)
 
     params = {loginId: "admin@example.com", password: "Asdf123!"}.to_json
-    type = FusionAuthLoginType.from_json(params)
+    input = FusionAuthLoginType.from_json(params)
 
-    code, _ = FusionAuthLoginService.new(type).call
+    code, _ = FusionAuthLoginService.new(input).call
 
     code.should eq 200
   end
@@ -31,9 +31,9 @@ describe FusionAuthLoginService do
       .to_return(status: 401)
 
     params = {loginId: "admin@example.com", password: "Asdf123!"}.to_json
-    type = FusionAuthLoginType.from_json(params)
+    input = FusionAuthLoginType.from_json(params)
 
-    code, _ = FusionAuthLoginService.new(type).call
+    code, _ = FusionAuthLoginService.new(input).call
 
     code.should eq 401
   end
