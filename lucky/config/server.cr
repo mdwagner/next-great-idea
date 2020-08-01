@@ -49,4 +49,5 @@ AppConfig.configure do |settings|
   settings.fusionauth_url = ENV.fetch("FUSIONAUTH_URL", "http://fusionauth:9011")
   settings.hasura_graphql_url = ENV.fetch("HASURA_GRAPHQL_ENDPOINT", "http://hasura:8080")
   settings.fusionauth_api_key = ENV.fetch("FUSIONAUTH_API_KEY", "bf69486b-4733-4470-a592-f1bfce7af580")
+  settings.fusionauth_app_id = ENV.fetch("FUSIONAUTH_APP_ID", "85a03867-dccf-4882-adde-1a79aeec50df")
 end

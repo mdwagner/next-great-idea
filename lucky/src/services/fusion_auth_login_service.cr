@@ -3,14 +3,23 @@ class FusionAuthLoginService
   end
 
   def call : Tuple(Int32, BaseSerializer)
-    # TODO: add applicationId to request (get this from env)
-    fa_response = FusionAuthHttpClient.client.post("/api/login", body: @type.to_json)
+    fa_response = FusionAuthHttpClient.client.post("/api/login", body: login_body)
 
     if fa_response.status_code == 200 && fa_response.body?
       {200, FusionAuthLoginSerializer.new(fa_response.body)}
     else
-      message = HTTP::Status::UNAUTHORIZED.description.not_nil!
-      {401, ErrorSerializer.new(message: message)}
+      status = HTTP::Status::UNAUTHORIZED
+      message = status.description.not_nil!
+      code = status.code
+      {code, ErrorSerializer.new(message: message)}
     end
+  end
+
+  private def login_body
+    {
+      "applicationId" => AppConfig.settings.fusionauth_app_id,
+      "loginId"       => @type.login_id,
+      "password"      => @type.password,
+    }.to_json
   end
 end
