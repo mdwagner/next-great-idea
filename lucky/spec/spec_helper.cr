@@ -15,3 +15,11 @@ include Carbon::Expectations
 include Lucky::RequestExpectations
 
 Habitat.raise_if_missing_settings!
+
+_has_connection = false
+Spec.before_each do
+  if !_has_connection
+    EnsureServerConnection.run
+    _has_connection = true
+  end
+end

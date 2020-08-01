@@ -1,4 +1,4 @@
-class FusionAuthSignUpService
+class FusionAuthSignUp
   def initialize(@type : FusionAuthSignUpType)
   end
 
