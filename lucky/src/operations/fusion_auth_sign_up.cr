@@ -28,12 +28,17 @@ class FusionAuthSignUp < Avram::Operation
   rescue ex : FusionAuthSignUpException
     # TODO
     # fusionauth had an error, retrieve and log error, return failure
+    Log.debug { "Failed to sign up in FusionAuth" }
+
     result = HasuraErrorSerializer.new
     @status = result.response_status
     yield self, result
   rescue ex : HasuraSignUpException
     # TODO
     # hasura had an error, retrieve and log error, try to remove fusionauth user, return failure
+
+    Log.debug { "Failed to create user" }
+
     result = HasuraErrorSerializer.new
     @status = result.response_status
     yield self, result
@@ -61,7 +66,7 @@ class FusionAuthSignUp < Avram::Operation
     json = JSON.parse(str)
 
     query = <<-GRAPHQL
-      mutation CreateUserFromRegistration(
+      mutation CreateUserDuringRegistration(
         $external_user_id: uuid,
         $email: String,
         $firstname: String,
@@ -89,7 +94,7 @@ class FusionAuthSignUp < Avram::Operation
         "lastname"         => json["user"]["lastName"].as_s?,
         "middlename"       => json["user"]["middleName"].as_s?,
       },
-      "operationName" => "CreateUserFromRegistration",
+      "operationName" => "CreateUserDuringRegistration",
     }.to_json
   end
 
@@ -101,16 +106,12 @@ class FusionAuthSignUp < Avram::Operation
   end
 
   private def hasura_error?(response)
-    if !response.status.ok? || !response.body?
-      return true
-    end
+    return true if !response.status.ok?
 
     json = JSON.parse(response.body)
-    if json["error"]? || json["errors"]?
-      return true
-    end
+    return true if json["errors"]?
 
-    return false
+    false
   end
 
   class FusionAuthSignUpException < Exception

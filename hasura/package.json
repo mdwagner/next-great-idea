@@ -4,8 +4,8 @@
   "description": "NextGreatIdea (hasura)",
   "license": "MIT",
   "scripts": {
-    "console": "hasura console --no-browser",
-    "migrate": "hasura migrate apply && hasura metadata apply"
+    "console": "hasura --skip-update-check console --no-browser",
+    "migrate": "hasura --skip-update-check migrate apply && hasura metadata apply"
   },
   "devDependencies": {
     "hasura-cli": "^1.2.1"
