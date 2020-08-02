@@ -1,4 +1,6 @@
 class FusionAuthSignUp < Avram::Operation
+  include HasuraErrorHelper
+
   param_key :input
 
   attribute email : String
@@ -101,17 +103,7 @@ class FusionAuthSignUp < Avram::Operation
   private def success_response
     {
       "success" => true,
-      "message" => nil,
     }
-  end
-
-  private def hasura_error?(response)
-    return true if !response.status.ok?
-
-    json = JSON.parse(response.body)
-    return true if json["errors"]?
-
-    false
   end
 
   class FusionAuthSignUpException < Exception
