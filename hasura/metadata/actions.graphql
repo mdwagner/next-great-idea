@@ -6,6 +6,17 @@ type Mutation {
 }
 
 
+type Mutation {
+  signUp (
+    email: String!
+    firstName: String!
+    lastName: String!
+    middleName: String
+    password: String!
+  ): FusionAuthSignUpResponse!
+}
+
+
 
 
 type FusionAuthLoginResponse {
@@ -17,6 +28,10 @@ type FusionAuthLoginResponse {
   timezone : String
   username : String
   verified : Boolean!
+}
+
+type FusionAuthSignUpResponse {
+  success : Boolean!
 }
 
 scalar JsonAny
