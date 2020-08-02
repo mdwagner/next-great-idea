@@ -36,10 +36,9 @@ describe "Api::V1::Login" do
 
     response = AppClient.exec(Api::V1::Login, input: {loginId: "admin@example.com", password: "Asdf123!"})
 
-    response.should send_json(401,
+    response.should send_json(400,
       message: "Unauthorized",
-      param: nil,
-      details: nil
+      code: 401
     )
   end
 end

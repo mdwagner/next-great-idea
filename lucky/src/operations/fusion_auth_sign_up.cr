@@ -28,11 +28,15 @@ class FusionAuthSignUp < Avram::Operation
   rescue ex : FusionAuthSignUpException
     # TODO
     # fusionauth had an error, retrieve and log error, return failure
-    yield self, generic_error_response
+    result = HasuraErrorSerializer.new
+    @status = result.response_status
+    yield self, result
   rescue ex : HasuraSignUpException
     # TODO
     # hasura had an error, retrieve and log error, try to remove fusionauth user, return failure
-    yield self, generic_error_response
+    result = HasuraErrorSerializer.new
+    @status = result.response_status
+    yield self, result
   end
 
   private def registration_body
@@ -87,11 +91,6 @@ class FusionAuthSignUp < Avram::Operation
       },
       "operationName" => "CreateUserFromRegistration",
     }.to_json
-  end
-
-  private def generic_error_response(s : HTTP::Status = HTTP::Status::INTERNAL_SERVER_ERROR)
-    @status = s
-    ErrorSerializer.new(message: @status.description.not_nil!)
   end
 
   private def success_response

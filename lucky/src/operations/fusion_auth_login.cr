@@ -15,7 +15,9 @@ class FusionAuthLogin < Avram::Operation
 
     yield self, login_response(fa_response.body)
   rescue FusionAuthLoginException
-    yield self, login_error_response
+    result = HasuraErrorSerializer.new(status: HTTP::Status::UNAUTHORIZED)
+    @status = result.response_status
+    yield self, result
   end
 
   private def login_body
@@ -38,11 +40,6 @@ class FusionAuthLogin < Avram::Operation
       "username" => json["user"]["username"].as_s?,
       "verified" => json["user"]["verified"].as_bool,
     }
-  end
-
-  private def login_error_response
-    @status = HTTP::Status::UNAUTHORIZED
-    ErrorSerializer.new(message: @status.description.not_nil!)
   end
 
   class FusionAuthLoginException < Exception
