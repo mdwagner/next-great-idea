@@ -16,8 +16,7 @@ class FusionAuthSignUp < Avram::Operation
     end
 
     if !fa_response.status.ok? || !fa_response.body?
-      @status = HTTP::Status::INTERNAL_SERVER_ERROR
-      return yield self, ErrorSerializer.new(message: @status.description.not_nil!)
+      return yield self, error_500_response
     end
 
     fa_json = JSON.parse(fa_response.body.not_nil!)
@@ -36,7 +35,7 @@ class FusionAuthSignUp < Avram::Operation
       # TODO
     end
 
-    yield self, FusionAuthSignUpSerializer.new({"success" => true}.to_json)
+    yield self, success_response
   end
 
   private def registration_body
@@ -89,5 +88,17 @@ class FusionAuthSignUp < Avram::Operation
       },
       "operationName" => "CreateUserFromRegistration",
     }.to_json
+  end
+
+  private def error_500_response
+    @status = HTTP::Status::INTERNAL_SERVER_ERROR
+    ErrorSerializer.new(message: @status.description.not_nil!)
+  end
+
+  private def success_response
+    {
+      "success" => true,
+      "message" => nil,
+    }
   end
 end
