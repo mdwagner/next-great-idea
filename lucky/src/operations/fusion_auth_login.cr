@@ -11,11 +11,11 @@ class FusionAuthLogin < Avram::Operation
       client.post("/api/login", body: login_body)
     end
 
-    if fa_response.status.ok? && fa_response.body?
-      yield self, login_response(fa_response.body)
-    else
-      yield self, login_error_response
-    end
+    raise FusionAuthLoginException.new if !fa_response.status.ok?
+
+    yield self, login_response(fa_response.body)
+  rescue FusionAuthLoginException
+    yield self, login_error_response
   end
 
   private def login_body
@@ -26,22 +26,25 @@ class FusionAuthLogin < Avram::Operation
     }.to_json
   end
 
-  private def login_response(json_str)
-    json = JSON.parse(json_str)
+  private def login_response(str)
+    json = JSON.parse(str)
     {
-      "token"    => json["token"],
-      "id"       => json["user"]["id"],
-      "active"   => json["user"]["active"],
+      "token"    => json["token"].as_s,
+      "id"       => json["user"]["id"].as_s,
+      "active"   => json["user"]["active"].as_bool,
       "data"     => json["user"]["data"],
-      "email"    => json["user"]["email"],
-      "timezone" => json["user"]["timezone"],
-      "username" => json["user"]["username"],
-      "verified" => json["user"]["verified"],
+      "email"    => json["user"]["email"].as_s,
+      "timezone" => json["user"]["timezone"].as_s?,
+      "username" => json["user"]["username"].as_s?,
+      "verified" => json["user"]["verified"].as_bool,
     }
   end
 
   private def login_error_response
     @status = HTTP::Status::UNAUTHORIZED
     ErrorSerializer.new(message: @status.description.not_nil!)
+  end
+
+  class FusionAuthLoginException < Exception
   end
 end

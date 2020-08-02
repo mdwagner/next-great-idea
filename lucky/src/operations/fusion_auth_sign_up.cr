@@ -15,27 +15,24 @@ class FusionAuthSignUp < Avram::Operation
       client.post("/api/user/registration", body: registration_body)
     end
 
-    if !fa_response.status.ok? || !fa_response.body?
-      return yield self, error_500_response
-    end
-
-    fa_json = JSON.parse(fa_response.body.not_nil!)
-
-    # get user_id from response
-    fa_user_id = fa_json["user"]["id"].as_s
+    raise FusionAuthSignUpException.new(fa_response) if !fa_response.status.ok?
 
     # create new user in hasura (user_id -> external_user_id)
     hasura_response = AppHttpClient.execute(HttpClient::Hasura) do |client|
-      client.post("/v1/graphql", body: create_user_mutation_body(fa_user_id))
+      client.post("/v1/graphql", body: create_user_mutation_body(fa_response.body))
     end
 
-    # need to check if hasura worked or not
-    # if hasura fails to create user, also delete fusionauth user
-    if hasura_response.status.ok?
-      # TODO
-    end
+    raise HasuraSignUpException.new(hasura_response) if hasura_error?(hasura_response)
 
     yield self, success_response
+  rescue ex : FusionAuthSignUpException
+    # TODO
+    # fusionauth had an error, retrieve and log error, return failure
+    yield self, generic_error_response
+  rescue ex : HasuraSignUpException
+    # TODO
+    # hasura had an error, retrieve and log error, try to remove fusionauth user, return failure
+    yield self, generic_error_response
   end
 
   private def registration_body
@@ -56,7 +53,9 @@ class FusionAuthSignUp < Avram::Operation
     }.to_json
   end
 
-  private def create_user_mutation_body(external_user_id)
+  private def create_user_mutation_body(str)
+    json = JSON.parse(str)
+
     query = <<-GRAPHQL
       mutation CreateUserFromRegistration(
         $external_user_id: uuid,
@@ -80,18 +79,18 @@ class FusionAuthSignUp < Avram::Operation
     {
       "query"     => query,
       "variables" => {
-        "external_user_id" => external_user_id,
-        "email"            => email.value,
-        "firstname"        => firstName.value,
-        "lastname"         => lastName.value,
-        "middlename"       => middleName.value,
+        "external_user_id" => json["user"]["id"].as_s?,
+        "email"            => json["user"]["email"].as_s?,
+        "firstname"        => json["user"]["firstName"].as_s?,
+        "lastname"         => json["user"]["lastName"].as_s?,
+        "middlename"       => json["user"]["middleName"].as_s?,
       },
       "operationName" => "CreateUserFromRegistration",
     }.to_json
   end
 
-  private def error_500_response
-    @status = HTTP::Status::INTERNAL_SERVER_ERROR
+  private def generic_error_response(s : HTTP::Status = HTTP::Status::INTERNAL_SERVER_ERROR)
+    @status = s
     ErrorSerializer.new(message: @status.description.not_nil!)
   end
 
@@ -100,5 +99,26 @@ class FusionAuthSignUp < Avram::Operation
       "success" => true,
       "message" => nil,
     }
+  end
+
+  private def hasura_error?(response)
+    if !response.status.ok? || !response.body?
+      return true
+    end
+
+    json = JSON.parse(response.body)
+    if json["error"]? || json["errors"]?
+      return true
+    end
+
+    return false
+  end
+
+  class FusionAuthSignUpException < Exception
+    include ResponseExceptionHelper
+  end
+
+  class HasuraSignUpException < Exception
+    include ResponseExceptionHelper
   end
 end

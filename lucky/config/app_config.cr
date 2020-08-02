@@ -5,6 +5,7 @@ class AppConfig
     setting fusionauth_app_id : String
     setting hasura_graphql_url : String
     setting hasura_graphql_admin_secret : String
+    setting git_commit : String
   end
 end
 
@@ -14,4 +15,5 @@ AppConfig.configure do |settings|
   settings.fusionauth_app_id = ENV.fetch("FUSIONAUTH_APP_ID", "85a03867-dccf-4882-adde-1a79aeec50df")
   settings.hasura_graphql_url = ENV.fetch("HASURA_GRAPHQL_ENDPOINT", "http://hasura:8080")
   settings.hasura_graphql_admin_secret = ENV.fetch("HASURA_GRAPHQL_ADMIN_SECRET", "secret")
+  settings.git_commit = ENV.fetch("GIT_COMMIT_SHA", `git rev-parse HEAD`.strip)
 end

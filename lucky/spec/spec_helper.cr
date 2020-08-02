@@ -1,5 +1,6 @@
 ENV["LUCKY_ENV"] = "test"
 ENV["DEV_PORT"] = "5001"
+ENV["GIT_COMMIT_SHA"] = "test"
 require "spec"
 require "webmock"
 require "../src/app"
