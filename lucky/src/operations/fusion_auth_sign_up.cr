@@ -1,6 +1,4 @@
 class FusionAuthSignUp < Avram::Operation
-  include StatusHelper
-
   param_key :input
 
   attribute email : String
@@ -9,9 +7,11 @@ class FusionAuthSignUp < Avram::Operation
   attribute middleName : String = ""
   attribute password : String
 
+  property status : HTTP::Status = HTTP::Status::OK
+
   def submit
     # send user and registration request
-    fa_response = AppHttpClient.execute(AppHttpClient::FusionAuth) do |client|
+    fa_response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
       client.post("/api/user/registration", body: registration_body)
     end
 
@@ -25,7 +25,7 @@ class FusionAuthSignUp < Avram::Operation
     fa_user_id = fa_json["user"]["id"].as_s
 
     # create new user in hasura (user_id -> external_user_id)
-    hasura_response = AppHttpClient.execute(AppHttpClient::Hasura) do |client|
+    hasura_response = AppHttpClient.execute(HttpClient::Hasura) do |client|
       client.post("/v1/graphql", body: create_user_mutation_body(fa_user_id))
     end
 

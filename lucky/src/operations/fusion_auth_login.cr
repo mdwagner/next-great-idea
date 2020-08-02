@@ -1,13 +1,13 @@
 class FusionAuthLogin < Avram::Operation
-  include StatusHelper
-
   param_key :input
 
   attribute loginId : String
   attribute password : String
 
+  property status : HTTP::Status = HTTP::Status::OK
+
   def submit
-    fa_response = AppHttpClient.execute(AppHttpClient::FusionAuth) do |client|
+    fa_response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
       client.post("/api/login", body: login_body)
     end
 

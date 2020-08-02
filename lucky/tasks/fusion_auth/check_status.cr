@@ -3,7 +3,7 @@ class FusionAuth::CheckStatus < LuckyCli::Task
   name "fa.check_status"
 
   def call
-    response = AppHttpClient.execute(AppHttpClient::FusionAuth) do |client|
+    response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
       client.get("/api/status")
     end
 

@@ -1,24 +1,20 @@
 require "http/client"
 require "uri"
 
-class AppHttpClient
-  enum HttpClient
-    FusionAuth
-    Hasura
+enum HttpClient
+  FusionAuth
+  Hasura
 
-    def fusionauth?
-      self == HttpClient::FusionAuth
-    end
-
-    def hasura?
-      self == HttpClient::Hasura
-    end
+  def fusionauth?
+    self == HttpClient::FusionAuth
   end
 
-  # enum aliases for easier use
-  FusionAuth = HttpClient::FusionAuth
-  Hasura     = HttpClient::Hasura
+  def hasura?
+    self == HttpClient::Hasura
+  end
+end
 
+class AppHttpClient
   def self.execute(client_type : HttpClient)
     # get uri
     uri = (
@@ -50,7 +46,7 @@ class AppHttpClient
       end
     end
 
-    response = yield client
+    response : HTTP::Client::Response = yield client
 
     # close client
     client.close
