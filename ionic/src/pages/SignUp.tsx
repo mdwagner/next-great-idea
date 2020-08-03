@@ -12,6 +12,7 @@ import {
   IonButton,
 } from "@ionic/react";
 import { useForm } from "react-hook-form";
+import { gql } from "apollo-boost";
 
 import "./SignUp/SignUp.css";
 import { IonInputController } from "../components/form/IonInputController";
@@ -24,6 +25,26 @@ interface SignUpInput {
   password: string;
   passwordConfirmation: string;
 }
+
+const SIGN_UP_USER = gql`
+  mutation signUpUser(
+    $email: String!
+    $firstName: String!
+    $lastName: String!
+    $middleName: String
+    $password: String!
+  ) {
+    signUp(
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      password: $password
+      middleName: $middleName
+    ) {
+      success
+    }
+  }
+`;
 
 export const SignUp: React.FC = () => {
   const history = useHistory();
