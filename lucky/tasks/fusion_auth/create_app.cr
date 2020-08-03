@@ -3,7 +3,7 @@ class FusionAuth::CreateApp < LuckyCli::Task
   name "fa.create_app"
 
   def call
-    # TODO
+    # Create application configuration
     abort "NOT_IMPLEMENTED"
   end
 end

@@ -3,7 +3,7 @@ class FusionAuth::CreateTenant < LuckyCli::Task
   name "fa.create_tenant"
 
   def call
-    # TODO
+    # Create tenant configuration
     abort "NOT_IMPLEMENTED"
   end
 end

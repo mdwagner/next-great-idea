@@ -1,6 +1,6 @@
 require "../../../spec_helper"
 
-describe "Api::V1::Login" do
+describe Api::V1::Login do
   it "should complete fusionauth login request" do
     WebMock.stub(:post, Regex.new(AppConfig.settings.fusionauth_url))
       .to_return(status: 200, body: {

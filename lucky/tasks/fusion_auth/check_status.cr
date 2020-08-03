@@ -4,6 +4,10 @@ class FusionAuth::CheckStatus < LuckyCli::Task
 
   def call
     response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
+      client.before_request do |request|
+        request.headers.delete("Accept")
+        request.headers.delete("Content-Type")
+      end
       client.get("/api/status")
     end
 
