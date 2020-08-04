@@ -13,9 +13,11 @@ import {
 } from "@ionic/react";
 import { useForm } from "react-hook-form";
 import { gql } from "apollo-boost";
+import { useMutation } from "@apollo/react-hooks";
 
 import "./SignUp/SignUp.css";
 import { IonInputController } from "../components/form/IonInputController";
+import { signUpUser, signUpUserVariables } from "./types/signUpUser";
 
 interface SignUpInput {
   email: string;
@@ -49,9 +51,20 @@ const SIGN_UP_USER = gql`
 export const SignUp: React.FC = () => {
   const history = useHistory();
   const { handleSubmit, control } = useForm<SignUpInput>();
+  const [signUp, { loading }] = useMutation<signUpUser, signUpUserVariables>(
+    SIGN_UP_USER,
+    {
+      onCompleted({ signUp: { success } }) {
+        goToLogin();
+      },
+    }
+  );
   const goToLogin = () => history.push("/login");
   const submit = handleSubmit(async (input) => {
-    console.log("call mutation", input);
+    delete input.passwordConfirmation;
+    signUp({
+      variables: input,
+    });
   });
 
   return (
@@ -154,10 +167,7 @@ export const SignUp: React.FC = () => {
               />
             </IonItem>
 
-            <IonButton
-              type="submit"
-              disabled={/* TODO: loading on mutation */ false}
-            >
+            <IonButton type="submit" disabled={loading}>
               Create New Account
             </IonButton>
 

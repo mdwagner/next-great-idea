@@ -31,6 +31,8 @@ class FusionAuthSignUp < Avram::Operation
     # TODO
     # fusionauth had an error, retrieve and log error, return failure
     Log.debug { "Failed to sign up in FusionAuth" }
+    res = ex.response
+    Log.debug { "CODE: #{res.status_code}\nBODY: #{res.body}" }
 
     result = HasuraErrorSerializer.new
     @status = result.response_status
@@ -40,6 +42,8 @@ class FusionAuthSignUp < Avram::Operation
     # hasura had an error, retrieve and log error, try to remove fusionauth user, return failure
 
     Log.debug { "Failed to create user" }
+    res = ex.response
+    Log.debug { "CODE: #{res.status_code}\nBODY: #{res.body}" }
 
     result = HasuraErrorSerializer.new
     @status = result.response_status
@@ -50,9 +54,10 @@ class FusionAuthSignUp < Avram::Operation
     {
       "registration" => {
         "applicationId" => AppConfig.settings.fusionauth_app_id,
-        "roles"         => [
-          "user",
-        ],
+        # TODO: add back in when FusionAuth NextGreatIdea application has roles
+        # "roles"         => [
+        #   "user",
+        # ],
       },
       "user" => {
         "email"      => email.value,
@@ -90,11 +95,11 @@ class FusionAuthSignUp < Avram::Operation
     {
       "query"     => query,
       "variables" => {
-        "external_user_id" => json["user"]["id"].as_s?,
-        "email"            => json["user"]["email"].as_s?,
-        "firstname"        => json["user"]["firstName"].as_s?,
-        "lastname"         => json["user"]["lastName"].as_s?,
-        "middlename"       => json["user"]["middleName"].as_s?,
+        "external_user_id" => json.dig?("user", "id"),
+        "email"            => json.dig?("user", "email"),
+        "firstname"        => json.dig?("user", "firstName"),
+        "lastname"         => json.dig?("user", "lastName"),
+        "middlename"       => json.dig("user", "middleName"),
       },
       "operationName" => "CreateUserDuringRegistration",
     }.to_json
