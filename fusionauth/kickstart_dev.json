@@ -3,7 +3,8 @@
     "adminEmail": "admin@example.com",
     "password": "Asdf123!",
     "defaultTenantId": "30663132-6464-6665-3032-326466613934",
-    "nextGreatIdeaAppId": "85a03867-dccf-4882-adde-1a79aeec50df"
+    "nextGreatIdeaAppId": "85a03867-dccf-4882-adde-1a79aeec50df",
+    "adminUserId": "d0aa4c0a-1b88-404f-b649-7addf500d8d7"
   },
   "apiKeys": [
     {
@@ -23,7 +24,7 @@
     },
     {
       "method": "POST",
-      "url": "/api/user/registration",
+      "url": "/api/user/registration/#{adminUserId}",
       "body": {
         "user": {
           "email": "#{adminEmail}",
@@ -36,6 +37,15 @@
           "roles": [
             "admin"
           ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/api/user/registration/#{adminUserId}",
+      "body": {
+        "registration": {
+          "applicationId": "#{nextGreatIdeaAppId}"
         }
       }
     }

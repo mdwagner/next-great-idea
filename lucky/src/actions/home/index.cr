@@ -1,9 +1,5 @@
 class Home::Index < ApiAction
   get "/" do
-    json({commit: commit})
-  end
-
-  memoize def commit : String
-    `git rev-parse HEAD`.strip
+    json({commit: AppConfig.settings.git_commit})
   end
 end

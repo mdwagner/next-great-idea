@@ -4,10 +4,16 @@ actions:
     kind: synchronous
     handler: http://host.docker.internal:5000/api/v1/login
     forward_client_headers: true
+- name: signUp
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:5000/api/v1/sign_up
+    forward_client_headers: true
 custom_types:
   enums: []
   input_objects: []
   objects:
   - name: FusionAuthLoginResponse
+  - name: FusionAuthSignUpResponse
   scalars:
   - name: JsonAny

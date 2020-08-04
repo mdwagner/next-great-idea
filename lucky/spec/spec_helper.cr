@@ -1,5 +1,6 @@
 ENV["LUCKY_ENV"] = "test"
 ENV["DEV_PORT"] = "5001"
+ENV["GIT_COMMIT"] = "test"
 require "spec"
 require "webmock"
 require "../src/app"
@@ -15,3 +16,11 @@ include Carbon::Expectations
 include Lucky::RequestExpectations
 
 Habitat.raise_if_missing_settings!
+
+_has_connection = false
+Spec.before_each do
+  if !_has_connection
+    EnsureServerConnection.run
+    _has_connection = true
+  end
+end
