@@ -9,32 +9,9 @@ env:
   IMAGE_NAME: mdwagner/next-great-idea
 
 jobs:
-  build-master:
-    name: Build and Push master branch
+  build:
+    name: Build and Push branches
     runs-on: ubuntu-latest
-
-    if: github.ref == 'refs/heads/master'
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Build and tag docker image
-        run: docker build -f Dockerfile -t $IMAGE_NAME:latest -t $IMAGE_NAME:master .
-
-      - name: Log into registry
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-
-      - name: Push images
-        run: |
-          docker push $IMAGE_NAME:master
-          docker push $IMAGE_NAME:latest
-
-  build-other-branches:
-    name: Build and Push other branches
-    runs-on: ubuntu-latest
-
-    if: github.ref != 'refs/heads/master'
 
     steps:
       - name: Checkout code
@@ -46,5 +23,11 @@ jobs:
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-      - name: Push images
+      - name: Push image
         run: docker push $IMAGE_NAME:${GITHUB_REF#refs/heads/}
+
+      - name: Push image as latest
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:latest
