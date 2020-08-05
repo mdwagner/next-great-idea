@@ -31,7 +31,7 @@ Lucky::Server.configure do |settings|
   #     end
   #   end
   settings.asset_host = "" # Lucky will serve assets
-  settings.secret_key_base = ""
+  settings.secret_key_base = "bb4O/hHXvkKhqQH6WP4lVD4H9/nq5UlcLpVn/2hX36c="
 end
 
 Lucky::ForceSSLHandler.configure do |settings|
