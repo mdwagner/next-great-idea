@@ -9,10 +9,13 @@ class EnsureServerConnection
           response = client.get("/")
           if response.status_code == 200
             connected = true
+          else
+            raise "error"
           end
         end
       rescue
         attempt += 1
+        sleep 1
       end
     end
   end
