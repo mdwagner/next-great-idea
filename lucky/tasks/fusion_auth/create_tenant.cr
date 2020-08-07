@@ -75,69 +75,69 @@ class FusionAuth::CreateTenant < LuckyCli::Task
         },
         "externalIdentifierConfiguration" => {
           "authorizationGrantIdTimeToLiveInSeconds" => 30,
-          "changePasswordIdGenerator" => {
+          "changePasswordIdGenerator"               => {
             "length" => 32,
-            "type" => "randomBytes",
+            "type"   => "randomBytes",
           },
           "changePasswordIdTimeToLiveInSeconds" => 600,
-          "deviceCodeTimeToLiveInSeconds" => 1_800,
-          "deviceUserCodeIdGenerator" => {
+          "deviceCodeTimeToLiveInSeconds"       => 1_800,
+          "deviceUserCodeIdGenerator"           => {
             "length" => 6,
-            "type" => "randomAlphaNumeric",
+            "type"   => "randomAlphaNumeric",
           },
           "emailVerificationIdGenerator" => {
             "length" => 32,
-            "type" => "randomBytes",
+            "type"   => "randomBytes",
           },
-          "emailVerificationIdTimeToLiveInSeconds" => 86_400,
+          "emailVerificationIdTimeToLiveInSeconds"      => 86_400,
           "externalAuthenticationIdTimeToLiveInSeconds" => 300,
-          "oneTimePasswordTimeToLiveInSeconds" => 60,
-          "passwordlessLoginGenerator" => {
+          "oneTimePasswordTimeToLiveInSeconds"          => 60,
+          "passwordlessLoginGenerator"                  => {
             "length" => 32,
-            "type" => "randomBytes",
+            "type"   => "randomBytes",
           },
           "passwordlessLoginTimeToLiveInSeconds" => 180,
-          "registrationVerificationIdGenerator" => {
+          "registrationVerificationIdGenerator"  => {
             "length" => 32,
-            "type" => "randomBytes",
+            "type"   => "randomBytes",
           },
           "registrationVerificationIdTimeToLiveInSeconds" => 86_400,
-          "setupPasswordIdGenerator" => {
+          "setupPasswordIdGenerator"                      => {
             "length" => 32,
-            "type" => "randomBytes",
+            "type"   => "randomBytes",
           },
-          "setupPasswordIdTimeToLiveInSeconds" => 86_400,
-          "twoFactorIdTimeToLiveInSeconds" => 300,
+          "setupPasswordIdTimeToLiveInSeconds"  => 86_400,
+          "twoFactorIdTimeToLiveInSeconds"      => 300,
           "twoFactorTrustIdTimeToLiveInSeconds" => 2_592_000,
         },
         "failedAuthenticationConfiguration" => {
-          "actionDuration" => 3,
-          "actionDurationUnit" => "MINUTES",
+          "actionDuration"      => 3,
+          "actionDurationUnit"  => "MINUTES",
           "resetCountInSeconds" => 60,
-          "tooManyAttempts" => 5,
+          "tooManyAttempts"     => 5,
         },
-        "issuer" => issuer,
+        "issuer"           => issuer,
         "jwtConfiguration" => {
-          "accessTokenKeyId" => jwt_key_id,
-          "enabled" => true,
-          "idTokenKeyId" => jwt_key_id,
+          "accessTokenKeyId"             => jwt_key_id,
+          "enabled"                      => true,
+          "idTokenKeyId"                 => jwt_key_id,
           "refreshTokenExpirationPolicy" => "Fixed",
           "refreshTokenRevocationPolicy" => {
-            "onLoginPrevented" => true,
+            "onLoginPrevented"  => true,
             "onPasswordChanged" => true,
           },
           "refreshTokenTimeToLiveInMinutes" => 43_200,
-          "refreshTokenUsagePolicy" => "Reusable",
-          "timeToLiveInSeconds" => 3_600,
+          "refreshTokenUsagePolicy"         => "Reusable",
+          "timeToLiveInSeconds"             => 3_600,
         },
-        "logoutURL" => "#{issuer}/logout",
-        "name" => tenant_name,
+        "logoutURL"               => "#{issuer}/logout",
+        "name"                    => tenant_name,
         "passwordValidationRules" => {
           "maxLength" => 256,
           "minLength" => 8,
         },
         "themeId": theme_id,
-      }
+      },
     }.to_json
   end
 
@@ -146,8 +146,8 @@ class FusionAuth::CreateTenant < LuckyCli::Task
 
     {
       "sourceThemeId" => default_theme_id,
-      "theme" => {
-        "name" => "#{theme_name} Theme"
+      "theme"         => {
+        "name" => "#{theme_name} Theme",
       },
     }.to_json
   end
@@ -159,11 +159,11 @@ class FusionAuth::CreateTenant < LuckyCli::Task
     {
       "key" => {
         "algorithm" => "HS256",
-        "kid" => jwt_kid,
-        "name" => "SHA-256 with HMAC (access and id tokens)",
-        "secret" => secret,
-        "type" => "HMAC",
-      }
+        "kid"       => jwt_kid,
+        "name"      => "SHA-256 with HMAC (access and id tokens)",
+        "secret"    => secret,
+        "type"      => "HMAC",
+      },
     }.to_json
   end
 end

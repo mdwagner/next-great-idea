@@ -54,10 +54,9 @@ class FusionAuthSignUp < Avram::Operation
     {
       "registration" => {
         "applicationId" => AppConfig.settings.fusionauth_app_id,
-        # TODO: add back in when FusionAuth NextGreatIdea application has roles
-        # "roles"         => [
-        #   "user",
-        # ],
+        "roles"         => [
+          "user",
+        ],
       },
       "user" => {
         "email"      => email.value,

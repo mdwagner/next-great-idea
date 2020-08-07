@@ -2,9 +2,7 @@
   "variables": {
     "adminEmail": "admin@example.com",
     "password": "Asdf123!",
-    "defaultTenantId": "30663132-6464-6665-3032-326466613934",
-    "nextGreatIdeaAppId": "85a03867-dccf-4882-adde-1a79aeec50df",
-    "adminUserId": "d0aa4c0a-1b88-404f-b649-7addf500d8d7"
+    "defaultTenantId": "30663132-6464-6665-3032-326466613934"
   },
   "apiKeys": [
     {
@@ -15,16 +13,7 @@
   "requests": [
     {
       "method": "POST",
-      "url": "/api/application/#{nextGreatIdeaAppId}",
-      "body": {
-        "application": {
-          "name": "Next Great Idea"
-        }
-      }
-    },
-    {
-      "method": "POST",
-      "url": "/api/user/registration/#{adminUserId}",
+      "url": "/api/user/registration",
       "body": {
         "user": {
           "email": "#{adminEmail}",
@@ -37,15 +26,6 @@
           "roles": [
             "admin"
           ]
-        }
-      }
-    },
-    {
-      "method": "POST",
-      "url": "/api/user/registration/#{adminUserId}",
-      "body": {
-        "registration": {
-          "applicationId": "#{nextGreatIdeaAppId}"
         }
       }
     }
