@@ -10,4 +10,12 @@ module Lucky::Env
   def name
     ENV["LUCKY_ENV"]? || "development"
   end
+
+  def fetch!(key : String, default : String | Proc(String)) : String
+    if ENV.has_key?(key) || production?
+      ENV[key]
+    else
+      default.responds_to?(:call) ? default.call : default
+    end
+  end
 end
