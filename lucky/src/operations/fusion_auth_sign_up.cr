@@ -11,10 +11,10 @@ class FusionAuthSignUp < Avram::Operation
 
   property status : HTTP::Status = HTTP::Status::OK
 
-  def submit
+  def submit(admin_role = false)
     # send user and registration request
     fa_response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
-      client.post("/api/user/registration", body: registration_body)
+      client.post("/api/user/registration", body: registration_body(admin_role))
     end
 
     raise FusionAuthSignUpException.new(fa_response) if !fa_response.status.ok?
@@ -50,13 +50,14 @@ class FusionAuthSignUp < Avram::Operation
     yield self, result
   end
 
-  private def registration_body
+  private def registration_body(admin_role)
+    roles = ["user"]
+    roles << "admin" if admin_role
+
     {
       "registration" => {
         "applicationId" => AppConfig.settings.fusionauth_app_id,
-        "roles"         => [
-          "user",
-        ],
+        "roles"         => roles,
       },
       "user" => {
         "email"      => email.value,
@@ -98,7 +99,7 @@ class FusionAuthSignUp < Avram::Operation
         "email"            => json.dig?("user", "email"),
         "firstname"        => json.dig?("user", "firstName"),
         "lastname"         => json.dig?("user", "lastName"),
-        "middlename"       => json.dig("user", "middleName"),
+        "middlename"       => json.dig?("user", "middleName"),
       },
       "operationName" => "CreateUserDuringRegistration",
     }.to_json

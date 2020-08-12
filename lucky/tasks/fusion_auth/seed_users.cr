@@ -1,30 +1,52 @@
 class FusionAuth::SeedUsers < LuckyCli::Task
-  summary "Seed development user(s) in FusionAuth"
+  summary "Seed development users in FusionAuth"
   name "fa.seed_users"
 
-  def call
-    only_admin = false
+  DEFAULT_PASSWORD = "Asdf123!"
 
-    OptionParser.parse do |parser|
-      parser.on("--only_admin", "Seed only admin user") do
-        only_admin = true
+  def call
+    sign_up(admin_user, true)
+    users.each { |u| sign_up(u) }
+
+    puts "OK"
+  end
+
+  def users
+    [
+      {
+        "email"     => "john.doe@example.com",
+        "firstName" => "John",
+        "lastName"  => "Doe",
+        "password"  => DEFAULT_PASSWORD,
+      },
+      {
+        "email"     => "jane.doe@example.com",
+        "firstName" => "Jane",
+        "lastName"  => "Doe",
+        "password"  => DEFAULT_PASSWORD,
+      },
+    ]
+  end
+
+  def admin_user
+    {
+      "email"     => "mother.nature@example.com",
+      "firstName" => "Mother",
+      "lastName"  => "Nature",
+      "password"  => DEFAULT_PASSWORD,
+    }
+  end
+
+  def sign_up(params, admin = false)
+    avram_params = Avram::Params.new(params)
+    fa_sign_up = FusionAuthSignUp.new(avram_params)
+
+    fa_sign_up.submit(admin) do |operation, result|
+      if !operation.status.ok?
+        puts "NAME: sign up (admin)"
+        puts "CODE: #{operation.status.code}"
+        abort
       end
     end
-
-    if only_admin
-      email = "admin@example.com"
-      password = "Asdf123!"
-      puts "Creating only admin user..."
-      puts "Email: #{email}"
-      puts "Password: #{password}"
-      # Create registration for admin
-    else
-      puts "Creating development users..."
-      # Users: admin, user(verified), user(unverified)
-      # Create registration for admin
-      # Create both user and registration for each user
-    end
-
-    abort "NOT_IMPLEMENTED"
   end
 end
