@@ -15,7 +15,7 @@ class HasuraErrorSerializer < BaseSerializer
     @message = @status.description.not_nil! if @message.nil?
     {
       "message" => @message,
-      "code"    => @status.code,
+      "code"    => @status.code.to_s,
     }
   end
 end

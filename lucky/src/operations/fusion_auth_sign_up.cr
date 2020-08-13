@@ -10,16 +10,15 @@ class FusionAuthSignUp < Avram::Operation
   attribute password : String
 
   property status : HTTP::Status = HTTP::Status::OK
+  getter external_user_id : String? = nil
 
   def submit(admin_role = false)
-    # send user and registration request
     fa_response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
       client.post("/api/user/registration", body: registration_body(admin_role))
     end
 
     raise FusionAuthSignUpException.new(fa_response) if !fa_response.status.ok?
 
-    # create new user in hasura (user_id -> external_user_id)
     hasura_response = AppHttpClient.execute(HttpClient::Hasura) do |client|
       client.post("/v1/graphql", body: create_user_mutation_body(fa_response.body))
     end
@@ -28,22 +27,15 @@ class FusionAuthSignUp < Avram::Operation
 
     yield self, success_response
   rescue ex : FusionAuthSignUpException
-    # TODO
-    # fusionauth had an error, retrieve and log error, return failure
-    Log.debug { "Failed to sign up in FusionAuth" }
-    res = ex.response
-    Log.debug { "CODE: #{res.status_code}\nBODY: #{res.body}" }
+    log_error(ex.response)
 
-    result = HasuraErrorSerializer.new
+    result = HasuraErrorSerializer.new(ex.response.status)
     @status = result.response_status
     yield self, result
   rescue ex : HasuraSignUpException
-    # TODO
-    # hasura had an error, retrieve and log error, try to remove fusionauth user, return failure
+    log_error(ex.response)
 
-    Log.debug { "Failed to create user" }
-    res = ex.response
-    Log.debug { "CODE: #{res.status_code}\nBODY: #{res.body}" }
+    attempt_to_remove_fa_user
 
     result = HasuraErrorSerializer.new
     @status = result.response_status
@@ -71,6 +63,7 @@ class FusionAuthSignUp < Avram::Operation
 
   private def create_user_mutation_body(str)
     json = JSON.parse(str)
+    @external_user_id = json.dig?("user", "id").try(&.as_s?)
 
     query = <<-GRAPHQL
       mutation CreateUserDuringRegistration(
@@ -95,7 +88,7 @@ class FusionAuthSignUp < Avram::Operation
     {
       "query"     => query,
       "variables" => {
-        "external_user_id" => json.dig?("user", "id"),
+        "external_user_id" => external_user_id,
         "email"            => json.dig?("user", "email"),
         "firstname"        => json.dig?("user", "firstName"),
         "lastname"         => json.dig?("user", "lastName"),
@@ -109,6 +102,31 @@ class FusionAuthSignUp < Avram::Operation
     {
       "success" => true,
     }
+  end
+
+  private def log_error(response, line = __LINE__)
+    code = response.status.code
+    body = response.body? || ""
+    json = {
+      "code" => code,
+      "body" => body,
+    }.to_json
+
+    Log.error { "#{__FILE__}:#{line} => #{json}" }
+  end
+
+  private def attempt_to_remove_fa_user
+    response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
+      client.before_request do |request|
+        request.headers.delete("Accept")
+        request.headers.delete("Content-Type")
+      end
+      client.delete("/api/user/#{external_user_id}?hardDelete=true")
+    end
+
+    if !response.status.ok?
+      log_error(response)
+    end
   end
 
   class FusionAuthSignUpException < Exception
