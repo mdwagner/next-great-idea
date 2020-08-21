@@ -29,3 +29,4 @@ type FusionAuthSignUpResponse {
 }
 
 scalar JsonAny
+
