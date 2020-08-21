@@ -15,14 +15,12 @@ class FusionAuth::SeedUsers < LuckyCli::Task
     [
       {
         "email"     => "john.doe@example.com",
-        "firstName" => "John",
-        "lastName"  => "Doe",
+        "username" => "john_doe",
         "password"  => DEFAULT_PASSWORD,
       },
       {
         "email"     => "jane.doe@example.com",
-        "firstName" => "Jane",
-        "lastName"  => "Doe",
+        "username" => "jane_doe",
         "password"  => DEFAULT_PASSWORD,
       },
     ]
@@ -31,8 +29,7 @@ class FusionAuth::SeedUsers < LuckyCli::Task
   def admin_user
     {
       "email"     => "mother.nature@example.com",
-      "firstName" => "Mother",
-      "lastName"  => "Nature",
+      "username" => "mother_nature",
       "password"  => DEFAULT_PASSWORD,
     }
   end

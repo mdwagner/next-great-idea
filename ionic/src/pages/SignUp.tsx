@@ -22,28 +22,14 @@ import { signUpUser, signUpUserVariables } from "./types/signUpUser";
 
 interface SignUpInput {
   email: string;
-  firstName: string;
-  middleName?: string;
-  lastName: string;
+  username: string;
   password: string;
   passwordConfirmation: string;
 }
 
 const SIGN_UP_USER = gql`
-  mutation signUpUser(
-    $email: String!
-    $firstName: String!
-    $lastName: String!
-    $middleName: String
-    $password: String!
-  ) {
-    signUp(
-      email: $email
-      firstName: $firstName
-      lastName: $lastName
-      password: $password
-      middleName: $middleName
-    ) {
+  mutation signUpUser($email: String!, $username: String!, $password: String!) {
+    signUp(email: $email, username: $username, password: $password) {
       success
     }
   }
@@ -90,9 +76,7 @@ export const SignUp: React.FC = () => {
       .finally(() => {
         reset({
           email: "",
-          firstName: "",
-          middleName: "",
-          lastName: "",
+          username: "",
           password: "",
           passwordConfirmation: "",
         });
@@ -127,40 +111,10 @@ export const SignUp: React.FC = () => {
             </IonItem>
             <IonItem>
               <IonLabel>
-                First Name <IonText color="danger">*</IonText>
+                Username <IonText color="danger">*</IonText>
               </IonLabel>
               <IonInputController
-                name="firstName"
-                control={control}
-                rules={{ required: true }}
-                defaultValue=""
-                ionInputProps={{
-                  type: "text",
-                  required: true,
-                  clearInput: true,
-                }}
-              />
-            </IonItem>
-            <IonItem>
-              <IonLabel>Middle Name</IonLabel>
-              <IonInputController
-                name="middleName"
-                control={control}
-                rules={{ required: false }}
-                defaultValue=""
-                ionInputProps={{
-                  type: "text",
-                  required: true,
-                  clearInput: true,
-                }}
-              />
-            </IonItem>
-            <IonItem>
-              <IonLabel>
-                Last Name <IonText color="danger">*</IonText>
-              </IonLabel>
-              <IonInputController
-                name="lastName"
+                name="username"
                 control={control}
                 rules={{ required: true }}
                 defaultValue=""

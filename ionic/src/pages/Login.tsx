@@ -32,7 +32,7 @@ const LOGIN_USER = gql`
       id
       email
       token
-      active
+      username
     }
   }
 `;

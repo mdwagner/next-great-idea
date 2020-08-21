@@ -8,8 +8,7 @@ const GET_USERS = gql`
     users {
       id
       email
-      firstname
-      lastname
+      username
     }
   }
 `;
@@ -22,9 +21,9 @@ export const UserList: React.FC = () => {
 
   return (
     <>
-      {data?.users.map(({ id, email, firstname, lastname }) => (
+      {data?.users.map(({ id, email, username }) => (
         <div key={id}>
-          <p>name: {[firstname, lastname].join(" ")}</p>
+          <p>username: {username}</p>
           <p>email: {email}</p>
           <p>id: {id}</p>
         </div>

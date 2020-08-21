@@ -11,8 +11,7 @@ export interface getUsers_users {
   __typename: "users";
   id: any;
   email: string;
-  firstname: string;
-  lastname: string;
+  username: string;
 }
 
 export interface getUsers {

@@ -12,7 +12,7 @@ export interface loginUser_login {
   id: string;
   email: string;
   token: string;
-  active: boolean;
+  username: string;
 }
 
 export interface loginUser {
