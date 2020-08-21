@@ -4,9 +4,7 @@ class FusionAuthSignUp < Avram::Operation
   param_key :input
 
   attribute email : String
-  attribute firstName : String
-  attribute lastName : String
-  attribute middleName : String = ""
+  attribute username : String
   attribute password : String
 
   property status : HTTP::Status = HTTP::Status::OK
@@ -52,33 +50,28 @@ class FusionAuthSignUp < Avram::Operation
         "roles"         => roles,
       },
       "user" => {
-        "email"      => email.value,
-        "firstName"  => firstName.value,
-        "middleName" => middleName.value,
-        "lastName"   => lastName.value,
-        "password"   => password.value,
+        "email"    => email.value,
+        "username" => username.value,
+        "password" => password.value,
       },
     }.to_json
   end
 
   private def create_user_mutation_body(str)
+    operation_name = "CreateUser"
     json = JSON.parse(str)
-    @external_user_id = json.dig?("user", "id").try(&.as_s?)
+    @external_user_id = json.dig("user", "id").as_s
 
     query = <<-GRAPHQL
-      mutation CreateUserDuringRegistration(
-        $external_user_id: uuid,
-        $email: String,
-        $firstname: String,
-        $lastname: String,
-        $middlename: String = ""
+      mutation #{operation_name}(
+        $external_user_id: uuid!,
+        $email: String!,
+        $username: String!
       ) {
         insert_users_one(object: {
           external_user_id: $external_user_id,
           email: $email,
-          firstname: $firstname,
-          lastname: $lastname,
-          middlename: $middlename
+          username: $username
         }) {
           id
         }
@@ -89,12 +82,10 @@ class FusionAuthSignUp < Avram::Operation
       "query"     => query,
       "variables" => {
         "external_user_id" => external_user_id,
-        "email"            => json.dig?("user", "email"),
-        "firstname"        => json.dig?("user", "firstName"),
-        "lastname"         => json.dig?("user", "lastName"),
-        "middlename"       => json.dig?("user", "middleName"),
+        "email"            => json.dig("user", "email").as_s,
+        "username"         => json.dig("user", "username").as_s,
       },
-      "operationName" => "CreateUserDuringRegistration",
+      "operationName" => operation_name,
     }.to_json
   end
 

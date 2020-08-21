@@ -5,10 +5,9 @@ describe Api::V1::SignUp do
     WebMock.stub(:post, /#{AppConfig.settings.fusionauth_url}/)
       .to_return(status: 200, body: {
         "user" => {
-          "id"        => "38fb129d-dfc1-4100-ad4f-3d7a44095e5e",
-          "email"     => "admin@example.com",
-          "firstName" => "Admin",
-          "lastName"  => "User",
+          "id"       => "38fb129d-dfc1-4100-ad4f-3d7a44095e5e",
+          "email"    => "admin@example.com",
+          "username" => "admin",
         },
       }.to_json)
 
@@ -17,7 +16,7 @@ describe Api::V1::SignUp do
         "data" => {} of String => String,
       }.to_json)
 
-    response = AppClient.exec(Api::V1::SignUp, input: {email: "admin@example.com", firstName: "Admin", lastName: "User", password: "Asdf123!"})
+    response = AppClient.exec(Api::V1::SignUp, input: {email: "admin@example.com", username: "admin", password: "Asdf123!"})
 
     response.should send_json(200,
       success: true
@@ -30,7 +29,7 @@ describe Api::V1::SignUp do
         "errors" => {} of String => String,
       }.to_json)
 
-    response = AppClient.exec(Api::V1::SignUp, input: {email: "admin@example.com", firstName: "Admin", lastName: "User", password: "Asdf123!"})
+    response = AppClient.exec(Api::V1::SignUp, input: {email: "admin@example.com", username: "admin", password: "Asdf123!"})
 
     response.should send_json(400,
       code: "500",
@@ -42,10 +41,9 @@ describe Api::V1::SignUp do
     WebMock.stub(:post, /#{AppConfig.settings.fusionauth_url}/)
       .to_return(status: 200, body: {
         "user" => {
-          "id"        => "38fb129d-dfc1-4100-ad4f-3d7a44095e5e",
-          "email"     => "admin@example.com",
-          "firstName" => "Admin",
-          "lastName"  => "User",
+          "id"       => "38fb129d-dfc1-4100-ad4f-3d7a44095e5e",
+          "email"    => "admin@example.com",
+          "username" => "admin",
         },
       }.to_json)
 
@@ -61,7 +59,7 @@ describe Api::V1::SignUp do
         "errors" => {} of String => String,
       }.to_json)
 
-    response = AppClient.exec(Api::V1::SignUp, input: {email: "admin@example.com", firstName: "Admin", lastName: "User", password: "Asdf123!"})
+    response = AppClient.exec(Api::V1::SignUp, input: {email: "admin@example.com", username: "admin", password: "Asdf123!"})
 
     response.should send_json(400,
       code: "500",
