@@ -22,7 +22,7 @@ import { IonInputController } from "../components/form/IonInputController";
 import { loginUser, loginUserVariables } from "./types/loginUser";
 
 interface LoginInput {
-  email: string;
+  loginId: string;
   password: string;
 }
 
@@ -44,7 +44,7 @@ export const Login: React.FC = () => {
   const [login, { loading }] = useMutation<loginUser, loginUserVariables>(
     LOGIN_USER
   );
-  const submit = handleSubmit(async ({ email: loginId, password }) => {
+  const submit = handleSubmit(async ({ loginId, password }) => {
     return login({
       variables: {
         loginId,
@@ -68,7 +68,7 @@ export const Login: React.FC = () => {
       })
       .finally(() => {
         // reset form state
-        reset({ email: "", password: "" });
+        reset({ loginId: "", password: "" });
       });
   });
   const goToSignUp = () => history.push("/signup");
@@ -86,15 +86,15 @@ export const Login: React.FC = () => {
           <IonList>
             <IonItem>
               <IonLabel>
-                Email <IonText color="danger">*</IonText>
+                Email/Username <IonText color="danger">*</IonText>
               </IonLabel>
               <IonInputController
-                name="email"
+                name="loginId"
                 control={control}
                 rules={{ required: true }}
                 defaultValue=""
                 ionInputProps={{
-                  type: "email",
+                  type: "text",
                   required: true,
                   clearInput: true,
                 }}
