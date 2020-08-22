@@ -22,7 +22,7 @@ export const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle>Next Great Idea</IonTitle>
         </IonToolbar>
       </IonHeader>
 

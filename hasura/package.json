@@ -4,6 +4,7 @@
   "description": "NextGreatIdea (hasura)",
   "license": "MIT",
   "scripts": {
+    "start": "npm run console",
     "console": "hasura --skip-update-check console --no-browser",
     "migrate:apply": "hasura --skip-update-check migrate apply",
     "metadata:apply": "hasura --skip-update-check metadata apply",

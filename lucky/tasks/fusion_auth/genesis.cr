@@ -3,8 +3,6 @@ class FusionAuth::Genesis < LuckyCli::Task
   name "fa.genesis"
 
   def call
-    abort "NOT_IMPLEMENTED"
-
     FusionAuth::CheckStatus.new.call
     FusionAuth::CreateTenant.new.call
     FusionAuth::CreateApp.new.call

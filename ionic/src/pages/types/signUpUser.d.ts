@@ -21,8 +21,6 @@ export interface signUpUser {
 
 export interface signUpUserVariables {
   email: string;
-  firstName: string;
-  lastName: string;
-  middleName?: string | null;
+  username: string;
   password: string;
 }

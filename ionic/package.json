@@ -4,6 +4,7 @@
   "description": "NextGreatIdea (ionic)",
   "license": "MIT",
   "scripts": {
+    "start": "npm run serve",
     "serve": "ionic serve",
     "ionic:start": "react-scripts start",
     "ionic:build": "react-scripts build",
