@@ -19,20 +19,14 @@ generates:
   src/:
     preset: near-operation-file
     presetConfig:
-      extension: .generated.ts
+      extension: .generated.tsx
       baseTypesPath: graphql/types.ts
     plugins:
       - "typescript-operations"
-      - "typescript-react-apollo"
+      - "typescript-urql"
     config:
       avoidOptionals: true
       addUnderscoreToArgsType: true
-      withMutationFn: false
-      apolloReactCommonImportFrom: "apollo-boost"
-      apolloReactHooksImportFrom: "@apollo/react-hooks"
-      gqlImport: apollo-boost#gql
-      withResultType: false
-      withMutationOptionsType: false
     hooks:
       afterOneFileWrite:
         - prettier --write src/

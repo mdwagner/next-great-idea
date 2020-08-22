@@ -12,7 +12,6 @@ import {
   IonButton,
 } from "@ionic/react";
 import { useForm } from "react-hook-form";
-import { useApolloClient } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 
 import "./Login/Login.css";
@@ -28,22 +27,17 @@ interface LoginInput {
 export const Login: React.FC = () => {
   const history = useHistory(); // eslint-disable-line
   const { handleSubmit, control, reset } = useForm<LoginInput>();
-  const client = useApolloClient();
-  const [login, { loading }] = useLoginUserMutation();
+  const [{ fetching: loading }, loginUser] = useLoginUserMutation();
+
   const submit = handleSubmit(async ({ loginId, password }) => {
-    return login({
-      variables: {
-        loginId,
-        password,
-      },
+    return loginUser({
+      loginId,
+      password,
     })
       .then((result) => {
         if (result.data) {
           // set token in localStorage
-          window.localStorage.setItem("token", result.data.login.token);
-
-          // set client cache for logged in state
-          client.cache.writeData({ data: { isLoggedIn: true } });
+          window.localStorage.setItem("token", result.data?.login?.token);
 
           // display login message
           console.info("logged in!");

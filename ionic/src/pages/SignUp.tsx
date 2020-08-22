@@ -49,15 +49,13 @@ export const SignUp: React.FC = () => {
   const { handleSubmit, control, reset } = useForm<SignUpInput>({
     resolver: validate,
   });
-  const [signUp, { loading }] = useSignUpUserMutation();
+  const [{ fetching: loading }, signUpUser] = useSignUpUserMutation();
   const goToLogin = () => history.push("/login");
   const submit = handleSubmit(async (input) => {
     delete input.passwordConfirmation;
-    signUp({
-      variables: input,
-    })
+    signUpUser(input)
       .then((result) => {
-        if (result.data?.signUp.success) {
+        if (result.data?.signUp?.success) {
           goToLogin();
         }
       })

@@ -2,7 +2,7 @@ import React from "react";
 import { useGetUsersQuery } from "./UserList/UserList.generated";
 
 export const UserList: React.FC = () => {
-  const { loading, error, data } = useGetUsersQuery();
+  const [{ fetching: loading, data, error }] = useGetUsersQuery();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
