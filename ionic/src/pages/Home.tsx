@@ -44,7 +44,7 @@ export const Home: React.FC = () => {
               <IonIcon slot="icon-only" icon={search} />
             </IonButton>
           </IonButtons>
-          <IonTitle>Home</IonTitle>
+          <IonTitle>Next Great Idea</IonTitle>
           <IonButtons slot="end">
             <IonMenuButton autoHide={false} />
           </IonButtons>

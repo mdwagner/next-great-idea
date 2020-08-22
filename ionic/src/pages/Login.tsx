@@ -22,7 +22,7 @@ import { IonInputController } from "../components/form/IonInputController";
 import { loginUser, loginUserVariables } from "./types/loginUser";
 
 interface LoginInput {
-  email: string;
+  loginId: string;
   password: string;
 }
 
@@ -32,7 +32,7 @@ const LOGIN_USER = gql`
       id
       email
       token
-      active
+      username
     }
   }
 `;
@@ -42,40 +42,34 @@ export const Login: React.FC = () => {
   const { handleSubmit, control, reset } = useForm<LoginInput>();
   const client = useApolloClient();
   const [login, { loading }] = useMutation<loginUser, loginUserVariables>(
-    LOGIN_USER,
-    {
-      onCompleted({ login: { token } }) {
-        // set token in localStorage
-        window.localStorage.setItem("token", token);
-
-        // set client cache for logged in state
-        client.cache.writeData({ data: { isLoggedIn: true } });
-
-        // reset form state
-        reset({ email: "", password: "" });
-
-        // display login message
-        console.info("logged in!");
-
-        // TODO: add home page redirect
-        // history.replace('/home');
-      },
-      onError(error) {
-        // reset form state
-        reset({ email: "", password: "" });
-
-        // display error message
-        console.error(error.message);
-      },
-    }
+    LOGIN_USER
   );
-  const submit = handleSubmit(async ({ email: loginId, password }) => {
-    await login({
+  const submit = handleSubmit(async ({ loginId, password }) => {
+    return login({
       variables: {
         loginId,
         password,
       },
-    });
+    })
+      .then((result) => {
+        if (result.data) {
+          // set token in localStorage
+          window.localStorage.setItem("token", result.data.login.token);
+
+          // set client cache for logged in state
+          client.cache.writeData({ data: { isLoggedIn: true } });
+
+          // display login message
+          console.info("logged in!");
+
+          // TODO: add home page redirect
+          // history.replace('/home');
+        }
+      })
+      .finally(() => {
+        // reset form state
+        reset({ loginId: "", password: "" });
+      });
   });
   const goToSignUp = () => history.push("/signup");
 
@@ -92,16 +86,15 @@ export const Login: React.FC = () => {
           <IonList>
             <IonItem>
               <IonLabel>
-                Email &nbsp;
-                <IonText color="danger">*</IonText>
+                Email/Username <IonText color="danger">*</IonText>
               </IonLabel>
               <IonInputController
-                name="email"
+                name="loginId"
                 control={control}
                 rules={{ required: true }}
                 defaultValue=""
                 ionInputProps={{
-                  type: "email",
+                  type: "text",
                   required: true,
                   clearInput: true,
                 }}
@@ -110,8 +103,7 @@ export const Login: React.FC = () => {
 
             <IonItem>
               <IonLabel>
-                Password &nbsp;
-                <IonText color="danger">*</IonText>
+                Password <IonText color="danger">*</IonText>
               </IonLabel>
               <IonInputController
                 name="password"

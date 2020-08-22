@@ -10,8 +10,9 @@ import {
   IonLabel,
   IonList,
   IonButton,
+  IonText,
 } from "@ionic/react";
-import { useForm } from "react-hook-form";
+import { useForm, Resolver } from "react-hook-form";
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 
@@ -21,50 +22,65 @@ import { signUpUser, signUpUserVariables } from "./types/signUpUser";
 
 interface SignUpInput {
   email: string;
-  firstName: string;
-  middleName?: string;
-  lastName: string;
+  username: string;
   password: string;
   passwordConfirmation: string;
 }
 
 const SIGN_UP_USER = gql`
-  mutation signUpUser(
-    $email: String!
-    $firstName: String!
-    $lastName: String!
-    $middleName: String
-    $password: String!
-  ) {
-    signUp(
-      email: $email
-      firstName: $firstName
-      lastName: $lastName
-      password: $password
-      middleName: $middleName
-    ) {
+  mutation signUpUser($email: String!, $username: String!, $password: String!) {
+    signUp(email: $email, username: $username, password: $password) {
       success
     }
   }
 `;
 
+const validate: Resolver<SignUpInput> = async (values) => {
+  let error = false;
+  if (values.password !== values.passwordConfirmation) {
+    error = true;
+  }
+
+  return {
+    values: error ? {} : values,
+    errors: error
+      ? {
+          passwordConfirmation: {
+            type: "mismatch",
+            message: "This does not match with password.",
+          },
+        }
+      : {},
+  };
+};
+
 export const SignUp: React.FC = () => {
   const history = useHistory();
-  const { handleSubmit, control } = useForm<SignUpInput>();
+  const { handleSubmit, control, reset } = useForm<SignUpInput>({
+    resolver: validate,
+  });
   const [signUp, { loading }] = useMutation<signUpUser, signUpUserVariables>(
-    SIGN_UP_USER,
-    {
-      onCompleted({ signUp: { success } }) {
-        goToLogin();
-      },
-    }
+    SIGN_UP_USER
   );
   const goToLogin = () => history.push("/login");
   const submit = handleSubmit(async (input) => {
     delete input.passwordConfirmation;
     signUp({
       variables: input,
-    });
+    })
+      .then((result) => {
+        if (result.data?.signUp.success) {
+          goToLogin();
+        }
+      })
+      .finally(() => {
+        reset({
+          email: "",
+          username: "",
+          password: "",
+          passwordConfirmation: "",
+        });
+      });
   });
 
   return (
@@ -78,7 +94,9 @@ export const SignUp: React.FC = () => {
         <form noValidate onSubmit={submit}>
           <IonList>
             <IonItem>
-              <IonLabel>Email Address: </IonLabel>
+              <IonLabel>
+                Email Address <IonText color="danger">*</IonText>
+              </IonLabel>
               <IonInputController
                 name="email"
                 control={control}
@@ -88,14 +106,15 @@ export const SignUp: React.FC = () => {
                   type: "email",
                   required: true,
                   clearInput: true,
-                  placeholder: "John",
                 }}
               />
             </IonItem>
             <IonItem>
-              <IonLabel>First Name: </IonLabel>
+              <IonLabel>
+                Username <IonText color="danger">*</IonText>
+              </IonLabel>
               <IonInputController
-                name="firstName"
+                name="username"
                 control={control}
                 rules={{ required: true }}
                 defaultValue=""
@@ -103,42 +122,13 @@ export const SignUp: React.FC = () => {
                   type: "text",
                   required: true,
                   clearInput: true,
-                  placeholder: "John",
                 }}
               />
             </IonItem>
             <IonItem>
-              <IonLabel>Middle Name: </IonLabel>
-              <IonInputController
-                name="middleName"
-                control={control}
-                rules={{ required: false }}
-                defaultValue=""
-                ionInputProps={{
-                  type: "text",
-                  required: true,
-                  clearInput: true,
-                  placeholder: "Sam",
-                }}
-              />
-            </IonItem>
-            <IonItem>
-              <IonLabel>Last Name: </IonLabel>
-              <IonInputController
-                name="lastName"
-                control={control}
-                rules={{ required: true }}
-                defaultValue=""
-                ionInputProps={{
-                  type: "text",
-                  required: true,
-                  clearInput: true,
-                  placeholder: "Doe",
-                }}
-              />
-            </IonItem>
-            <IonItem>
-              <IonLabel>Password: </IonLabel>
+              <IonLabel>
+                Password <IonText color="danger">*</IonText>
+              </IonLabel>
               <IonInputController
                 name="password"
                 control={control}
@@ -152,8 +142,9 @@ export const SignUp: React.FC = () => {
               />
             </IonItem>
             <IonItem>
-              {/* FE validation: check if passwords match */}
-              <IonLabel>Password Confirmation: </IonLabel>
+              <IonLabel>
+                Password Confirmation <IonText color="danger">*</IonText>
+              </IonLabel>
               <IonInputController
                 name="passwordConfirmation"
                 control={control}

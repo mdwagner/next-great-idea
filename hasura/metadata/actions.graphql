@@ -9,9 +9,7 @@ type Mutation {
 type Mutation {
   signUp (
     email: String!
-    firstName: String!
-    lastName: String!
-    middleName: String
+    username: String!
     password: String!
   ): FusionAuthSignUpResponse!
 }
@@ -22,12 +20,8 @@ type Mutation {
 type FusionAuthLoginResponse {
   token : String!
   id : ID!
-  active : Boolean!
-  data : JsonAny
   email : String!
-  timezone : String
-  username : String
-  verified : Boolean!
+  username : String!
 }
 
 type FusionAuthSignUpResponse {

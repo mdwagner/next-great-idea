@@ -35,12 +35,8 @@ class FusionAuthLogin < Avram::Operation
     {
       "token"    => json["token"].as_s,
       "id"       => json["user"]["id"].as_s,
-      "active"   => json["user"]["active"].as_bool,
-      "data"     => json["user"]["data"],
       "email"    => json["user"]["email"].as_s,
-      "timezone" => json["user"]["timezone"].as_s?,
-      "username" => json["user"]["username"].as_s?,
-      "verified" => json["user"]["verified"].as_bool,
+      "username" => json["user"]["username"].as_s,
     }
   end
 
