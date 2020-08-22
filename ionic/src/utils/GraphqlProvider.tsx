@@ -5,26 +5,23 @@ const client = createClient({
   url:
     process.env.HASURA_GRAPHQL_ENDPOINT ||
     "http://host.docker.internal:8080/v1/graphql",
-  fetch: (input, init) => {
+  fetchOptions: () => {
+    const headers = new Headers();
     const token = window.localStorage.getItem("token");
-    const authHeader: object = token
-      ? { Authorization: `Bearer ${token}` }
-      : {};
 
-    return fetch(input, {
-      ...init,
-      headers: {
-        ...init?.headers,
-        ...authHeader,
-      },
-    });
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+
+    if (process.env.NODE_ENV !== "production") {
+      headers.set("X-Hasura-Admin-Secret", "secret");
+    }
+
+    return {
+      headers,
+    };
   },
-  fetchOptions: {
-    headers: {
-      "X-Hasura-Admin-Secret":
-        process.env.NODE_ENV === "production" ? "" : "secret",
-    },
-  },
+  requestPolicy: "network-only",
 });
 
 export const GraphqlProvider: React.FC = ({ children }) => {
