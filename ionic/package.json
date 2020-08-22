@@ -9,9 +9,7 @@
     "ionic:start": "react-scripts start",
     "ionic:build": "react-scripts build",
     "ionic:test": "react-scripts test",
-    "gql:generate": "npm run gql:download-schema && npm run gql:codegen",
-    "gql:download-schema": "apollo client:download-schema src/graphql/schema.json --endpoint http://host.docker.internal:8080/v1/graphql --header 'X-Hasura-Admin-Secret: secret'",
-    "gql:codegen": "apollo client:codegen --localSchemaFile=src/graphql/schema.json --target=typescript --includes='src/**/*.{ts,tsx}' --tagName=gql --globalTypesFile=src/graphql-global-types.d.ts --tsFileExtension='d.ts' types"
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
@@ -29,6 +27,12 @@
   },
   "devDependencies": {
     "@capacitor/cli": "2.1.0",
+    "@graphql-codegen/cli": "1.17.8",
+    "@graphql-codegen/introspection": "1.17.8",
+    "@graphql-codegen/near-operation-file-preset": "^1.17.11",
+    "@graphql-codegen/typescript": "1.17.8",
+    "@graphql-codegen/typescript-operations": "1.17.8",
+    "@graphql-codegen/typescript-react-apollo": "2.0.6",
     "@ionic/cli": "^6.9.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
@@ -39,6 +43,7 @@
     "@types/react-dom": "^16.9.4",
     "@types/react-router": "^5.1.4",
     "@types/react-router-dom": "^5.1.3",
+    "prettier": "2.0.5",
     "react-scripts": "3.4.1",
     "typescript": "3.8.3"
   },

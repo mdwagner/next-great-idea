@@ -1,0 +1,42 @@
+overwrite: true
+
+schema:
+  - http://host.docker.internal:8080/v1/graphql:
+      headers:
+        X-Hasura-Admin-Secret: secret
+
+documents:
+  - "src/**/*.graphql"
+
+generates:
+  src/graphql/types.ts:
+    plugins:
+      - "typescript"
+    config:
+      avoidOptionals: true
+      addUnderscoreToArgsType: true
+
+  src/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .generated.ts
+      baseTypesPath: graphql/types.ts
+    plugins:
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      avoidOptionals: true
+      addUnderscoreToArgsType: true
+      withMutationFn: false
+      apolloReactCommonImportFrom: "apollo-boost"
+      apolloReactHooksImportFrom: "@apollo/react-hooks"
+      gqlImport: apollo-boost#gql
+      withResultType: false
+      withMutationOptionsType: false
+    hooks:
+      afterOneFileWrite:
+        - prettier --write src/
+
+  src/graphql/schema.json:
+    plugins:
+      - "introspection"

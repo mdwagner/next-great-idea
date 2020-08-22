@@ -12,38 +12,24 @@ import {
   IonButton,
 } from "@ionic/react";
 import { useForm } from "react-hook-form";
-import { gql } from "apollo-boost";
-import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 
 import "./Login/Login.css";
+import { useLoginUserMutation } from "./Login/Login.generated";
 import "../components/UserList";
 import { IonInputController } from "../components/form/IonInputController";
-import { loginUser, loginUserVariables } from "./types/loginUser";
 
 interface LoginInput {
   loginId: string;
   password: string;
 }
 
-const LOGIN_USER = gql`
-  mutation loginUser($loginId: String!, $password: String!) {
-    login(loginId: $loginId, password: $password) {
-      id
-      email
-      token
-      username
-    }
-  }
-`;
-
 export const Login: React.FC = () => {
   const history = useHistory(); // eslint-disable-line
   const { handleSubmit, control, reset } = useForm<LoginInput>();
   const client = useApolloClient();
-  const [login, { loading }] = useMutation<loginUser, loginUserVariables>(
-    LOGIN_USER
-  );
+  const [login, { loading }] = useLoginUserMutation();
   const submit = handleSubmit(async ({ loginId, password }) => {
     return login({
       variables: {
