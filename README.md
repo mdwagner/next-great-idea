@@ -19,8 +19,8 @@ An app for your _next_ idea!
 - VS Code Remote Containers extension (easy)
     - Open Folder in Container
 - Docker Compose (advanced)
-    - `$ docker-compose -f docker-compose.yml -f .devcontainer/docker-compose.yml up -d`
-    - `$ docker-compose -f docker-compose.yml -f .devcontainer/docker-compose.yml exec --workdir=/workspace dev-container bash`
+    - `$ bash scripts/start_up_containers.sh`
+        - **NOTE:** this will only start the project containers
 
 ### NOTES
 - `git` might not work that well inside the container (errors, etc.), so it's recommended to do any `git` commands outside of the container.
