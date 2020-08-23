@@ -11,5 +11,5 @@ _docker_compose () {
   docker-compose -f docker-compose.yml -f .devcontainer/docker-compose.yml "$@"
 }
 
-# start new containers
+# stop running containers
 _docker_compose stop
