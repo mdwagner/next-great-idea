@@ -24,6 +24,7 @@ import { personCircle, search } from "ionicons/icons";
 
 // import { ExploreContainer } from "../components/ExploreContainer";
 import { UserList } from "../components/UserList";
+import { IdeasList } from "../components/IdeasList";
 
 import "./Home/Home.css";
 
@@ -52,7 +53,8 @@ export const Home: React.FC = () => {
       </IonHeader>
 
       <IonContent>
-        <UserList />
+        {/* <UserList /> */}
+        {/* <IdeasList /> */}
         <IonButton onClick={goToLogin}>Back to Login</IonButton>
       </IonContent>
     </IonPage>
