@@ -13,12 +13,10 @@ import {
   IonText,
 } from "@ionic/react";
 import { useForm, Resolver } from "react-hook-form";
-import { gql } from "apollo-boost";
-import { useMutation } from "@apollo/react-hooks";
 
 import "./SignUp/SignUp.css";
+import { useSignUpUserMutation } from "./SignUp/SignUp.generated";
 import { IonInputController } from "../components/form/IonInputController";
-import { signUpUser, signUpUserVariables } from "./types/signUpUser";
 
 interface SignUpInput {
   email: string;
@@ -26,14 +24,6 @@ interface SignUpInput {
   password: string;
   passwordConfirmation: string;
 }
-
-const SIGN_UP_USER = gql`
-  mutation signUpUser($email: String!, $username: String!, $password: String!) {
-    signUp(email: $email, username: $username, password: $password) {
-      success
-    }
-  }
-`;
 
 const validate: Resolver<SignUpInput> = async (values) => {
   let error = false;
@@ -59,17 +49,13 @@ export const SignUp: React.FC = () => {
   const { handleSubmit, control, reset } = useForm<SignUpInput>({
     resolver: validate,
   });
-  const [signUp, { loading }] = useMutation<signUpUser, signUpUserVariables>(
-    SIGN_UP_USER
-  );
+  const [{ fetching: loading }, signUpUser] = useSignUpUserMutation();
   const goToLogin = () => history.push("/login");
   const submit = handleSubmit(async (input) => {
     delete input.passwordConfirmation;
-    signUp({
-      variables: input,
-    })
+    signUpUser(input)
       .then((result) => {
-        if (result.data?.signUp.success) {
+        if (result.data?.signUp?.success) {
           goToLogin();
         }
       })
