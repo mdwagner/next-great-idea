@@ -19,8 +19,18 @@ An app for your _next_ idea!
 - VS Code Remote Containers extension (easy)
     - Open Folder in Container
 - Docker Compose (advanced)
-    - `$ bash scripts/start_up_containers.sh`
+    - `$ bash scripts/outside_docker/start_up_containers.sh`
         - **NOTE:** this will only start the project containers
+- Run genesis script
+    - `$ bash scripts/inside_docker/genesis.sh`
+        - **NOTE:** should only need to run this once
+- Start applications (seperate terminals)
+    - Hasura
+        - `$ cd hasura; npm start`
+    - Ionic
+        - `$ cd ionic; npm start`
+    - Lucky
+        - `$ cd lucky; hivemind`
 
 ### NOTES
 - `git` might not work that well inside the container (errors, etc.), so it's recommended to do any `git` commands outside of the container.
