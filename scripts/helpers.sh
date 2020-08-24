@@ -50,7 +50,7 @@ is_linux() {
 #     echo "do stuff inside docker"
 #   fi
 is_docker() {
-  if command grep docker /proc/1/cgroup -qa; then
+  if is_linux && command grep docker /proc/1/cgroup -qa; then
     true
   else
     false
