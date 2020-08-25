@@ -35,8 +35,8 @@ AppConfig.configure do |settings|
 
   settings.git_commit = Lucky::Env.fetch!("GIT_COMMIT", ->{ `git rev-parse HEAD`.strip })
 
-  settings.email_host = Lucky::Env.fetch!("EMAIL_HOST", "localhost")
-  settings.email_port = Lucky::Env.fetch!("EMAIL_PORT", "3001")
+  settings.email_host = Lucky::Env.fetch!("EMAIL_HOST", "mailhog")
+  settings.email_port = Lucky::Env.fetch!("EMAIL_PORT", "1025")
   settings.issuer = Lucky::Env.fetch!("APP_ISSUER", "http://example.com")
   settings.app_name = Lucky::Env.fetch!("APP_NAME", "NextGreatIdea")
 
