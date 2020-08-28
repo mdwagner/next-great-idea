@@ -1,13 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-// import {
-//   IonContent,
-//   IonHeader,
-//   IonPage,
-//   IonTitle,
-//   IonToolbar,
-//   IonButton,
-// } from "@ionic/react";
 
 import {
   IonToolbar,
@@ -23,7 +15,6 @@ import {
 import { personCircle, search } from "ionicons/icons";
 
 // import { ExploreContainer } from "../components/ExploreContainer";
-import { UserList } from "../components/UserList";
 import { IdeasList } from "../components/IdeasList";
 
 import "./Home/Home.css";
@@ -53,8 +44,7 @@ export const Home: React.FC = () => {
       </IonHeader>
 
       <IonContent>
-        {/* <UserList /> */}
-        {/* <IdeasList /> */}
+        <IdeasList />
         <IonButton onClick={goToLogin}>Back to Login</IonButton>
       </IonContent>
     </IonPage>

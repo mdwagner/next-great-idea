@@ -1,0 +1,10 @@
+query getIdeas {
+  ideas {
+    id
+    title
+    description
+    user {
+      username
+    }
+  }
+}

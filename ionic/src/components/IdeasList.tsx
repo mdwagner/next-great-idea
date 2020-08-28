@@ -1,48 +1,28 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-
-const GET_IDEAS = gql`
-  query getIdeas {
-    ideas {
-      id
-      title
-      description
-      user {
-        email
-      }
-    }
-  }
-`;
+import { IonList, IonItem, IonLabel, IonContent } from "@ionic/react";
+import { useGetIdeasQuery } from "./IdeasList/IdeasList.generated";
+import "./IdeasList/IdeasList.css";
 
 export const IdeasList: React.FC = () => {
-  const { loading, error, data } = useQuery(GET_IDEAS);
+  const [result] = useGetIdeasQuery();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (result.fetching) return <p>Loading...</p>;
+  if (result.error) return <p>Error :(</p>;
 
   return (
     <>
-      {data?.users.map(
-        ({
-          id,
-          title,
-          description,
-          email,
-        }: {
-          id: any;
-          title: any;
-          description: any;
-          email: any;
-        }) => (
-          <div key={id}>
-            <p>title: {title}</p>
-            <p>description: {description}</p>
-            <p>creator: {email}</p>
-            <p>id: {id}</p>
-          </div>
-        )
-      )}
+      <IonContent>
+        <IonList>
+          {result.data?.ideas.map(({ id, title, description, user }) => (
+            <IonItem className="center" key={id}>
+              <IonLabel>title: {title}</IonLabel>
+              <IonLabel>description: {description}</IonLabel>
+              <IonLabel>creator: {user.username}</IonLabel>
+              <IonLabel>id: {id}</IonLabel>
+            </IonItem>
+          ))}
+        </IonList>
+      </IonContent>
     </>
   );
 };
