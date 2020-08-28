@@ -3,7 +3,7 @@ import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
-import { ApolloProvider } from "./utils/ApolloProvider";
+import { GraphqlProvider } from "./utils/GraphqlProvider";
 import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
 import { Home } from "./pages/Home";
@@ -30,14 +30,14 @@ import "./theme/variables.css";
 export const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <ApolloProvider>
+      <GraphqlProvider>
         <IonRouterOutlet>
           <Route path="/login" children={<Login />} />
           <Route path="/signup" children={<SignUp />} />
           {/* <Route path="/" exact children={<Redirect to="/login" />} /> */}
           <Route path="/" children={<Home />} />
         </IonRouterOutlet>
-      </ApolloProvider>
+      </GraphqlProvider>
     </IonReactRouter>
   </IonApp>
 );

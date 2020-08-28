@@ -14,23 +14,23 @@ class FusionAuth::SeedUsers < LuckyCli::Task
   def users
     [
       {
-        "email"     => "john.doe@example.com",
+        "email"    => "john.doe@example.com",
         "username" => "john_doe",
-        "password"  => DEFAULT_PASSWORD,
+        "password" => DEFAULT_PASSWORD,
       },
       {
-        "email"     => "jane.doe@example.com",
+        "email"    => "jane.doe@example.com",
         "username" => "jane_doe",
-        "password"  => DEFAULT_PASSWORD,
+        "password" => DEFAULT_PASSWORD,
       },
     ]
   end
 
   def admin_user
     {
-      "email"     => "mother.nature@example.com",
+      "email"    => "mother.nature@example.com",
       "username" => "mother_nature",
-      "password"  => DEFAULT_PASSWORD,
+      "password" => DEFAULT_PASSWORD,
     }
   end
 
@@ -38,7 +38,7 @@ class FusionAuth::SeedUsers < LuckyCli::Task
     avram_params = Avram::Params.new(params)
     fa_sign_up = FusionAuthSignUp.new(avram_params)
 
-    fa_sign_up.submit(admin) do |operation, result|
+    fa_sign_up.submit(admin, false) do |operation, result|
       if !operation.status.ok?
         puts "NAME: sign up (admin)"
         puts "CODE: #{operation.status.code}"

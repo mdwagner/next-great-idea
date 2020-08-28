@@ -35,7 +35,7 @@ jobs:
       run: shards install
 
     - name: Check file formatting
-      run: crystal tool format --check src spec
+      run: crystal tool format --check src spec tasks
 
     - name: Run tests
       run: crystal spec
