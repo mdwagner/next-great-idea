@@ -39,6 +39,8 @@ class FusionAuth::DeleteTenant < LuckyCli::Task
     end
     error_response(jwt_key_response, "jwt key")
 
+    FusionAuth::DeleteEmailTemplates.new.call
+
     delete_hasura_response = AppHttpClient.execute(HttpClient::Hasura) do |client|
       query = <<-GRAPHQL
         mutation FusionAuthDeleteTenantTask {

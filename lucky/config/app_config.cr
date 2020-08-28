@@ -6,6 +6,7 @@ class AppConfig
     setting fusionauth_app_id : String
     setting fusionauth_theme_id : String
     setting fusionauth_jwt_key_id : String
+    setting fusionauth_email_template_verification_id : String
 
     setting hasura_graphql_url : String
     setting hasura_graphql_admin_secret : String
@@ -14,6 +15,8 @@ class AppConfig
 
     setting email_host : String
     setting email_port : String
+    setting email_from_email : String
+    setting email_from_name : String
     setting issuer : String
     setting app_name : String
 
@@ -29,6 +32,7 @@ AppConfig.configure do |settings|
   settings.fusionauth_app_id = Lucky::Env.fetch!("FUSIONAUTH_APP_ID", "85a03867-dccf-4882-adde-1a79aeec50df")
   settings.fusionauth_theme_id = Lucky::Env.fetch!("FUSIONAUTH_THEME_ID", "d2c5b616-cdb7-4abb-97cc-4465a29f313f")
   settings.fusionauth_jwt_key_id = Lucky::Env.fetch!("FUSIONAUTH_JWT_KEY_ID", "29c14b28-fe3a-4db5-a49c-3fd30b5e4bce")
+  settings.fusionauth_email_template_verification_id = Lucky::Env.fetch!("FUSIONAUTH_EMAIL_TEMPLATE_VERIFICATION_ID", "6e046c92-5a42-4d21-8bb8-8e76eba035c7")
 
   settings.hasura_graphql_url = Lucky::Env.fetch!("HASURA_GRAPHQL_ENDPOINT", "http://hasura:8080")
   settings.hasura_graphql_admin_secret = Lucky::Env.fetch!("HASURA_GRAPHQL_ADMIN_SECRET", "secret")
@@ -37,6 +41,8 @@ AppConfig.configure do |settings|
 
   settings.email_host = Lucky::Env.fetch!("EMAIL_HOST", "mailhog")
   settings.email_port = Lucky::Env.fetch!("EMAIL_PORT", "1025")
+  settings.email_from_email = Lucky::Env.fetch!("EMAIL_FROM_EMAIL", "no-reply@fusionauth.io")
+  settings.email_from_name = Lucky::Env.fetch!("EMAIL_FROM_NAME", "NextGreatIdea App")
   settings.issuer = Lucky::Env.fetch!("APP_ISSUER", "http://example.com")
   settings.app_name = Lucky::Env.fetch!("APP_NAME", "NextGreatIdea")
 
