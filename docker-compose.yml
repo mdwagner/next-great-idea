@@ -57,3 +57,10 @@ services:
     volumes:
       - /usr/local/fusionauth/config
       - ./fusionauth:/kickstart
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025

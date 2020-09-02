@@ -13,6 +13,9 @@ class FusionAuth::CreateTenant < LuckyCli::Task
     # THEME
     clone_default_theme
 
+    # EMAIL TEMPLATES
+    FusionAuth::CreateEmailTemplates.new.call
+
     # TENANT
     tenant_response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
       id = AppConfig.settings.fusionauth_tenant_id
@@ -62,16 +65,23 @@ class FusionAuth::CreateTenant < LuckyCli::Task
   def tenant_json
     email_host = AppConfig.settings.email_host
     email_port = AppConfig.settings.email_port.to_i
+    email_from_email = AppConfig.settings.email_from_email
+    email_from_name = AppConfig.settings.email_from_name
     theme_id = AppConfig.settings.fusionauth_theme_id
     issuer = AppConfig.settings.issuer
     tenant_name = AppConfig.settings.app_name
     jwt_key_id = AppConfig.settings.fusionauth_jwt_key_id
+    verify_email_id = AppConfig.settings.fusionauth_email_template_verification_id
 
     {
       "tenant" => {
         "emailConfiguration" => {
-          "host" => email_host,
-          "port" => email_port,
+          "host"                        => email_host,
+          "port"                        => email_port,
+          "defaultFromEmail"            => email_from_email,
+          "defaultFromName"             => email_from_name,
+          "verifyEmail"                 => true,
+          "verificationEmailTemplateId" => verify_email_id,
         },
         "externalIdentifierConfiguration" => {
           "authorizationGrantIdTimeToLiveInSeconds" => 30,
