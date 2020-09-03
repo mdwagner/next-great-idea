@@ -49,20 +49,4 @@ jobs:
           registry: ghcr.io
           repository: ${{ github.repository }}
           tag_with_ref: true
-
-      # - name: Build and tag docker image
-      #   run: docker build -f Dockerfile -t $IMAGE_NAME:${GITHUB_REF#refs/heads/} .
-
-      # - name: Log into registry
-      #   run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
-
-      # - name: Push image
-      #   run: |
-      #     docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/heads/}
-      #     docker push ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/heads/}
-
-      # - name: Push image as latest
-      #   if: github.ref == 'refs/heads/master'
-      #   run: |
-      #     docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} ghcr.io/${{ github.repository }}:latest
-      #     docker push ghcr.io/${{ github.repository }}:latest
+          cache_froms: mcr.microsoft.com/vscode/devcontainers/base:ubuntu18.04
