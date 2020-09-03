@@ -35,6 +35,7 @@ jobs:
   build-ghcr:
     name: Build and Push branches (Github Container Registry)
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/latest'
 
     steps:
       - name: Checkout code
@@ -44,13 +45,15 @@ jobs:
         run: docker build -f Dockerfile -t $IMAGE_NAME:${GITHUB_REF#refs/heads/} .
 
       - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login https://ghcr.io -u ${{ secrets.GHCR_PAT_USERNAME }} --password-stdin
 
       - name: Push image
-        run: docker push $IMAGE_NAME:${GITHUB_REF#refs/heads/}
+        run: |
+          docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/heads/}
+          docker push ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/heads/}
 
       - name: Push image as latest
         if: github.ref == 'refs/heads/master'
         run: |
-          docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} $IMAGE_NAME:latest
-          docker push $IMAGE_NAME:latest
+          docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} ghcr.io/${{ github.repository }}:latest
+          docker push ghcr.io/${{ github.repository }}:latest
