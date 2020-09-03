@@ -50,5 +50,3 @@ RUN wget --quiet https://github.com/DarthSim/hivemind/releases/download/${HIVEMI
  && chmod +x /tmp/hivemind \
  && mv /tmp/hivemind /usr/local/bin \
  && hivemind -v
-
-RUN echo hello
