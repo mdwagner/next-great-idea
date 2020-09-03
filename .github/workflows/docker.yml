@@ -41,19 +41,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build and tag docker image
-        run: docker build -f Dockerfile -t $IMAGE_NAME:${GITHUB_REF#refs/heads/} .
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          repository: ${{ github.repository }}
+          tag_with_ref: true
 
-      - name: Log into registry
-        run: echo "${{ secrets.GHCR_PAT }}" | docker login https://ghcr.io -u ${{ secrets.GHCR_PAT_USERNAME }} --password-stdin
+      # - name: Build and tag docker image
+      #   run: docker build -f Dockerfile -t $IMAGE_NAME:${GITHUB_REF#refs/heads/} .
 
-      - name: Push image
-        run: |
-          docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/heads/}
-          docker push ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/heads/}
+      # - name: Log into registry
+      #   run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Push image as latest
-        if: github.ref == 'refs/heads/master'
-        run: |
-          docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} ghcr.io/${{ github.repository }}:latest
-          docker push ghcr.io/${{ github.repository }}:latest
+      # - name: Push image
+      #   run: |
+      #     docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/heads/}
+      #     docker push ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/heads/}
+
+      # - name: Push image as latest
+      #   if: github.ref == 'refs/heads/master'
+      #   run: |
+      #     docker tag $IMAGE_NAME:${GITHUB_REF#refs/heads/} ghcr.io/${{ github.repository }}:latest
+      #     docker push ghcr.io/${{ github.repository }}:latest
