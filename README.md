@@ -1,4 +1,6 @@
 # Introduction
+![hasura](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Hasura%20CI?label=hasura) ![ionic](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Ionic%20CI?label=ionic) ![lucky](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Lucky%20CI?label=lucky) ![dev-container](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Docker%20CI?label=dev-container)
+
 An app for your _next_ idea!
 
 ## This app uses the following technologies:
