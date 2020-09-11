@@ -6,6 +6,7 @@ import { IonReactRouter } from "@ionic/react-router";
 import { GraphqlProvider } from "./utils/GraphqlProvider";
 import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
+import { Home } from "./pages/Home";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -33,7 +34,8 @@ export const App: React.FC = () => (
         <IonRouterOutlet>
           <Route path="/login" children={<Login />} />
           <Route path="/signup" children={<SignUp />} />
-          <Route path="/" exact children={<Redirect to="/login" />} />
+          <Route path="/" children={<Home />} />
+          {/* <Route path="/" exact children={<Redirect to="/login" />} /> */}
         </IonRouterOutlet>
       </GraphqlProvider>
     </IonReactRouter>
