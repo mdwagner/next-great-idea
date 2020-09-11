@@ -35,7 +35,8 @@ export const App: React.FC = () => (
           <Route path="/home" children={<Home />} />
           <Route path="/login" children={<Login />} />
           <Route path="/signup" children={<SignUp />} />
-          <Route path="/" exact children={<Redirect to="/login" />} />
+          <Route path="/" children={<Home />} />
+          {/* <Route path="/" exact children={<Redirect to="/login" />} /> */}
         </IonRouterOutlet>
       </GraphqlProvider>
     </IonReactRouter>
