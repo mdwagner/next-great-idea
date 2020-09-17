@@ -47,3 +47,5 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/en/
     - Ex: `whatever-i-want`
     - Ex: `not-master`
     - Ex: `ticket-123`
+
+(https://i.kym-cdn.com/photos/images/facebook/001/459/556/023.png)
