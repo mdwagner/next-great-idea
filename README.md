@@ -48,4 +48,5 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/en/
     - Ex: `not-master`
     - Ex: `ticket-123`
 
+![Image of bestpepe]
 (https://i.kym-cdn.com/photos/images/facebook/001/459/556/023.png)
