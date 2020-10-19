@@ -34,8 +34,9 @@ jobs:
     - name: Install deps
       run: shards install
 
-    - name: Check file formatting
-      run: crystal tool format --check src spec tasks
-
     - name: Run tests
       run: crystal spec
+
+    - name: Check file formatting
+      run: crystal tool format --check src spec tasks
+      if: always()

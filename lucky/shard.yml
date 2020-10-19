@@ -25,3 +25,6 @@ dependencies:
   webmock:
     github: manastech/webmock.cr
     branch: master
+  fusionauth_client:
+    github: mdwagner/fusionauth-crystal-client
+    branch: master

@@ -3,14 +3,18 @@ require "../../../spec_helper"
 describe Api::V1::Login do
   it "should complete fusionauth login request" do
     WebMock.stub(:post, /#{AppConfig.settings.fusionauth_url}/)
-      .to_return(status: 200, body: {
-        "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "user"  => {
-          "id"       => "38fb129d-dfc1-4100-ad4f-3d7a44095e5e",
-          "email"    => "admin@example.com",
-          "username" => "admin",
-        },
-      }.to_json)
+      .to_return(
+        status: 200,
+        headers: HTTP::Headers{"content-type" => "application/json"},
+        body: {
+          "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+          "user"  => {
+            "id"       => "38fb129d-dfc1-4100-ad4f-3d7a44095e5e",
+            "email"    => "admin@example.com",
+            "username" => "admin",
+          },
+        }.to_json
+      )
 
     response = AppClient.exec(Api::V1::Login, input: {loginId: "admin@example.com", password: "Asdf123!"})
 
@@ -24,7 +28,10 @@ describe Api::V1::Login do
 
   it "should fail to complete fusionauth login request" do
     WebMock.stub(:post, /#{AppConfig.settings.fusionauth_url}/)
-      .to_return(status: 401)
+      .to_return(
+        status: 401,
+        headers: HTTP::Headers{"content-type" => "application/json"}
+      )
 
     response = AppClient.exec(Api::V1::Login, input: {loginId: "admin@example.com", password: "Asdf123!"})
 
