@@ -6,8 +6,8 @@ class FusionAuth::CheckStatus < LuckyCli::Task
     response = FusionAuth::RESTClient.new(URI.parse(AppConfig.settings.fusionauth_url))
       .authorization(AppConfig.settings.fusionauth_api_key)
       .uri("/api/status")
-      .get()
-      .go()
+      .get
+      .go
 
     if response.was_successful
       puts "OK"

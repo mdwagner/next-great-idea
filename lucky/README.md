@@ -9,6 +9,6 @@
 - `hivemind` - starts up server in development mode and will re-compile project on file changes
 - `crystal spec` - runs specs
     - add `focus: true` on `describe` and `it` blocks to focus which specs to run
-- `crystal tool format src spec` - formats all crystal files in `src/` and `spec/`
-    - `crystal tool format --check src spec` - only checks which files need to be formatted
+- `crystal tool format src spec tasks` - formats all crystal files in `src/`, `spec/`, and `tasks/`
+    - `crystal tool format --check src spec tasks` - only checks which files need to be formatted
 - `lucky <commands...>` - runs built-in and custom lucky-cli tasks
