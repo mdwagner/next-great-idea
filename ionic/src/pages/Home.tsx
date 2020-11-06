@@ -17,7 +17,7 @@ export const Home: React.FC = () => {
   const logout = () => {
     window.localStorage.removeItem("token");
     console.log("logged out!");
-    history.replace("/");
+    history.replace("/login");
   };
 
   return (
