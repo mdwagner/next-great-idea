@@ -17,7 +17,6 @@ import { useHistory } from "react-router-dom";
 
 import "./Login/Login.css";
 import { useLoginUserMutation } from "./Login/Login.generated";
-import "../components/UserList";
 import { IonInputController } from "../components/form/IonInputController";
 
 interface LoginInput {
