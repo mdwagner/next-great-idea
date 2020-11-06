@@ -32,6 +32,10 @@ shards:
     git: https://github.com/crystal-loot/exception_page.git
     version: 0.1.4
 
+  fusionauth_client:
+    git: https://github.com/mdwagner/fusionauth-crystal-client.git
+    version: 0.1.0+git.commit.f874dbe2f4ab0aa46e95edcbbcb051ab1b1615d3
+
   future:
     git: https://github.com/crystal-community/future.cr.git
     version: 0.1.0

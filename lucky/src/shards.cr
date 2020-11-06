@@ -5,3 +5,4 @@ Dotenv.load?
 # Require your shards here
 require "lucky"
 require "carbon"
+require "fusionauth_client"
