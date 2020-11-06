@@ -7,10 +7,7 @@ import { GraphqlProvider } from "./utils/GraphqlProvider";
 import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
 import { Home } from "./pages/Home";
-<<<<<<< HEAD
 import { CreateIdea } from "./pages/CreateIdea";
-=======
->>>>>>> master
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
