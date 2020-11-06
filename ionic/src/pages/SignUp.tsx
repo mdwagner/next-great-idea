@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import { useHistory } from "react-router-dom";
 import {
@@ -25,15 +26,12 @@ interface SignUpInput {
   passwordConfirmation: string;
 }
 
-const validate: Resolver<SignUpInput> = async (values) => {
-  let error = false;
-  if (values.password !== values.passwordConfirmation) {
-    error = true;
-  }
+const resolver: Resolver<SignUpInput> = async (values) => {
+  const hasError = values.password !== values.passwordConfirmation;
 
   return {
-    values: error ? {} : values,
-    errors: error
+    values: hasError ? {} : values,
+    errors: hasError
       ? {
           passwordConfirmation: {
             type: "mismatch",
@@ -47,26 +45,34 @@ const validate: Resolver<SignUpInput> = async (values) => {
 export const SignUp: React.FC = () => {
   const history = useHistory();
   const { handleSubmit, control, reset } = useForm<SignUpInput>({
-    resolver: validate,
+    resolver,
   });
   const [{ fetching: loading }, signUpUser] = useSignUpUserMutation();
   const goToLogin = () => history.push("/login");
+
   const submit = handleSubmit(async (input) => {
-    delete input.passwordConfirmation;
-    signUpUser(input)
-      .then((result) => {
-        if (result.data?.signUp?.success) {
-          goToLogin();
-        }
-      })
-      .finally(() => {
-        reset({
-          email: "",
-          username: "",
-          password: "",
-          passwordConfirmation: "",
-        });
-      });
+    console.log("signed up!");
+    goToLogin();
+
+    // @todo
+    // signUpUser({
+    //   email: input.email,
+    //   username: input.username,
+    //   password: input.password,
+    // })
+    //   .then((result) => {
+    //     if (result.data?.signUp?.success) {
+    //       goToLogin();
+    //     }
+    //   })
+    //   .finally(() => {
+    //     reset({
+    //       email: "",
+    //       username: "",
+    //       password: "",
+    //       passwordConfirmation: "",
+    //     });
+    //   });
   });
 
   return (

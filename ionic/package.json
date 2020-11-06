@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run serve",
+    "test": "npm run ionic:test",
     "serve": "ionic serve",
     "ionic:start": "react-scripts start",
     "ionic:build": "react-scripts build",

@@ -11,40 +11,14 @@ class FusionAuthSignUp < Avram::Operation
   getter external_user_id : String? = nil
 
   def submit(admin_role = false, verify_email = true)
-    fa_response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
-      client.post("/api/user/registration", body: registration_body(admin_role, verify_email))
-    end
+    client = FusionAuth::FusionAuthClient.new(
+      AppConfig.settings.fusionauth_api_key,
+      AppConfig.settings.fusionauth_url
+    )
 
-    raise FusionAuthSignUpException.new(fa_response) if !fa_response.status.ok?
-
-    hasura_response = AppHttpClient.execute(HttpClient::Hasura) do |client|
-      client.post("/v1/graphql", body: create_user_mutation_body(fa_response.body))
-    end
-
-    raise HasuraSignUpException.new(hasura_response) if hasura_error?(hasura_response)
-
-    yield self, success_response
-  rescue ex : FusionAuthSignUpException
-    log_error(ex.response)
-
-    result = HasuraErrorSerializer.new(ex.response.status)
-    @status = result.response_status
-    yield self, result
-  rescue ex : HasuraSignUpException
-    log_error(ex.response)
-
-    attempt_to_remove_fa_user
-
-    result = HasuraErrorSerializer.new
-    @status = result.response_status
-    yield self, result
-  end
-
-  private def registration_body(admin_role, verify_email)
     roles = ["user"]
     roles << "admin" if admin_role
-
-    {
+    response = client.register(nil, {
       "registration" => {
         "applicationId" => AppConfig.settings.fusionauth_app_id,
         "roles"         => roles,
@@ -56,12 +30,40 @@ class FusionAuthSignUp < Avram::Operation
       },
       "skipRegistrationVerification" => true,
       "skipVerification"             => !verify_email,
-    }.to_json
+    })
+
+    if !response.was_successful
+      log_fa_error(response)
+
+      error_status = HTTP::Status.new(response.status == -1 ? 500 : response.status)
+      result = HasuraErrorSerializer.new(error_status)
+      @status = result.response_status
+
+      return yield self, result
+    end
+
+    success_response = response.success_response.not_nil!
+
+    response = AppHttpClient.execute(HttpClient::Hasura) do |http_client|
+      http_client.post("/v1/graphql", body: create_user_mutation_body(success_response))
+    end
+
+    if hasura_error?(response)
+      log_error(response)
+
+      attempt_to_remove_fa_user(client) if external_user_id
+
+      result = HasuraErrorSerializer.new
+      @status = result.response_status
+
+      return yield self, result
+    end
+
+    yield self, {"success" => true}
   end
 
-  private def create_user_mutation_body(str)
+  private def create_user_mutation_body(json)
     operation_name = "CreateUser"
-    json = JSON.parse(str)
     @external_user_id = json.dig("user", "id").as_s
 
     query = <<-GRAPHQL
@@ -91,42 +93,29 @@ class FusionAuthSignUp < Avram::Operation
     }.to_json
   end
 
-  private def success_response
-    {
-      "success" => true,
-    }
-  end
-
   private def log_error(response, line = __LINE__)
-    code = response.status.code
-    body = response.body? || ""
     json = {
-      "code" => code,
-      "body" => body,
+      "code" => response.status.code,
+      "body" => response.body?,
     }.to_json
 
     Log.error { "#{__FILE__}:#{line} => #{json}" }
   end
 
-  private def attempt_to_remove_fa_user
-    response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
-      client.before_request do |request|
-        request.headers.delete("Accept")
-        request.headers.delete("Content-Type")
-      end
-      client.delete("/api/user/#{external_user_id}?hardDelete=true")
-    end
+  private def log_fa_error(response, line = __LINE__)
+    json = {
+      "code" => response.status,
+      "body" => response.success_response.try(&.to_json),
+    }.to_json
 
-    if !response.status.ok?
-      log_error(response)
-    end
+    Log.error { "#{__FILE__}:#{line} => #{json}" }
   end
 
-  class FusionAuthSignUpException < Exception
-    include ResponseExceptionHelper
-  end
+  private def attempt_to_remove_fa_user(client)
+    response = client.delete_user(external_user_id.not_nil!)
 
-  class HasuraSignUpException < Exception
-    include ResponseExceptionHelper
+    if !response.was_successful
+      log_fa_error(response)
+    end
   end
 end

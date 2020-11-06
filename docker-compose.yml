@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
   dev-container:
-    image: mdwagner/next-great-idea:latest
+    image: ghcr.io/mdwagner/next-great-idea:latest
     depends_on:
       - postgres
       - graphql-engine

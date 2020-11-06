@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import {
   IonPage,
@@ -16,7 +17,6 @@ import { useHistory } from "react-router-dom";
 
 import "./Login/Login.css";
 import { useLoginUserMutation } from "./Login/Login.generated";
-import "../components/UserList";
 import { IonInputController } from "../components/form/IonInputController";
 
 interface LoginInput {
@@ -25,31 +25,37 @@ interface LoginInput {
 }
 
 export const Login: React.FC = () => {
-  const history = useHistory(); // eslint-disable-line
+  const history = useHistory();
   const { handleSubmit, control, reset } = useForm<LoginInput>();
   const [{ fetching: loading }, loginUser] = useLoginUserMutation();
+  const goToHome = () => history.replace("/home");
 
   const submit = handleSubmit(async ({ loginId, password }) => {
-    return loginUser({
-      loginId,
-      password,
-    })
-      .then((result) => {
-        if (result.data) {
-          // set token in localStorage
-          window.localStorage.setItem("token", result.data?.login?.token);
+    window.localStorage.setItem("token", "test123");
+    console.log("logged in!");
+    goToHome();
 
-          // display login message
-          console.info("logged in!");
+    // @todo
+    // return loginUser({
+    //   loginId,
+    //   password,
+    // })
+    //   .then((result) => {
+    //     if (result.data) {
+    //       // set token in localStorage
+    //       window.localStorage.setItem("token", result.data?.login?.token);
 
-          // TODO: add home page redirect
-          // history.replace('/home');
-        }
-      })
-      .finally(() => {
-        // reset form state
-        reset({ loginId: "", password: "" });
-      });
+    //       // display login message
+    //       console.info("logged in!");
+
+    //       // TODO: add home page redirect
+    //       // history.replace('/home');
+    //     }
+    //   })
+    //   .finally(() => {
+    //     // reset form state
+    //     reset({ loginId: "", password: "" });
+    //   });
   });
   const goToSignUp = () => history.push("/signup");
 

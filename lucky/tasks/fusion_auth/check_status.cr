@@ -3,15 +3,13 @@ class FusionAuth::CheckStatus < LuckyCli::Task
   name "fa.check_status"
 
   def call
-    response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
-      client.before_request do |request|
-        request.headers.delete("Accept")
-        request.headers.delete("Content-Type")
-      end
-      client.get("/api/status")
-    end
+    response = FusionAuth::RESTClient.new(URI.parse(AppConfig.settings.fusionauth_url))
+      .authorization(AppConfig.settings.fusionauth_api_key)
+      .uri("/api/status")
+      .get
+      .go
 
-    if response.status.ok?
+    if response.was_successful
       puts "OK"
     else
       abort "ERROR"

@@ -11,10 +11,10 @@ class FusionAuth::CreateEmailTemplates < LuckyCli::Task
   end
 
   def error_response(response, name : String? = nil)
-    if !response.status.ok?
+    if !response.was_successful
       puts "NAME: #{name}" if name
-      puts "CODE: #{response.status_code}"
-      puts "BODY: #{response.body}"
+      puts "CODE: #{response.status}"
+      puts "BODY: #{response.error_response.try(&.to_json)}"
       abort
     end
   end
@@ -23,9 +23,12 @@ class FusionAuth::CreateEmailTemplates < LuckyCli::Task
     id = template.delete("id")
     name = template["emailTemplate"]["name"]
 
-    response = AppHttpClient.execute(HttpClient::FusionAuth) do |client|
-      client.post("/api/email/template/#{id}", body: template.to_json)
-    end
+    client = FusionAuth::FusionAuthClient.new(
+      AppConfig.settings.fusionauth_api_key,
+      AppConfig.settings.fusionauth_url
+    )
+
+    response = client.create_email_template(id, template)
     error_response(response, name)
   end
 
