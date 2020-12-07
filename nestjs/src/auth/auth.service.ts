@@ -1,5 +1,5 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { FusionAuthService } from './fusion-auth.service';
+import { FusionAuthClient } from '@fusionauth/typescript-client';
 import { FusionAuthLoginResponse } from './models/fusion-auth-login-response.model';
 import { FusionAuthSignUpResponse } from './models/fusion-auth-sign-up-response.model';
 
@@ -7,14 +7,14 @@ import { FusionAuthSignUpResponse } from './models/fusion-auth-sign-up-response.
 export class AuthService {
   constructor(
     private httpService: HttpService,
-    private fusionAuthService: FusionAuthService,
+    private fusionAuthClient: FusionAuthClient,
   ) {}
 
   async login(
     loginId: string,
     password: string,
   ): Promise<FusionAuthLoginResponse> {
-    const { response } = await this.fusionAuthService.client.login({
+    const { response } = await this.fusionAuthClient.login({
       loginId,
       password,
     });
