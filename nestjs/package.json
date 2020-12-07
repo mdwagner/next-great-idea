@@ -19,9 +19,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@fusionauth/typescript-client": "^1.22.0",
     "@nestjs/common": "^7.5.1",
     "@nestjs/core": "^7.5.1",
+    "@nestjs/graphql": "^7.9.1",
     "@nestjs/platform-express": "^7.5.1",
+    "apollo-server-express": "^2.19.0",
+    "graphql": "^15.4.0",
+    "graphql-tools": "^7.0.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3"
@@ -71,7 +76,9 @@
       "project": "tsconfig.json",
       "sourceType": "module"
     },
-    "plugins": ["@typescript-eslint/eslint-plugin"],
+    "plugins": [
+      "@typescript-eslint/eslint-plugin"
+    ],
     "extends": [
       "plugin:@typescript-eslint/recommend",
       "prettier/@typescript-eslint",
