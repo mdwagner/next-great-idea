@@ -40,11 +40,11 @@ export class AuthService {
     email: string,
     username: string,
     password: string,
-    { adminRole = false, verifyEmail = true }: SignUpOptions,
+    options?: SignUpOptions,
   ): Promise<FusionAuthSignUpResponse> {
     const applicationId = this.configService.get<string>('FUSIONAUTH_APP_ID');
     const roles = ['user'];
-    if (adminRole) roles.push('admin');
+    if (options?.adminRole) roles.push('admin');
 
     try {
       const { response } = await this.fusionAuthClient.register(null, {
@@ -58,7 +58,7 @@ export class AuthService {
           password,
         },
         skipRegistrationVerification: true,
-        skipVerification: !verifyEmail,
+        skipVerification: Boolean(options?.skipVerification),
       });
 
       const sdk = getSdk(this.graphqlClient);
@@ -82,5 +82,5 @@ export class AuthService {
 
 interface SignUpOptions {
   adminRole?: boolean;
-  verifyEmail?: boolean;
+  skipVerification?: boolean;
 }
