@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FusionAuthClient } from '@fusionauth/typescript-client';
-import { GraphQLClient, gql } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
+import { getSdk } from './auth.service.generated';
 import { FusionAuthLoginResponse } from './models/fusion-auth-login-response.model';
 import { FusionAuthSignUpResponse } from './models/fusion-auth-sign-up-response.model';
 
@@ -60,30 +61,13 @@ export class AuthService {
         skipVerification: !verifyEmail,
       });
 
-      await this.graphqlClient.request(
-        gql`
-          mutation CreateUser(
-            $external_user_id: uuid!
-            $email: String!
-            $username: String!
-          ) {
-            insert_users_one(
-              object: {
-                external_user_id: $external_user_id
-                email: $email
-                username: $username
-              }
-            ) {
-              id
-            }
-          }
-        `,
-        {
-          external_user_id: response?.user?.id,
-          email: response?.user?.email,
-          username: response?.user?.username,
-        },
-      );
+      const sdk = getSdk(this.graphqlClient);
+
+      await sdk.CreateUser({
+        external_user_id: response?.user?.id,
+        email: response?.user?.email,
+        username: response?.user?.username,
+      });
 
       return { success: true };
     } catch (err) {

@@ -1,0 +1,15 @@
+mutation CreateUser(
+  $external_user_id: uuid!
+  $email: String!
+  $username: String!
+) {
+  insert_users_one(
+    object: {
+      external_user_id: $external_user_id
+      email: $email
+      username: $username
+    }
+  ) {
+    id
+  }
+}
