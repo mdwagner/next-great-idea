@@ -6,9 +6,8 @@ export const factory: FactoryProvider<FusionAuthClient> = {
   provide: FusionAuthClient,
   useFactory: (configService: ConfigService) => {
     return new FusionAuthClient(
-      configService.get('FUSIONAUTH_API_KEY'),
-      configService.get('FUSIONAUTH_URL'),
-      configService.get('FUSIONAUTH_TENANT_ID'),
+      configService.get<string>('FUSIONAUTH_API_KEY'),
+      configService.get<string>('FUSIONAUTH_URL'),
     );
   },
   inject: [ConfigService],
