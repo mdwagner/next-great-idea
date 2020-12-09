@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
-import { INestApplicationContext } from '@nestjs/common';
-import { AppModule } from '../app.module';
+import type { INestApplicationContext } from '@nestjs/common';
+import { AppModule } from '../src/app.module';
 
 export type TaskCallback = (app: INestApplicationContext) => Promise<void>;
 

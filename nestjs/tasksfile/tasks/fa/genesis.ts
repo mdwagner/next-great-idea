@@ -1,4 +1,4 @@
-import type { TaskCallback } from '../wrapAppContext';
+import type { TaskCallback } from '../../wrapAppContext';
 
 export const genesis: TaskCallback = async (app) => {
   console.log('hello world');
