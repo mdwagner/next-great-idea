@@ -1,29 +1,23 @@
 import { cli } from 'tasksfile';
-import { NestFactory } from '@nestjs/core';
-import { Logger, INestApplicationContext } from '@nestjs/common';
-import { AppModule } from './app.module';
-
-async function runAppContext(cb: TaskCallback) {
-  const app = await NestFactory.createApplicationContext(AppModule, {
-    logger: ['error', 'debug'],
-  });
-  const logger = new Logger();
-  await cb(app, logger);
-  await app.close();
-}
-
-const checkStatus = () =>
-  runAppContext(async (app, logger) => {
-    logger.debug('hello world');
-  });
+import { wrapAppContext } from './tasksfile/wrapAppContext';
+import { checkStatus } from './tasksfile/fa/checkStatus';
+import { createApp } from './tasksfile/fa/createApp';
+import { createEmailTemplates } from './tasksfile/fa/createEmailTemplates';
+import { createTenant } from './tasksfile/fa/createTenant';
+import { deleteEmailTemplates } from './tasksfile/fa/deleteEmailTemplates';
+import { deleteTenant } from './tasksfile/fa/deleteTenant';
+import { genesis } from './tasksfile/fa/genesis';
+import { seedUsers } from './tasksfile/fa/seedUsers';
 
 cli({
   fa: {
-    checkStatus,
+    checkStatus: () => wrapAppContext(checkStatus),
+    createApp: () => wrapAppContext(createApp),
+    createEmailTemplates: () => wrapAppContext(createEmailTemplates),
+    createTenant: () => wrapAppContext(createTenant),
+    deleteEmailTemplates: () => wrapAppContext(deleteEmailTemplates),
+    deleteTenant: () => wrapAppContext(deleteTenant),
+    genesis: () => wrapAppContext(genesis),
+    seedUsers: () => wrapAppContext(seedUsers),
   },
 });
-
-type TaskCallback = (
-  app: INestApplicationContext,
-  logger: Logger,
-) => Promise<void>;
