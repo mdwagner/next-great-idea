@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
-import { validationSchema } from './config/validation-schema';
+import { envSchemaValidation } from './config/env-schema-validation';
 import { AppResolver } from './app.resolver';
 import { AuthModule } from './auth/auth.module';
 
@@ -9,7 +9,18 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema,
+      validate: (config) =>
+        envSchemaValidation.validateSync(config, {
+          abortEarly: true,
+          stripUnknown: true,
+        }),
+      envFilePath: [
+        '.env.production.local',
+        '.env.production',
+        '.env.development.local',
+        '.env.development',
+      ],
+      cache: true,
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
