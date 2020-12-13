@@ -1,5 +1,15 @@
+import { FusionAuthClient } from '@fusionauth/typescript-client';
 import type { TaskCallback } from '../../wrapAppContext';
 
 export const checkStatus: TaskCallback = async (app) => {
-  console.log('hello world');
+  const fusionAuthClient = app.get<FusionAuthClient>(FusionAuthClient);
+
+  await fusionAuthClient.clientBuilder
+    .build(fusionAuthClient.host)
+    .withAuthorization(fusionAuthClient.apiKey)
+    .withUri('/api/status')
+    .withMethod('GET')
+    .go();
+
+  console.log('OK');
 };
