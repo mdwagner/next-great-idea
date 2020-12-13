@@ -1,8 +1,8 @@
-version: '3.6'
+version: "3.6"
 
 services:
   dev-container:
-    image: ghcr.io/mdwagner/next-great-idea:latest
+    image: mcr.microsoft.com/vscode/devcontainers/javascript-node:12
     depends_on:
       - postgres
       - graphql-engine
@@ -24,7 +24,7 @@ services:
       POSTGRES_PASSWORD: password
 
   graphql-engine:
-    image: hasura/graphql-engine:latest
+    image: hasura/graphql-engine:v1.2.2
     restart: always
     ports:
       - 8080:8080

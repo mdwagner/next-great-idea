@@ -79,7 +79,7 @@ export const createTenant: TaskCallback = async (app) => {
           type: SecureGeneratorType.randomAlphaNumeric,
         },
         emailVerificationIdGenerator: {
-          length: 6,
+          length: 32,
           type: SecureGeneratorType.randomBytes,
         },
         emailVerificationIdTimeToLiveInSeconds: 86_400,

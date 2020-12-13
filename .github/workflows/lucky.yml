@@ -3,9 +3,9 @@ name: Lucky CI
 on:
   push:
     paths:
-    - 'lucky/**'
-    - '!ionic/**'
-    - '!hasura/**'
+      - "lucky/**"
+      - "!ionic/**"
+      - "!hasura/**"
 
 defaults:
   run:
@@ -20,23 +20,23 @@ jobs:
       image: crystallang/crystal:0.35.1-alpine
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Cache shards
-      uses: actions/cache@v1
-      with:
-        path: lucky/lib
-        key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-shards-
+      - name: Cache shards
+        uses: actions/cache@v1
+        with:
+          path: lucky/lib
+          key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-shards-
 
-    - name: Install deps
-      run: shards install
+      - name: Install deps
+        run: shards install
 
-    - name: Run tests
-      run: crystal spec
+      - name: Run tests
+        run: crystal spec
 
-    - name: Check file formatting
-      run: crystal tool format --check src spec tasks
-      if: always()
+      - name: Check file formatting
+        run: crystal tool format --check src spec tasks
+        if: always()

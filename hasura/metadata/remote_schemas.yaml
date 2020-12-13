@@ -1,1 +1,5 @@
-[]
+- name: next-great-idea-nestjs
+  definition:
+    url: http://host.docker.internal:5000/graphql
+    timeout_seconds: 60
+    forward_client_headers: true

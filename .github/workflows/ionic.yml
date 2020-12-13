@@ -3,9 +3,9 @@ name: Ionic CI
 on:
   push:
     paths:
-    - 'ionic/**'
-    - '!hasura/**'
-    - '!lucky/**'
+      - "ionic/**"
+      - "!hasura/**"
+      - "!lucky/**"
 
 defaults:
   run:
@@ -19,16 +19,16 @@ jobs:
       CI: true
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12'
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
 
-    - name: Install deps
-      run: npm ci
+      - name: Install deps
+        run: npm ci
 
-    - name: Run tests
-      run: npm run ionic:test
+      - name: Run tests
+        run: npm run ionic:test

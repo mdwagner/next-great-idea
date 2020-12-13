@@ -3,7 +3,7 @@ name: Docker CI
 on:
   push:
     paths:
-    - 'Dockerfile'
+      - "Dockerfile"
 
 jobs:
   push:
