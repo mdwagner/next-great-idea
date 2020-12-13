@@ -50,6 +50,9 @@ jobs:
         with:
           args: migrate apply
 
+      - name: Remove Remote Schemas
+        run: cat /dev/null > metadata/remote_schemas.yaml
+
       - name: Apply Hasura Metadata
         uses: tibotiber/hasura-action@master
         with:
