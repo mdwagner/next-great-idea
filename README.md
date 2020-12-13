@@ -1,5 +1,5 @@
 # Introduction
-![hasura](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Hasura%20CI?label=hasura) ![ionic](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Ionic%20CI?label=ionic) ![lucky](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Lucky%20CI?label=lucky) ![dev-container](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Docker%20CI?label=dev-container)
+![hasura](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Hasura%20CI?label=hasura) ![ionic](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Ionic%20CI?label=ionic)
 
 An app for your _next_ idea!
 
@@ -8,7 +8,7 @@ An app for your _next_ idea!
 - [Hasura GraphQL](https://hasura.io/docs/1.0/graphql/manual/index.html)
 - [Ionic Framework (React)](https://ionicframework.com/docs)
 - [FusionAuth](https://fusionauth.io/docs/v1/tech/)
-- [Lucky Framework](https://luckyframework.org/guides/getting-started/why-lucky)
+- [NestJS](https://docs.nestjs.com/)
 
 ## Getting Started
 
@@ -31,8 +31,8 @@ An app for your _next_ idea!
         - `$ cd hasura; npm start`
     - Ionic
         - `$ cd ionic; npm start`
-    - Lucky
-        - `$ cd lucky; hivemind`
+    - NestJS
+        - `$ cd nestjs; npm run start:dev`
 
 ### NOTES
 - `git` might not work that well inside the container (errors, etc.), so it's recommended to do any `git` commands outside of the container.

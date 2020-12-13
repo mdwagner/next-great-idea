@@ -16,11 +16,11 @@ pushd ionic
 npm ci
 popd
 
-# lucky
-echo "switching to lucky..."
-pushd lucky
-shards install
-lucky fa.genesis
+# nestjs
+echo "switching to nestjs..."
+pushd nestjs
+npm ci
+npx task fa:genesis
 popd
 
 echo "done!"
@@ -30,4 +30,4 @@ echo "Commands to start:"
 echo
 echo "Hasura: \`npm start\`"
 echo "Ionic: \`npm start\`"
-echo "Lucky: \`hivemind\`"
+echo "Nestjs: \`npm run start:dev\`"

@@ -5,7 +5,7 @@ on:
     paths:
       - "ionic/**"
       - "!hasura/**"
-      - "!lucky/**"
+      - "!nestjs/**"
 
 defaults:
   run:
