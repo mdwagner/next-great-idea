@@ -1,0 +1,34 @@
+name: NestJS CI
+
+on:
+  push:
+    paths:
+      - "nestjs/**"
+      - "!hasura/**"
+      - "!ionic/**"
+
+defaults:
+  run:
+    working-directory: nestjs
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build app
+        run: npm run build
