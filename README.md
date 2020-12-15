@@ -23,8 +23,7 @@ An app for your _next_ idea!
 $ git clone https://github.com/mdwagner/next-great-idea.git
 ```
 
-#### Use VisualStudioCode Remote Containers extension
-[Link](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+#### Use [VisualStudioCode Remote Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 ```
 Open Folder in Container
 ```
@@ -61,9 +60,6 @@ $ cd nestjs
 $ npx task fa:genesis
 ```
 
-### Container Notes
-- `git` might not work that well inside the container (errors, etc.), so it's recommended to do any `git` commands outside of the container.
-
 ## Contributing
 This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). Usage is up to developer discretion. We only ask you follow these conventions:
 - commit prefix is lowercase `<type>[optional scope]`
@@ -74,3 +70,6 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/en/
     - Ex: `whatever-i-want`
     - Ex: `not-master`
     - Ex: `ticket-123`
+
+## Notes
+- If you don't have your [local SSH agent running locally](https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys), you may run into errors when pushing changes from _inside_ of the container. If you are still having issues, an alternative approach is pushing changes from _outside_ of the container.
