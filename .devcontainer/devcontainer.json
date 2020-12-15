@@ -14,7 +14,7 @@
   "workspaceFolder": "/workspace",
   // Set *default* container specific settings.json values on container create.
   "settings": {
-    "terminal.integrated.shell.linux": null,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[typescript]": {
       "editor.formatOnSave": true
     },
