@@ -1,5 +1,5 @@
 # Introduction
-![hasura](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Hasura%20CI?label=hasura) ![ionic](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Ionic%20CI?label=ionic)
+![hasura](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Hasura%20CI?label=hasura) ![ionic](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/Ionic%20CI?label=ionic) ![nestjs](https://img.shields.io/github/workflow/status/mdwagner/next-great-idea/NestJS%20CI?label=nestjs)
 
 An app for your _next_ idea!
 
