@@ -17,24 +17,51 @@ An app for your _next_ idea!
 - [Docker](https://www.docker.com/)
 
 ### Quick Start
-- Clone repo
-- VS Code Remote Containers extension (easy)
-    - Open Folder in Container
-- Docker Compose (advanced)
-    - `$ bash scripts/outside_docker/start_up_containers.sh`
-        - **NOTE:** this will only start the project containers
-- Run genesis script
-    - `$ bash scripts/inside_docker/genesis.sh`
-        - **NOTE:** should only need to run this once
-- Start applications (seperate terminals)
-    - Hasura
-        - `$ cd hasura; npm start`
-    - Ionic
-        - `$ cd ionic; npm start`
-    - NestJS
-        - `$ cd nestjs; npm run start:dev`
 
-### NOTES
+#### Clone repo
+```sh
+$ git clone https://github.com/mdwagner/next-great-idea.git
+```
+
+#### Use VisualStudioCode Remote Containers extension
+[Link](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+```
+Open Folder in Container
+```
+
+#### Run the following commands in order:
+**TERMINAL 1** (Keep open)
+```sh
+$ cd ionic
+$ npm ci
+$ npm start
+```
+Go to [localhost:8100](http://localhost:8100) for Ionic Web app.
+
+**TERMINAL 2** (Keep open)
+```sh
+$ cd nestjs
+$ npm ci
+$ npm run start:dev
+```
+Go to [localhost:5000/graphql](http://localhost:5000/graphql) for NestJS GraphQL Playground.
+
+**TERMINAL 3** (Keep open)
+```sh
+$ cd hasura
+$ npm ci
+$ npm run migrate
+$ npm start
+```
+Go to [localhost:9695](http://localhost:9695) for Hasura web console.
+
+**TERMINAL 4** (You can close this one when finished)
+```sh
+$ cd nestjs
+$ npx task fa:genesis
+```
+
+### Container Notes
 - `git` might not work that well inside the container (errors, etc.), so it's recommended to do any `git` commands outside of the container.
 
 ## Contributing
