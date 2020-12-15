@@ -1,19 +1,19 @@
-name: Ionic CI
+name: NestJS CI
 
 on:
   push:
     paths:
-      - "ionic/**"
+      - "nestjs/**"
       - "!hasura/**"
-      - "!nestjs/**"
+      - "!ionic/**"
 
 defaults:
   run:
-    working-directory: ionic
+    working-directory: nestjs
 
 jobs:
-  test:
-    name: Tests
+  build:
+    name: Build
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -30,5 +30,5 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: Run tests
-        run: npm run ionic:test
+      - name: Build app
+        run: npm run build

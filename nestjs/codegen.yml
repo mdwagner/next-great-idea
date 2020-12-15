@@ -1,0 +1,36 @@
+overwrite: true
+
+schema:
+  - http://host.docker.internal:8080/v1/graphql:
+      headers:
+        X-Hasura-Admin-Secret: secret
+
+documents:
+  - 'src/**/*.graphql'
+
+generates:
+  src/graphql/types.ts:
+    plugins:
+      - 'typescript'
+    config:
+      avoidOptionals: true
+      addUnderscoreToArgsType: true
+
+  src/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .generated.ts
+      baseTypesPath: graphql/types.ts
+    plugins:
+      - 'typescript-operations'
+      - 'typescript-graphql-request'
+    config:
+      avoidOptionals: true
+      addUnderscoreToArgsType: true
+    hooks:
+      afterOneFileWrite:
+        - prettier --write src/
+
+  src/graphql/schema.json:
+    plugins:
+      - 'introspection'

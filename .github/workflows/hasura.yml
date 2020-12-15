@@ -3,9 +3,9 @@ name: Hasura CI
 on:
   push:
     paths:
-    - 'hasura/**'
-    - '!ionic/**'
-    - '!lucky/**'
+      - "hasura/**"
+      - "!ionic/**"
+      - "!nestjs/**"
 
 defaults:
   run:
@@ -33,7 +33,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       graphql-engine:
-        image: hasura/graphql-engine:latest
+        image: hasura/graphql-engine:v1.2.2
         ports:
           - "8080:8080"
         env:
@@ -42,15 +42,18 @@ jobs:
           HASURA_GRAPHQL_ENABLE_CONSOLE: false
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Apply Hasura Migrations
-      uses: tibotiber/hasura-action@master
-      with:
-        args: migrate apply
+      - name: Apply Hasura Migrations
+        uses: tibotiber/hasura-action@master
+        with:
+          args: migrate apply
 
-    - name: Apply Hasura Metadata
-      uses: tibotiber/hasura-action@master
-      with:
-        args: metadata apply
+      - name: Remove Remote Schemas
+        run: cat /dev/null > metadata/remote_schemas.yaml
+
+      - name: Apply Hasura Metadata
+        uses: tibotiber/hasura-action@master
+        with:
+          args: metadata apply
