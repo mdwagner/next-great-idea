@@ -1,9 +1,9 @@
 overwrite: true
 
 schema:
-  - http://host.docker.internal:8080/v1/graphql:
-      headers:
-        X-Hasura-Admin-Secret: secret
+  - ${SCHEMA_PATH}:
+    headers:
+      X-Hasura-Admin-Secret: ${ADMIN_SECRET}
 
 documents:
   - "src/**/*.graphql"
