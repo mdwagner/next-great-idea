@@ -1,9 +1,9 @@
 overwrite: true
 
 schema:
-  - ${SCHEMA_PATH}:
+  - ${REACT_APP_GRAPHQL_URL}:
     headers:
-      X-Hasura-Admin-Secret: ${ADMIN_SECRET}
+      X-Hasura-Admin-Secret: ${REACT_APP_ADMIN_SECRET}
 
 documents:
   - "src/**/*.graphql"
