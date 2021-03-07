@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "hasura/**"
+      - ".github/workflows/hasura.yml"
       - "!ionic/**"
       - "!nestjs/**"
 
@@ -33,13 +34,14 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       graphql-engine:
-        image: hasura/graphql-engine:v1.2.2
+        image: hasura/graphql-engine:v1.3.3
         ports:
           - "8080:8080"
         env:
           HASURA_GRAPHQL_ADMIN_SECRET: secret
           HASURA_GRAPHQL_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/postgres"
-          HASURA_GRAPHQL_ENABLE_CONSOLE: false
+          HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+          HASURA_GRAPHQL_DEV_MODE: "true"
 
     steps:
       - name: Checkout code
@@ -49,9 +51,6 @@ jobs:
         uses: tibotiber/hasura-action@master
         with:
           args: migrate apply
-
-      - name: Remove Remote Schemas
-        run: cat /dev/null > metadata/remote_schemas.yaml
 
       - name: Apply Hasura Metadata
         uses: tibotiber/hasura-action@master

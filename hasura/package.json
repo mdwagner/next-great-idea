@@ -5,12 +5,15 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run console",
-    "console": "hasura --skip-update-check console --no-browser",
-    "migrate:apply": "hasura --skip-update-check migrate apply",
-    "metadata:apply": "hasura --skip-update-check metadata apply",
-    "migrate": "npm run migrate:apply && npm run metadata:apply"
+    "console": "npm run hasura:base -- console --no-browser",
+    "migrate:apply": "npm run hasura:base -- migrate apply",
+    "migrate:status": "npm run hasura:base -- migrate status",
+    "metadata:apply": "npm run hasura:base -- metadata apply",
+    "metadata:export": "npm run hasura:base -- metadata export",
+    "migrate": "npm run migrate:apply && npm run metadata:apply",
+    "hasura:base": "hasura --skip-update-check"
   },
   "devDependencies": {
-    "hasura-cli": "^1.2.1"
+    "hasura-cli": "1.3.3"
   }
 }
