@@ -15,18 +15,7 @@
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "[typescript]": {
-      "editor.formatOnSave": true
-    },
-    "[typescriptreact]": {
-      "editor.formatOnSave": true
-    },
-    "[javascript]": {
-      "editor.formatOnSave": true
-    },
-    "[javascriptreact]": {
-      "editor.formatOnSave": true
-    }
+    "editor.formatOnSave": true
   },
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
@@ -36,7 +25,7 @@
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
-    5000, // nestjs
+    // 5000, // nestjs
     8100, // ionic
     9693, // hasura
     9695 // hasura
