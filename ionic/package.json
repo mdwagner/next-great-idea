@@ -10,9 +10,11 @@
     "generate": "graphql-codegen -r dotenv/config --config codegen.yml"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^1.0.3",
     "@capacitor/core": "^2.4.6",
     "@ionic/react": "^5.5.4",
     "@ionic/react-router": "^5.5.4",
+    "aws-amplify": "^3.3.22",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.11.0",
     "ionicons": "^5.5.0",

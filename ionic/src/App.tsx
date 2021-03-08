@@ -1,7 +1,8 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import Amplify from "aws-amplify";
 
 import { GraphqlProvider } from "./utils/GraphqlProvider";
 import { Home } from "./pages/Home";
@@ -25,12 +26,30 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
+/* Configure Amplify */
+Amplify.configure({
+  Auth: {
+    region: "us-east-2",
+    userPoolId: "us-east-2_nTZEGMXaV",
+    userPoolWebClientId: "mtanpn75j134d6hmecjuf4ib0",
+    authenticationFlowType: "USER_SRP_AUTH",
+    oauth: {
+      domain: "next-great-idea.auth.us-east-2.amazoncognito.com",
+      scope: ["email", "openid", "profile"],
+      redirectSignIn: "http://localhost:8100/callback",
+      redirectSignOut: "http://localhost:8100/logout",
+      responseType: "code",
+    },
+  },
+});
+
 export const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <GraphqlProvider>
         <IonRouterOutlet>
           <Route path="/" exact children={<Home />} />
+          <Redirect to="/" />
         </IonRouterOutlet>
       </GraphqlProvider>
     </IonReactRouter>
