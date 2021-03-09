@@ -3,17 +3,10 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "build": "parcel build index.js --target node --bundle-node-modules --no-source-maps --no-minify --no-cache --out-file index.js"
+    "prebuild": "mkdir -p dist",
+    "build": "zip -9 -q -r dist/index.zip ."
   },
-  "devDependencies": {
-    "parcel-bundler": "1.12.3",
-    "parcel-plugin-externals": "^0.5.2"
-  },
-  "externals": [
-    "aws-sdk"
-  ],
   "dependencies": {
-    "aws-sdk": "^2.858.0",
     "node-fetch": "^2.6.1"
   }
 }
